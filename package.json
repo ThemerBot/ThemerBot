@@ -4,7 +4,8 @@
   "description": "Create themes for telegram android from a picture.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "lint": "eslint **/*.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/YouTwitFace/CreateAtthemeBot/issues"
   },
-  "homepage": "https://github.com/YouTwitFace/CreateAtthemeBot#readme"
+  "homepage": "https://github.com/YouTwitFace/CreateAtthemeBot#readme",
+  "dependencies": {
+    "telegraf": "^3.25.5"
+  },
+  "devDependencies": {
+    "eslint": "^5.11.1"
+  }
 }
