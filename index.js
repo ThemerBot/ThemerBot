@@ -1,12 +1,18 @@
 `use strict`;
 
+if (!process.env.TOKEN) {
+    require(`dotenv`).load();
+}
+
 const {
-    token,
-    username = ``,
-} = require(`./config`);
+    TOKEN,
+    USERNAME = ``,
+} = process.env;
 
 const Telegraf = require(`telegraf`);
-const bot = new Telegraf(token, { username });
+const bot = new Telegraf(TOKEN, {
+    username: USERNAME,
+});
 
 require(`./middleware`)(bot);
 require(`./handlers`)(bot);
