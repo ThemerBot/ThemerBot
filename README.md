@@ -1,2 +1,2 @@
 # CreateAtthemeBot
-Coming soon...
+> Rewrite of @CreateAtthemeBot on telegram.
