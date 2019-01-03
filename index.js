@@ -21,3 +21,5 @@ require(`./middleware`)(bot);
 require(`./handlers`)(bot);
 
 bot.startPolling();
+// eslint-disable-next-line no-console
+console.log(`@${USERNAME} is running...`);
