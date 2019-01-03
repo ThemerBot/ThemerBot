@@ -1,5 +1,3 @@
-`use strict`;
-
 module.exports = (bot) => {
     bot.command(`start`, async (ctx) => {
         const typing = ctx.action();

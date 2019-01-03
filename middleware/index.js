@@ -1,6 +1,4 @@
-`use strict`;
-
-const modules = [`action`, `download`];
+const modules = [`action`, `download`, `keyboard`, `colors`];
 
 module.exports = (bot) =>
     modules.forEach(middleware =>

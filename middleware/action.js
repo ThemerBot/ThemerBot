@@ -1,5 +1,3 @@
-`use strict`;
-
 module.exports = (bot) => {
     bot.context.sendChatAction = function (action) {
         bot.telegram.sendChatAction(this.chat.id, action);
