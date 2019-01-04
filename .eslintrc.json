@@ -41,9 +41,9 @@
             "error",
             "always-multiline"
         ],
-        "no-extra-parens": [
+        "arrow-parens": [
             "error",
-            "all"
+            "as-needed"
         ]
     }
 }
