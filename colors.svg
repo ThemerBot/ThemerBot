@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="720px" height="512px" viewBox="0 0 720 512">
+    <g id="g1">
+        <rect id="1" width="200px" height="200px" fill="#123456" ry="10px" x="50px" y="50px" />
+        <text id="text1" fill="#ffffff" text-anchor="middle" font-family="Verdana" font-size="75px" x="150px" y="175px">1</text>
+    </g>
+    <g id="g2">
+        <rect id="2" width="200px" height="200px" fill="#234567" ry="10px" x="260px" y="50px" />
+        <text id="text2" fill="#ffffff" text-anchor="middle" font-family="Verdana" font-size="75px" x="360px" y="175px">2</text>
+    </g>
+    <g id="g3">
+        <rect id="3" width="200px" height="200px" fill="#345678" ry="10px" x="470px" y="50px" />
+        <text id="text3" fill="#ffffff" text-anchor="middle" font-family="Verdana" font-size="75px" x="570px" y="175px">3</text>
+    </g>
+    <g id="g4">
+        <rect id="4" width="200px" height="200px" fill="#456789" ry="10px" x="50px" y="270px" />
+        <text id="text4" fill="#ffffff" text-anchor="middle" font-family="Verdana" font-size="75px" x="150px" y="395px">4</text>
+    </g>
+    <g id="g5">
+        <rect id="5" width="200px" height="200px" fill="#567890" ry="10px" x="260px" y="270px" />
+        <text id="text5" fill="#ffffff" text-anchor="middle" font-family="Verdana" font-size="75px" x="360px" y="395px">5</text>
+    </g>
+    <g id="default">
+        <path d="M 480 270 L 660 270 C 665.519 270 670 274.481 670 280 L 670 460 C 670 465.519 665.519 470 660 470 L 480 470 C 474.481 470 470 465.519 470 460 L 470 280 C 470 274.481 474.481 270 480 270 Z" fill="#234567" />
+        <path d="M 670 330 L 670 460 C 670 465.519 665.519 470 660 470 L 530 470 L 670 330 Z" fill="#345678" />
+        <path d="M 480 270 L 610 270 L 470 410 L 470 280 C 470 274.481 474.481 270 480 270 Z" fill="#123456" />
+    </g>
+</svg>
