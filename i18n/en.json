@@ -1,1 +1,3 @@
-{}
+{
+    "start": "Hi {{name}}! Send me a photo."
+}

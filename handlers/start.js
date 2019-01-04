@@ -4,7 +4,7 @@ module.exports = (bot) => {
         const { first_name, last_name } = ctx.from;
         const name = `${first_name} ${last_name || ``}`.trim();
 
-        await ctx.reply(`Hi ${name}! Send me a photo.`);
+        await ctx.reply(ctx.i18n(`start`, { name }));
         typing.stop();
     });
 };
