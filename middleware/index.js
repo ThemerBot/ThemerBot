@@ -4,6 +4,7 @@ const modules = [
     `keyboard`,
     `colors`,
     `i18n`,
+    `maketheme`,
 ];
 
 module.exports = bot =>

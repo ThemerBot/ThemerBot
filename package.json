@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/YouTwitFace/CreateAtthemeBot#readme",
   "dependencies": {
+    "attheme-js": "^2.1.4",
     "dotenv": "^6.2.0",
     "get-image-colors": "^2.0.0",
     "new-i18n": "^1.1.1",
