@@ -30,7 +30,7 @@ module.exports = bot => {
 
         switch (data) {
             case `default`: { // Default button
-                await ctx.editMessageCaption(`What type of theme do you want?`, typeKeyboard);
+                await ctx.editMessageCaption(ctx.i18n(`type_of_theme`), typeKeyboard);
 
                 const { colors } = ctx.theme;
 
