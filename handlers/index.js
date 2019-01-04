@@ -4,7 +4,7 @@ const handlers = [
     `cbquery`,
 ];
 
-module.exports = (bot) =>
+module.exports = bot =>
     handlers.forEach(handler =>
         require(`./${handler}`)(bot)
     );

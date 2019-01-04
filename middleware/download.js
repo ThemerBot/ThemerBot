@@ -1,6 +1,6 @@
 const request = require(`request-promise`);
 
-module.exports = (bot) => {
+module.exports = bot => {
     const downloadUrl = `https://api.telegram.org/file/bot${bot.token}`;
 
     bot.context.downloadFile = async function () {
