@@ -21,9 +21,12 @@
     "dotenv": "^6.2.0",
     "get-image-colors": "^2.0.0",
     "new-i18n": "^1.1.1",
+    "promise-fs": "^2.0.1",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
-    "telegraf": "^3.25.5"
+    "sharp": "^0.21.1",
+    "telegraf": "^3.25.5",
+    "xmldom": "^0.1.27"
   },
   "devDependencies": {
     "eslint": "^5.11.1"
