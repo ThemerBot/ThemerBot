@@ -1,4 +1,8 @@
-const modules = [`action`, `download`, `keyboard`, `colors`];
+const modules = [
+    `action`,
+    `download`,
+    `i18n`,
+];
 
 module.exports = (bot) =>
     modules.forEach(middleware =>
