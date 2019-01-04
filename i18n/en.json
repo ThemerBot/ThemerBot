@@ -6,5 +6,6 @@
     "choose_color_2": "What color would you like for the main text?",
     "choose_color_3": "What color would you like for the secondary text?",
     "cant_reuse_bg": "I cannot allow you to re-use the background color 🚫",
-    "type_of_theme": "What type of theme do you want?"
+    "type_of_theme": "What type of theme do you want?",
+    "error": "There was an error. Please try with a different picture."
 }
