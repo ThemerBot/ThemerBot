@@ -57,6 +57,32 @@ module.exports = bot => {
                 break;
             }
 
+            case `tgx-theme`:
+            case `attheme`: {
+                const typing = ctx.action(`upload_photo`);
+                const name = ctx.makeThemeName();
+                const { photo, using } = ctx.theme;
+
+                const theme = ctx.makeTheme({
+                    type: data,
+                    name: name,
+                    image: photo,
+                    colors: using,
+                });
+
+                await ctx.editMessageMedia({
+                    caption: `Made by @CreateAtthemeBot\n#theme ${using.join(` `)}`,
+                    type: `document`,
+                    media: {
+                        source: Buffer.from(theme, `binary`),
+                        filename: `${name} by @CreateAtthemeBot.${data}`,
+                    },
+                });
+
+                typing.stop();
+                break;
+            }
+
             default: { // All colors and type
                 const keyboard = ctx.keyboard(true);
                 const color = ctx.theme.colors[data];
