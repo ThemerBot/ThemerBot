@@ -1,6 +1,8 @@
 const modules = [
     `action`,
     `download`,
+    `keyboard`,
+    `colors`,
     `i18n`,
 ];
 

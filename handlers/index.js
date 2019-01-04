@@ -1,4 +1,8 @@
-const handlers = [`start`, `photos`];
+const handlers = [
+    `start`,
+    `photos`,
+    `cbquery`,
+];
 
 module.exports = (bot) =>
     handlers.forEach(handler =>

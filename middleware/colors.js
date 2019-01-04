@@ -1,8 +1,10 @@
+const path = require(`path`);
 const fs = require(`promise-fs`);
 const { DOMParser, XMLSerializer } = require(`xmldom`);
 const { serializeToString: serialize } = new XMLSerializer();
 const sharp = require(`sharp`);
 const getColors = require(`get-image-colors`);
+const svgPath = path.join(__dirname, `../colors.svg`);
 
 module.exports = bot => {
     bot.context.getImageColors = async (buffer, type) => {
@@ -11,7 +13,7 @@ module.exports = bot => {
     };
 
     bot.context.makeColorsPreview = async colors => {
-        const svgFile = await fs.readFile(`./colors.svg`, `utf8`);
+        const svgFile = await fs.readFile(svgPath, `utf8`);
         const svg = new DOMParser().parseFromString(svgFile);
 
         let rects = svg.getElementsByTagName(`rect`);
