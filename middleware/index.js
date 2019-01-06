@@ -1,4 +1,5 @@
 const modules = [
+    `errors`,
     `action`,
     `download`,
     `keyboard`,
