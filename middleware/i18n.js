@@ -1,5 +1,5 @@
 const newI18n = require(`new-i18n`);
-const i18n = newI18n(`${__dirname}/../i18n`, [`en`, `hi`]);
+const i18n = newI18n(`${__dirname}/../i18n`, [`en`, `hi`, `es`]);
 
 module.exports = bot => {
     bot.context.i18n = function (keyword, variables) {
