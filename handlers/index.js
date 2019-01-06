@@ -1,6 +1,7 @@
 const handlers = [
     `start`,
     `photos`,
+    `documents`,
     `cbquery`,
 ];
 
