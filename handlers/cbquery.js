@@ -24,7 +24,7 @@ module.exports = bot => {
             return;
         }
 
-        if (!ctx.theme || message.message_id !== ctx.theme.message_id) {
+        if (!ctx.theme) {
             return await ctx.answerCbQuery(ctx.i18n(`no_theme_found`), true);
         }
 

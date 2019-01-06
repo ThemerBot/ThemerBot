@@ -15,6 +15,13 @@ const bot = new Telegraf(TOKEN, {
 
 bot.use(session({
     property: `theme`,
+    getSessionKey(ctx) {
+        if (ctx.chat && ctx.from && ctx.message) {
+            return `${ctx.chat.id}:${ctx.from.id}:${ctx.message.message_id}`;
+        }
+
+        return;
+    },
 }));
 
 require(`./middleware`)(bot);
