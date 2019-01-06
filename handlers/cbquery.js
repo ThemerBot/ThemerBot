@@ -11,7 +11,7 @@ module.exports = bot => {
     };
 
     bot.on(`callback_query`, async ctx => {
-        const { data, message } = ctx.callbackQuery;
+        const { data } = ctx.callbackQuery;
 
         if (data.startsWith(`cancel`)) {
             if (data.split(`,`).pop() == ctx.from.id) {
@@ -24,7 +24,8 @@ module.exports = bot => {
             return;
         }
 
-        if (!ctx.theme) {
+        // Check if `ctx.theme` has any properties
+        if (Object.keys(ctx.theme).length === 0) {
             return await ctx.answerCbQuery(ctx.i18n(`no_theme_found`), true);
         }
 

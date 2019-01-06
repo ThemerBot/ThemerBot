@@ -15,12 +15,13 @@ const bot = new Telegraf(TOKEN, {
 
 bot.use(session({
     property: `theme`,
-    getSessionKey(ctx) {
-        if (ctx.chat && ctx.from && ctx.message) {
-            return `${ctx.chat.id}:${ctx.from.id}:${ctx.message.message_id}`;
-        }
+    getSessionKey: ctx => {
+        const message = ctx.callbackQuery &&
+            ctx.callbackQuery.message.reply_to_message ||
+            ctx.message;
 
-        return;
+        if (!ctx.chat || !ctx.from || !message) return;
+        return `${ctx.chat.id}:${ctx.from.id}:${message.message_id}`;
     },
 }));
 
