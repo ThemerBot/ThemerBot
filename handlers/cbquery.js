@@ -25,7 +25,7 @@ module.exports = bot => {
         }
 
         // Check if `ctx.theme` has any properties
-        if (Object.keys(ctx.theme).length === 0) {
+        if (!ctx.theme || Object.keys(ctx.theme).length === 0) {
             return await ctx.answerCbQuery(ctx.i18n(`no_theme_found`), true);
         }
 
