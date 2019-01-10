@@ -4,7 +4,8 @@ module.exports = bot => {
     const downloadUrl = `https://api.telegram.org/file/bot${bot.token}`;
 
     bot.context.downloadFile = async function () {
-        const documentID = this.message.document.file_id;
+        const message = this.message.reply_to_message || this.message;
+        const documentID = message.document.file_id;
         const file = await bot.telegram.getFile(documentID);
 
         return await request({

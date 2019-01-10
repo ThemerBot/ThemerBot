@@ -3,6 +3,7 @@ const handlers = [
     `photos`,
     `documents`,
     `cbquery`,
+    `rename`,
 ];
 
 module.exports = bot =>
