@@ -18,6 +18,19 @@ module.exports = bot => {
     };
 
     bot.context.createButton = button;
+
+    bot.context.shareKeyboard = function (fileID) {
+        return {
+            inline_keyboard: [
+                [
+                    {
+                        text: this.i18n(`share`),
+                        switch_inline_query: `share ${fileID}`,
+                    },
+                ],
+            ],
+        };
+    };
 };
 
 function button(text, data) {

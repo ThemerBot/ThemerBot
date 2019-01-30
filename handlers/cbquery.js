@@ -71,7 +71,7 @@ module.exports = bot => {
                     colors: using,
                 });
 
-                await ctx.editMessageMedia({
+                const { message_id, document } = await ctx.editMessageMedia({
                     caption: `Made by @CreateAtthemeBot\n#theme ${using.join(` `)}`,
                     type: `document`,
                     media: {
@@ -79,6 +79,13 @@ module.exports = bot => {
                         filename: `${name} by @CreateAtthemeBot.${data}`,
                     },
                 });
+
+                await bot.telegram.editMessageReplyMarkup(
+                    ctx.chat.id,
+                    message_id,
+                    null,
+                    ctx.shareKeyboard(document.file_id)
+                );
 
                 typing.stop();
                 ctx.theme = null;
