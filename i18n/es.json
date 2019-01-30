@@ -7,5 +7,7 @@
     "choose_color_3": "¿Qué color te gustaría para el texto secundario?",
     "cant_reuse_bg": "No puedo permitir que reutilices el color de fondo 🚫",
     "type_of_theme": "¿Qué tipo de tema quieres?",
-    "error": "Hubo un error. Por favor intente con una imagen diferente."
+    "error": "Hubo un error. Por favor intente con una imagen diferente.",
+    "cancel": "Cancelar",
+    "default": "Por defecto"
 }

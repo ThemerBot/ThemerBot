@@ -1,5 +1,5 @@
 module.exports = bot => {
-    const defaultButton = button(`Default`, `default`);
+    const defaultButton = button(bot.context.i18n(`default`), `default`);
     const backspaceButton = button(`⬅️`, `-`);
 
     bot.context.keyboard = function (backspace) {
@@ -11,7 +11,7 @@ module.exports = bot => {
         ];
 
         if (this.chat.type !== `private`) {
-            keys.push([button(`Cancel`, `cancel,${this.from.id}`)]);
+            keys.push([button(this.i18n(`cancel`), `cancel,${this.from.id}`)]);
         }
 
         return { inline_keyboard: keys };
