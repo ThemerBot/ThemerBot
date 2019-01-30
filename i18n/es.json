@@ -9,5 +9,7 @@
     "type_of_theme": "¿Qué tipo de tema quieres?",
     "error": "Hubo un error. Por favor intente con una imagen diferente.",
     "cancel": "Cancelar",
-    "default": "Por defecto"
+    "default": "Por defecto",
+    "share": "Compartir",
+    "share_theme": "Compartir tema"
 }
