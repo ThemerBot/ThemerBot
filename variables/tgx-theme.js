@@ -1,13 +1,18 @@
+const isLight = require(`./isLight`);
+
 module.exports = (name, colors) => {
     colors = colors.map(color => color.slice(1));
+    const isBgLight = isLight(colors[0]);
 
     return `
         !
         name: "${name}"
         author: "${process.env.USERNAME}"
         @
-        bubbleOutline, bubbleUnreadShadow, dark, replaceShadowsWithSeparators, shadowDepth: 1
-        lightStatusBar, wallpaperId: 0
+        bubbleOutline, bubbleUnreadShadow, replaceShadowsWithSeparators, shadowDepth: 1
+        wallpaperId: 0
+        lightStatusBar: ${isBgLight ? 1 : 0}
+        dark: ${isBgLight ? 0 : 1}
         parentTheme: 11
         wallpaperUsageId: 2
         #
