@@ -16,7 +16,7 @@ module.exports = bot => {
         if (data.startsWith(`cancel`)) {
             if (data.split(`,`).pop() == ctx.from.id) {
                 await ctx.deleteMessage();
-                delete ctx.theme;
+                ctx.theme = null;
             } else {
                 await ctx.answerCbQuery(ctx.i18n(`not_your_theme`));
             }
@@ -81,6 +81,7 @@ module.exports = bot => {
                 });
 
                 typing.stop();
+                ctx.theme = null;
                 break;
             }
 
