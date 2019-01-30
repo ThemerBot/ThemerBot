@@ -1,8 +1,8 @@
 module.exports = bot => {
-    const defaultButton = button(bot.context.i18n(`default`), `default`);
     const backspaceButton = button(`⬅️`, `-`);
 
     bot.context.keyboard = function (backspace) {
+        const defaultButton = button(this.i18n(`default`), `default`);
         const lastButton = backspace ? backspaceButton : defaultButton;
 
         const keys = [
