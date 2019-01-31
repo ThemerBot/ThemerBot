@@ -26,6 +26,7 @@ module.exports = (name, colors) => {
         headerRemoveBackground, togglerActiveBackground, togglerInactiveBackground, togglerNegativeBackground, togglerPositiveBackground: #${colors[1]}96
         headerTabInactiveText: #${colors[1]}CC
         seekEmpty: #${colors[2]}96
+        previewBackground: ${colors[0]}C0
         separator: #0000
     `;
 };
