@@ -5,6 +5,7 @@ const handlers = [
     `cbquery`,
     `rename`,
     `share`,
+    `fix`,
 ];
 
 module.exports = bot =>
