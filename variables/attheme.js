@@ -70,8 +70,6 @@ module.exports = colors => {
         avatar_text=#ff${colors[0]}
         calls_callReceivedGreenIcon=#ff${colors[1]}
         calls_callReceivedRedIcon=#ff${colors[1]}
-        calls_ratingStar=#ff${colors[2]}
-        calls_ratingStarSelected=#ff${colors[1]}
         changephoneinfo_image=#ff${colors[2]}
         chat_addContact=#ff${colors[1]}
         chat_adminSelectedText=#ff${colors[1]}
@@ -106,6 +104,7 @@ module.exports = colors => {
         chat_inAudioDurationSelectedText=#ff${colors[1]}
         chat_inAudioDurationText=#ff${colors[1]}
         chat_inAudioPerfomerText=#ff${colors[1]}
+        chat_inAudioPerfomerSelectedText=#ff${colors[1]}
         chat_inAudioProgress=#ff${colors[0]}
         chat_inAudioSeekbar=#ff${colors[2]}
         chat_inAudioSeekbarFill=#ff${colors[1]}
