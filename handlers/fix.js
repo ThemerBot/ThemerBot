@@ -27,14 +27,14 @@ module.exports = bot => {
             const theme = ctx.makeTheme({
                 type: fileName.split(`.`).pop(),
                 name: fileName,
-                image: oldTheme.getWallpaper(),
+                image: oldTheme.getWallpaper() || ``,
                 colors: colors,
             });
 
             const reply = await ctx.replyWithDocument(
                 {
                     source: Buffer.from(theme.toString(`int`), `binary`),
-                    filename: `this is a test.attheme`,
+                    filename: fileName,
                 },
                 {
                     caption: `#theme ${colors.join(` `)}`,
