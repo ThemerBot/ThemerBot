@@ -44,7 +44,9 @@ module.exports = bot => {
                 const keyboard = ctx.keyboard(length > 0);
 
                 await ctx.editMessageCaption(
-                    ctx.i18n(`choose_color_${length + 1}`),
+                    ctx.i18n(`choose_color_${length + 1}`, {
+                        colors: theme.using.join(`, `),
+                    }),
                     { reply_markup: keyboard }
                 );
 
@@ -100,7 +102,9 @@ module.exports = bot => {
 
                 if (length < 3) {
                     await ctx.editMessageCaption(
-                        ctx.i18n(`choose_color_${length + 1}`),
+                        ctx.i18n(`choose_color_${length + 1}`, {
+                            colors: theme.using.join(`, `),
+                        }),
                         { reply_markup: keyboard }
                     );
                 } else {
