@@ -1,5 +1,5 @@
 if (!process.env.TOKEN) {
-    require(`dotenv`).load();
+    require(`dotenv`).config();
 }
 
 const {
