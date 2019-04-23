@@ -15,6 +15,17 @@ module.exports = bot => {
         return { inline_keyboard: keys };
     };
 
+    bot.context.typeKeyboard = {
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    button(`attheme`, `attheme`),
+                    button(`tgx-theme`, `tgx-theme`),
+                ],
+            ],
+        },
+    };
+
     bot.context.createButton = button;
 
     bot.context.shareKeyboard = function (fileID) {

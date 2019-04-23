@@ -1,15 +1,4 @@
 module.exports = bot => {
-    const typeKeyboard = {
-        reply_markup: {
-            inline_keyboard: [
-                [
-                    bot.context.createButton(`attheme`, `attheme`),
-                    bot.context.createButton(`tgx-theme`, `tgx-theme`),
-                ],
-            ],
-        },
-    };
-
     bot.on(`callback_query`, async ctx => {
         const { data } = ctx.callbackQuery;
 
@@ -109,7 +98,7 @@ module.exports = bot => {
                         { reply_markup: keyboard }
                     );
                 } else {
-                    await ctx.editMessageCaption(ctx.i18n(`type_of_theme`), typeKeyboard);
+                    await ctx.editMessageCaption(ctx.i18n(`type_of_theme`), ctx.typeKeyboard);
                 }
             }
         }
