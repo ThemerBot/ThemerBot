@@ -11,7 +11,7 @@ module.exports = bot => {
             const previewPhoto = await ctx.makeColorsPreview(colors);
             const keyboard = ctx.keyboard();
 
-            await ctx.replyWithPhoto(
+            const { message_id } = await ctx.replyWithPhoto(
                 { source: previewPhoto },
                 {
                     reply_markup: keyboard,
@@ -20,11 +20,11 @@ module.exports = bot => {
                 }
             );
 
-            ctx.theme = {
+            ctx.saveTheme(message_id, {
                 photo,
                 colors,
                 using: [],
-            };
+            });
         } catch (e) {
             await ctx.reply(ctx.i18n(`error`));
         } finally {

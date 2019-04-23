@@ -1,11 +1,13 @@
 module.exports = bot => {
     bot.on(`callback_query`, async ctx => {
         const { data } = ctx.callbackQuery;
+        const { message_id: themeId } = ctx.callbackQuery.message;
+        const theme = ctx.getTheme(themeId);
 
         if (data.startsWith(`cancel`)) {
             if (data.split(`,`).pop() == ctx.from.id) {
                 await ctx.deleteMessage();
-                ctx.theme = null;
+                ctx.saveTheme(themeId, null);
             } else {
                 await ctx.answerCbQuery(ctx.i18n(`not_your_theme`));
             }
@@ -13,8 +15,7 @@ module.exports = bot => {
             return;
         }
 
-        // Check if `ctx.theme` has any properties
-        if (!ctx.theme || Object.keys(ctx.theme).length === 0) {
+        if (!theme) {
             return await ctx.answerCbQuery(ctx.i18n(`no_theme_found`), true);
         }
 
@@ -22,21 +23,24 @@ module.exports = bot => {
             case `default`: { // Default button
                 await ctx.editMessageCaption(ctx.i18n(`type_of_theme`), typeKeyboard);
 
-                const { colors } = ctx.theme;
+                const { colors } = theme;
 
-                ctx.theme.using = [
+                theme.using = [
                     colors[0],
                     colors[4],
                     colors[3],
                 ];
 
+                ctx.saveTheme(themeId, theme);
+
                 break;
             }
 
             case `-`: { // Backspace
-                ctx.theme.using.pop();
+                theme.using.pop();
+                ctx.saveTheme(themeId, theme);
 
-                const length = ctx.theme.using.length;
+                const { length } = theme.using;
                 const keyboard = ctx.keyboard(length > 0);
 
                 await ctx.editMessageCaption(
@@ -51,9 +55,9 @@ module.exports = bot => {
             case `attheme`: {
                 const typing = ctx.action(`upload_photo`);
                 const name = ctx.makeThemeName();
-                const { photo, using } = ctx.theme;
+                const { photo, using } = theme;
 
-                const theme = ctx.makeTheme({
+                const completedTheme = ctx.makeTheme({
                     type: data,
                     name: name,
                     image: photo,
@@ -64,7 +68,7 @@ module.exports = bot => {
                     caption: `Made by @CreateAtthemeBot\n#theme ${using.join(` `)}`,
                     type: `document`,
                     media: {
-                        source: Buffer.from(theme, `binary`),
+                        source: Buffer.from(completedTheme, `binary`),
                         filename: `${name} by @CreateAtthemeBot.${data}`,
                     },
                 });
@@ -77,20 +81,22 @@ module.exports = bot => {
                 );
 
                 typing.stop();
-                ctx.theme = null;
+                ctx.saveTheme(themeId, null);
                 break;
             }
 
             default: { // All colors and type
-                const keyboard = ctx.keyboard(true);
-                const color = ctx.theme.colors[data];
+                const color = theme.colors[data];
 
-                if (ctx.theme.using[0] === color) {
+                if (theme.using[0] === color) {
                     return ctx.answerCbQuery(ctx.i18n(`cant_reuse_bg`));
                 }
 
-                ctx.theme.using.push(color);
-                const { length } = ctx.theme.using;
+                theme.using.push(color);
+                ctx.saveTheme(themeId, theme);
+
+                const keyboard = ctx.keyboard(true);
+                const { length } = theme.using;
 
                 if (length < 3) {
                     await ctx.editMessageCaption(
