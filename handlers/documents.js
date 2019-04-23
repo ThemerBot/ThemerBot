@@ -1,11 +1,16 @@
 const allowedMimeTypes = [`image/png`, `image/jpeg`];
 
 module.exports = bot => {
-    bot.on(`document`, async (ctx, next) => {
-        const mimeType = ctx.message.document.mime_type;
+    bot.on(`document`, async ctx => {
+        const {
+            mime_type: mimeType,
+            file_size: fileSize,
+        } = ctx.message.document;
 
         if (!allowedMimeTypes.includes(mimeType)) {
-            return next();
+            return;
+        } else if (fileSize > 1000000) {
+            return await ctx.reply(ctx.i18n(`image_too_big`));
         }
 
         const typing = ctx.action(`upload_photo`);
