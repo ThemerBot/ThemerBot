@@ -11,5 +11,6 @@
     "cancel": "Cancelar",
     "default": "Por defecto",
     "share": "Compartir",
-    "share_theme": "Compartir tema"
+    "share_theme": "Compartir tema",
+    "image_too_big": "Esa imagen es demasiado grande. Intenta enviándola como una foto."
 }

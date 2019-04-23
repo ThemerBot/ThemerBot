@@ -11,5 +11,6 @@
     "cancel": "Cancel",
     "default": "Default",
     "share": "Share",
-    "share_theme": "Share theme"
+    "share_theme": "Share theme",
+    "image_too_big": "That image is too big. Try sending it as a photo."
 }
