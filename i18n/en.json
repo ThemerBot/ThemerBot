@@ -12,5 +12,6 @@
     "default": "Default",
     "share": "Share",
     "share_theme": "Share theme",
-    "image_too_big": "That image is too big. Try sending it as a photo."
+    "image_too_big": "That image is too big. Try sending it as a photo.",
+    "invalid_reply": "You must reply to a message."
 }

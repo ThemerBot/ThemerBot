@@ -1,0 +1,56 @@
+module.exports = bot => {
+    bot.hears(/^#[\da-f]{6}$/i, async ctx => {
+        const { reply_to_message: reply } = ctx.message;
+
+        if (!reply) {
+            return await ctx.reply(ctx.i18n(`invalid_reply`));
+        }
+
+        const { message_id: themeId } = reply;
+        const theme = ctx.getTheme(themeId);
+
+        if (!theme) {
+            return await ctx.reply(ctx.i18n(`no_theme_found`));
+        }
+
+        const [color] = ctx.match;
+
+        if (theme.using[0] === color) {
+            return ctx.reply(ctx.i18n(`cant_reuse_bg`));
+        }
+
+        theme.using.push(color);
+        ctx.saveTheme(themeId, theme);
+
+        const keyboard = ctx.keyboard(true);
+        const { length } = theme.using;
+
+        const captionArgs = [
+            ctx.chat.id,
+            themeId,
+            null,
+        ];
+
+        if (length < 3) {
+            await ctx.telegram.editMessageCaption(
+                ...captionArgs,
+                ctx.i18n(`choose_color_${length + 1}`, {
+                    colors: theme.using.join(`, `),
+                }),
+                { reply_markup: keyboard }
+            );
+        } else {
+            await ctx.telegram.editMessageCaption(
+                ...captionArgs,
+                ctx.i18n(`type_of_theme`),
+                ctx.typeKeyboard
+            );
+        }
+
+        try {
+            await ctx.deleteMessage();
+        } catch (_) {
+            // Ignore errors
+        }
+    });
+};

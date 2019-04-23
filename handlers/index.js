@@ -1,5 +1,6 @@
 const handlers = [
     `start`,
+    `custom-color`,
     `photos`,
     `documents`,
     `cbquery`,
