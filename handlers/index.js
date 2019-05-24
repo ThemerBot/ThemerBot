@@ -1,5 +1,5 @@
 const handlers = [
-    `start`,
+    `help`,
     `custom-color`,
     `photos`,
     `documents`,

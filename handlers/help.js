@@ -9,4 +9,14 @@ module.exports = bot => {
             typing.stop();
         }
     });
+
+    bot.command(`help`, async () => {
+        // TODO
+    });
+
+    bot.command(`credits`, async ctx => {
+        await ctx.reply(
+            `This bot is created and maintained by @twitface. I would like to thank the following users for helping with translations:\n\n@ericksonx for Spanish\n@KookieWithJam for Hindi\n@tgcoreuser for Italian`
+        );
+    });
 };
