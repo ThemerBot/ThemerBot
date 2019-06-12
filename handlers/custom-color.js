@@ -1,5 +1,5 @@
 module.exports = bot => {
-    bot.hears(/^#[\da-f]{6}$/i, async ctx => {
+    bot.hears(/^#(?:[\da-f]{2,3}){1,2}$/i, async ctx => {
         const { reply_to_message: reply } = ctx.message;
 
         if (!reply) {
