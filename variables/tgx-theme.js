@@ -1,7 +1,9 @@
 const isLight = require(`./isLight`);
 
+const ensureLength = hex => hex.length === 6 ? hex : hex.split(``).map(c => c.repeat(2)).join(``);
+
 module.exports = (name, colors) => {
-    colors = colors.map(color => color.slice(1));
+    colors = colors.map(color => ensureLength(color.slice(1)));
     const [bg, text, secondaryText] = colors;
     const isBgLight = isLight(bg);
 
