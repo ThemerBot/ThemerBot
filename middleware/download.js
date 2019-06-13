@@ -1,15 +1,13 @@
 const request = require(`request-promise`);
 
 module.exports = bot => {
-    const downloadUrl = `https://api.telegram.org/file/bot${bot.token}`;
-
     bot.context.downloadFile = async function () {
         const message = this.message.reply_to_message || this.message;
         const documentID = message.document.file_id;
-        const file = await bot.telegram.getFile(documentID);
+        const link = await bot.telegram.getFileLink(documentID);
 
         return await request({
-            uri: `${downloadUrl}/${file.file_path}`,
+            uri: link,
             encoding: null,
         });
     };
@@ -17,10 +15,10 @@ module.exports = bot => {
     bot.context.downloadPhoto = async function () {
         const photos = this.message.photo;
         const photo = photos.pop().file_id;
-        const file = await bot.telegram.getFile(photo);
+        const link = await bot.telegram.getFileLink(photo);
 
         return await request({
-            uri: `${downloadUrl}/${file.file_path}`,
+            uri: link,
             encoding: null,
         });
     };
