@@ -1,5 +1,5 @@
 module.exports = bot => {
-    bot.hears(/^#[\da-f]{6}$/i, async ctx => {
+    bot.hears(/^#(?:[\da-f]{3}){1,2}$/i, async ctx => {
         const { reply_to_message: reply } = ctx.message;
 
         if (!reply) {
@@ -13,7 +13,10 @@ module.exports = bot => {
             return await ctx.reply(ctx.i18n(`no_theme_found`));
         }
 
-        const [color] = ctx.match;
+        let [color] = ctx.match;
+        if (color.length === 4) {
+            color = `#` + color.slice(1).split(``).map(c => c.repeat(2)).join(``);
+        }
 
         if (theme.using[0] === color) {
             return ctx.reply(ctx.i18n(`cant_reuse_bg`));
