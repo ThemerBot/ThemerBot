@@ -13,7 +13,10 @@ module.exports = bot => {
             return await ctx.reply(ctx.i18n(`no_theme_found`));
         }
 
-        const [color] = ctx.match;
+        let [color] = ctx.match;
+        if (color.length === 4) {
+            color = `#` + color.slice(1).split(``).map(c => c.repeat(2)).join(``);
+        }
 
         if (theme.using[0] === color) {
             return ctx.reply(ctx.i18n(`cant_reuse_bg`));
