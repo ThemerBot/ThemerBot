@@ -29,6 +29,6 @@ module.exports = (name, colors) => {
         headerTabInactiveText: #${text}CC
         seekEmpty: #${secondaryText}96
         previewBackground: ${bg}C0
-        separator: #0000
+        separator: #00000023
     `;
 };
