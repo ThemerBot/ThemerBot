@@ -1,7 +1,7 @@
 module.exports = bot => {
     bot.on(`photo`, async ctx => {
         const { forward_from } = ctx.message;
-        if (forward_from && forward_from.username === process.env.USERNAME) return;
+        if (forward_from && forward_from.username === process.env.BOT_USERNAME) return;
 
         const typing = ctx.action(`upload_photo`);
 
