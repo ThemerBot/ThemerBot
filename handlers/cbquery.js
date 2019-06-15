@@ -21,7 +21,7 @@ module.exports = bot => {
 
         switch (data) {
             case `default`: { // Default button
-                await ctx.editMessageCaption(ctx.i18n(`type_of_theme`), ctx.typeKeyboard);
+                await ctx.editMessageCaption(ctx.i18n(`type_of_theme`), ctx.typeKeyboard());
 
                 const { colors } = theme;
 
@@ -108,7 +108,7 @@ module.exports = bot => {
                         { reply_markup: keyboard }
                     );
                 } else {
-                    await ctx.editMessageCaption(ctx.i18n(`type_of_theme`), ctx.typeKeyboard);
+                    await ctx.editMessageCaption(ctx.i18n(`type_of_theme`), ctx.typeKeyboard());
                 }
             }
         }

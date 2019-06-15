@@ -15,15 +15,16 @@ module.exports = bot => {
         return { inline_keyboard: keys };
     };
 
-    bot.context.typeKeyboard = {
-        reply_markup: {
-            inline_keyboard: [
-                [
-                    button(`attheme`, `attheme`),
-                    button(`tgx-theme`, `tgx-theme`),
+    bot.context.typeKeyboard = function() {
+        return {
+            reply_markup: {
+                inline_keyboard: [
+                    [`attheme`, `tgx-theme`].map(type => {
+                        return button(`${this.i18n(type)} (.${type})`, type);
+                    }),
                 ],
-            ],
-        },
+            },
+        };
     };
 
     bot.context.createButton = button;
