@@ -100,7 +100,7 @@ module.exports = bot => {
                 const keyboard = ctx.keyboard(true);
                 const { length } = theme.using;
 
-                if (length < 3) {
+                if (length < 4) {
                     await ctx.editMessageCaption(
                         ctx.i18n(`choose_color_${length + 1}`, {
                             colors: theme.using.join(`, `),
