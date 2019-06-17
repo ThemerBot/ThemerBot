@@ -34,7 +34,7 @@ module.exports = bot => {
             null,
         ];
 
-        if (length < 4) {
+        if (length < 3) {
             await ctx.telegram.editMessageCaption(
                 ...captionArgs,
                 ctx.i18n(`choose_color_${length + 1}`, {
