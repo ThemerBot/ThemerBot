@@ -19,6 +19,26 @@ const mixBrightness = (a, b, ratio) => adjustBrightness(a, b ? ratio : -ratio);
 
 const getFgColor = bg => isLight(bg) ? adjustBrightness(bg, -45) : `#ffffff`;
 
+const themeData = colors => {
+    const [filling, text, secondaryText, primary] = colors,
+        isLightTheme = isLight(filling),
+        textOnPrimary = getFgColor(primary),
+        background = adjustBrightness(filling, -6.5),
+        backgroundText = mixBrightness(text, isLightTheme, 8);
+
+    return {
+        background,
+        filling,
+        text,
+        backgroundText,
+        secondaryText,
+        primary,
+        textOnPrimary,
+        isLightTheme,
+        author: process.env.BOT_USERNAME,
+    };
+};
+
 module.exports = {
-    isLight, adjustBrightness, mixBrightness, getFgColor,
+    isLight, adjustBrightness, mixBrightness, getFgColor, themeData,
 };

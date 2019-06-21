@@ -1,16 +1,22 @@
-const Color = require(`color`);
-const { isLight, adjustBrightness: adjust, mixBrightness: mix, getFgColor } = require(`./helpers`);
+const { isLight, adjustBrightness, mixBrightness, themeData } = require(`./helpers`);
 
 module.exports = (name, colors) => {
-    const [filling, text, secondaryText, primary] = colors,
-        isLightTheme = Color(filling).isLight(),
-        textOnPrimary = getFgColor(primary),
-        background = adjust(filling, -6.5);
+    const {
+        author,
+        background,
+        filling,
+        isLightTheme,
+        primary,
+        secondaryText,
+        text,
+        textOnPrimary,
+        backgroundText,
+    } = themeData(colors);
 
     return `
         !
         name: "${name}"
-        author: "${process.env.BOT_USERNAME}"
+        author: "${author}"
         @
         shadowDepth: ${isLightTheme ? .65 : 1}
         wallpaperId: 0
@@ -20,7 +26,7 @@ module.exports = (name, colors) => {
         wallpaperUsageId: 2
         #
         background: ${background}
-        background_text, background_textLight, background_icon: ${mix(text, isLightTheme, 8)}
+        background_text, background_textLight, background_icon: ${backgroundText}
 
         headerLightBackground: ${filling}
         headerLightIcon, headerLightText: ${text}
@@ -30,23 +36,23 @@ module.exports = (name, colors) => {
         headerTabActiveText, headerTabActive, headerText, headerIcon, messageSwipeContent, passcodeIcon, passcodeText, fillingPositiveContent, attachText: ${textOnPrimary}
 
         circleButtonRegular, circleButtonTheme: ${primary}
-        circleButtonNewSecret, fileGreen: ${adjust(primary, 3)}
-        circleButtonNewChannel, fileYellow: ${adjust(primary, 7)}
-        circleButtonNewGroup: ${adjust(primary, 12)}
-        circleButtonNewChat, fileRed: ${adjust(primary, 17)}
+        circleButtonNewSecret, fileGreen: ${adjustBrightness(primary, 3)}
+        circleButtonNewChannel, fileYellow: ${adjustBrightness(primary, 7)}
+        circleButtonNewGroup: ${adjustBrightness(primary, 12)}
+        circleButtonNewChat, fileRed: ${adjustBrightness(primary, 17)}
         circleButtonChat, circleButtonOverlay: ${filling}
         circleButtonChatIcon, circleButtonOverlayIcon, bubbleIn_time, bubbleOut_time, bubbleOut_progress: ${secondaryText}
 
         controlInactive, headerRemoveBackgroundHighlight, introSectionActive, playerButton, text: ${text}
 
-        avatarCyan, nameCyan, attachContact: ${mix(primary, isLightTheme, 17)}
-        avatarBlue, nameBlue: ${mix(primary, isLightTheme, 15)}
-        avatarGreen, nameGreen, attachFile: ${mix(primary, isLightTheme, 10)}
-        avatarViolet, nameViolet: ${mix(primary, isLightTheme, 5)}
-        avatarRed, nameRed, attachPhoto: ${mix(primary, isLightTheme, -5)}
-        avatarPink, namePink, attachLocation: ${mix(primary, isLightTheme, -10)}
-        avatarYellow, nameYellow, attachInlineBot: ${mix(primary, isLightTheme, -15)}
-        avatarOrange, nameOrange: ${mix(primary, isLightTheme, -17)}
+        avatarCyan, nameCyan, attachContact: ${mixBrightness(primary, isLightTheme, 17)}
+        avatarBlue, nameBlue: ${mixBrightness(primary, isLightTheme, 15)}
+        avatarGreen, nameGreen, attachFile: ${mixBrightness(primary, isLightTheme, 10)}
+        avatarViolet, nameViolet: ${mixBrightness(primary, isLightTheme, 5)}
+        avatarRed, nameRed, attachPhoto: ${mixBrightness(primary, isLightTheme, -5)}
+        avatarPink, namePink, attachLocation: ${mixBrightness(primary, isLightTheme, -10)}
+        avatarYellow, nameYellow, attachInlineBot: ${mixBrightness(primary, isLightTheme, -15)}
+        avatarOrange, nameOrange: ${mixBrightness(primary, isLightTheme, -17)}
         avatarSavedMessages: ${primary}
 
         bubbleIn_background, bubbleOut_background, chatBackground, chatKeyboard, checkContent, controlContent, filling, headerButton, inlineContentActive, overlayFilling, placeholder, promoContent: ${filling}
@@ -68,8 +74,8 @@ module.exports = (name, colors) => {
         unread, bubble_unread: ${primary}18
         textPlaceholder: ${text}66
         previewBackground: ${filling}C0
-        togglerInactive: ${mix(secondaryText, isLightTheme, 10)}
-        togglerInactiveBackground: ${mix(secondaryText, isLightTheme, 10)}64
+        togglerInactive: ${mixBrightness(secondaryText, isLightTheme, 10)}
+        togglerInactiveBackground: ${mixBrightness(secondaryText, isLightTheme, 10)}64
         badgeText: ${textOnPrimary}
         badgeMuted: ${text}65
         badgeMutedText: ${filling}
