@@ -1,16 +1,15 @@
 const Color = require(`color`);
 
-const isLight = c => {
-    return Color(c, `hex`).lightness() > 60;
-};
+const isLight = c => Color(c).lightness() > 60;
 
 /**
  * Changes to brightness of a color.
  * @param {number} ratio A number between -100 and 100 (if it is negative, `color` will be darkened)
+ * @returns {string} A color with lightness of `color.lightness() + ratio`
  */
 const adjustBrightness = (color, ratio) => {
     const object = Color(color);
-    return object.lighten(ratio / 100).hex();
+    return object.lightness(object.lightness() + ratio).hex();
 };
 
 /**
