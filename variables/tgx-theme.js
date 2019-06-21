@@ -20,7 +20,7 @@ module.exports = (name, colors) => {
         wallpaperUsageId: 2
         #
         background: ${background}
-        background_text, background_textLight, background_icon: ${mix(text, isLightTheme, -5)}
+        background_text, background_textLight, background_icon: ${mix(text, isLightTheme, 8)}
 
         headerLightBackground: ${filling}
         headerLightIcon, headerLightText: ${text}
@@ -30,23 +30,23 @@ module.exports = (name, colors) => {
         headerTabActiveText, headerTabActive, headerText, headerIcon, messageSwipeContent, passcodeIcon, passcodeText, fillingPositiveContent, attachText: ${textOnPrimary}
 
         circleButtonRegular, circleButtonTheme: ${primary}
-        circleButtonNewSecret, fileGreen: ${adjust(primary, 10)}
-        circleButtonNewChannel, fileYellow: ${adjust(primary, 20)}
-        circleButtonNewGroup: ${adjust(primary, 30)}
-        circleButtonNewChat, fileRed: ${adjust(primary, 40)}
+        circleButtonNewSecret, fileGreen: ${adjust(primary, 3)}
+        circleButtonNewChannel, fileYellow: ${adjust(primary, 7)}
+        circleButtonNewGroup: ${adjust(primary, 12)}
+        circleButtonNewChat, fileRed: ${adjust(primary, 17)}
         circleButtonChat, circleButtonOverlay: ${filling}
         circleButtonChatIcon, circleButtonOverlayIcon, bubbleIn_time, bubbleOut_time, bubbleOut_progress: ${secondaryText}
 
         controlInactive, headerRemoveBackgroundHighlight, introSectionActive, playerButton, text: ${text}
 
-        avatarCyan, nameCyan, attachContact: ${mix(primary, isLightTheme, 20)}
+        avatarCyan, nameCyan, attachContact: ${mix(primary, isLightTheme, 17)}
         avatarBlue, nameBlue: ${mix(primary, isLightTheme, 15)}
         avatarGreen, nameGreen, attachFile: ${mix(primary, isLightTheme, 10)}
         avatarViolet, nameViolet: ${mix(primary, isLightTheme, 5)}
         avatarRed, nameRed, attachPhoto: ${mix(primary, isLightTheme, -5)}
         avatarPink, namePink, attachLocation: ${mix(primary, isLightTheme, -10)}
         avatarYellow, nameYellow, attachInlineBot: ${mix(primary, isLightTheme, -15)}
-        avatarOrange, nameOrange: ${mix(primary, isLightTheme, -20)}
+        avatarOrange, nameOrange: ${mix(primary, isLightTheme, -17)}
         avatarSavedMessages: ${primary}
 
         bubbleIn_background, bubbleOut_background, chatBackground, chatKeyboard, checkContent, controlContent, filling, headerButton, inlineContentActive, overlayFilling, placeholder, promoContent: ${filling}
