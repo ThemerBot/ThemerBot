@@ -13,5 +13,6 @@
     "share": "Share",
     "share_theme": "Share theme",
     "image_too_big": "That image is too big. Try sending it as a photo.",
-    "invalid_reply": "You must reply to a message."
+    "invalid_reply": "You must reply to a message.",
+    "dont_click": "Don't click so fast 💨"
 }
