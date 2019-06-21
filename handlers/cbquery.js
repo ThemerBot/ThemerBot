@@ -1,3 +1,5 @@
+const messageNotModified = `Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message`;
+
 module.exports = bot => {
     bot.on(`callback_query`, async ctx => {
         const { data } = ctx.callbackQuery;
@@ -108,7 +110,13 @@ module.exports = bot => {
                         { reply_markup: keyboard }
                     );
                 } else {
-                    await ctx.editMessageCaption(ctx.i18n(`type_of_theme`), ctx.typeKeyboard());
+                    try {
+                        await ctx.editMessageCaption(ctx.i18n(`type_of_theme`), ctx.typeKeyboard());
+                    } catch (e) {
+                        if (e.description === messageNotModified) {
+                            return await ctx.answerCbQuery(ctx.i18n(`dont_click`), true);
+                        }
+                    }
                 }
             }
         }

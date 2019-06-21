@@ -16,5 +16,6 @@
     "image_too_big": "That image is too big. Try sending it as a photo.",
     "invalid_reply": "You must reply to a message.",
     "tgx-theme": "Telegram X",
-    "attheme": "Telegram"
+    "attheme": "Telegram",
+    "dont_click": "Don't click so fast 💨"
 }
