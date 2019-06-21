@@ -22,7 +22,7 @@
     "color": "^3.1.2",
     "dotenv": "^7.0.0",
     "get-image-colors": "^2.0.0",
-    "new-i18n": "^1.1.1",
+    "new-i18n": "^1.2.0",
     "promise-fs": "^2.1.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",

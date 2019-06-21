@@ -5,6 +5,7 @@
     "choose_color_1": "What color would you like for the backgrounds?",
     "choose_color_2": "What color would you like for the main text?\nCurrent colors: {{colors}}",
     "choose_color_3": "What color would you like for the secondary text?\nCurrent colors: {{colors}}",
+    "choose_color_4": "What color would you like as the primary color?\nCurrent colors: {{colors}}",
     "cant_reuse_bg": "I cannot allow you to re-use the background color 🚫",
     "type_of_theme": "What type of theme do you want?",
     "error": "There was an error. Please try with a different picture.",
@@ -15,5 +16,6 @@
     "image_too_big": "That image is too big. Try sending it as a photo.",
     "invalid_reply": "You must reply to a message.",
     "tgx-theme": "Telegram X",
-    "attheme": "Telegram"
+    "attheme": "Telegram",
+    "dont_click": "Don't click so fast 💨"
 }

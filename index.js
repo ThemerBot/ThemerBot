@@ -9,12 +9,12 @@ const {
     API_ROOT,
 } = process.env;
 
-const Telegraf = require(`telegraf/telegraf`);
+const Telegraf = require(`telegraf`);
 const bot = new Telegraf(TOKEN, {
     username: BOT_USERNAME,
     telegram: {
         ...API_ROOT && {
-            apiRoot: `http://tgp.sh-sh.ir/`,
+            apiRoot: API_ROOT,
         },
     },
 });
