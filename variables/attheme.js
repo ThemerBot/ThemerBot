@@ -101,7 +101,7 @@ module.exports = colors => {
         chat_attachLocationBackground=#ff${colors[2]}
         chat_attachLocationIcon=#ff${colors[0]}
         chat_attachMediaBanBackground=#ff${colors[2]}
-        chat_attachMediaBantext=#ff${colors[0]}
+        chat_attachMediaBanText=#ff${colors[0]}
         chat_attachSendBackground=#ff${colors[2]}
         chat_attachSendIcon=#ff${colors[0]}
         chat_attachVideoBackground=#ff${colors[2]}
