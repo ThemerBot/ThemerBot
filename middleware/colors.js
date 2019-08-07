@@ -16,6 +16,7 @@ module.exports = bot => {
         const svgFile = await fs.readFile(svgPath, `utf8`);
         const svg = new DOMParser().parseFromString(svgFile);
 
+        // Get rect
         let rects = svg.getElementsByTagName(`rect`);
         rects = Array.prototype.slice.call(rects, 0, 5);
         rects.forEach((rect, index) => rect.setAttribute(`fill`, colors[index]));
