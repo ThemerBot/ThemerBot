@@ -23,7 +23,7 @@ module.exports = bot => {
 
         switch (data) {
             case `default`: { // Default button
-                await ctx.editMessageCaption(ctx.i18n(`type_of_theme`), ctx.typeKeyboard);
+                await ctx.editMessageCaption(ctx.i18n(`type_of_theme`), ctx.typeKeyboard());
 
                 const { colors } = theme;
 
@@ -102,7 +102,7 @@ module.exports = bot => {
                 const keyboard = ctx.keyboard(true);
                 const { length } = theme.using;
 
-                if (length < 3) {
+                if (length < 4) {
                     await ctx.editMessageCaption(
                         ctx.i18n(`choose_color_${length + 1}`, {
                             colors: theme.using.join(`, `),
@@ -111,7 +111,7 @@ module.exports = bot => {
                     );
                 } else {
                     try {
-                        await ctx.editMessageCaption(ctx.i18n(`type_of_theme`), ctx.typeKeyboard);
+                        await ctx.editMessageCaption(ctx.i18n(`type_of_theme`), ctx.typeKeyboard());
                     } catch (e) {
                         if (e.description === messageNotModified) {
                             return await ctx.answerCbQuery(ctx.i18n(`dont_click`), true);

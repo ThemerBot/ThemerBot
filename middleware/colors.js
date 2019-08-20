@@ -5,6 +5,7 @@ const { serializeToString: serialize } = new XMLSerializer();
 const sharp = require(`sharp`);
 const getColors = require(`get-image-colors`);
 const svgPath = path.join(__dirname, `../colors.svg`);
+const { getFgColor } = require(`../variables/helpers`);
 
 module.exports = bot => {
     bot.context.getImageColors = async (buffer, type) => {
@@ -16,10 +17,13 @@ module.exports = bot => {
         const svgFile = await fs.readFile(svgPath, `utf8`);
         const svg = new DOMParser().parseFromString(svgFile);
 
-        // Get rect
-        let rects = svg.getElementsByTagName(`rect`);
-        rects = Array.prototype.slice.call(rects, 0, 5);
-        rects.forEach((rect, index) => rect.setAttribute(`fill`, colors[index]));
+        const rects = svg.getElementsByTagName(`rect`);
+        const texts = svg.getElementsByTagName(`text`);
+        for (let i = 0; i < 5; i++) {
+            const color = colors[i];
+            rects[i].setAttribute(`fill`, color);
+            texts[i].setAttribute(`fill`, getFgColor(color));
+        }
 
         const defaultColors = svg.getElementsByTagName(`path`);
         defaultColors[0].setAttribute(`fill`, colors[4]);

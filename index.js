@@ -4,13 +4,19 @@ if (!process.env.TOKEN) {
 
 const {
     TOKEN,
-    USERNAME = ``,
+    BOT_USERNAME = ``,
     LOG_CHANNEL,
+    API_ROOT,
 } = process.env;
 
 const Telegraf = require(`telegraf`);
 const bot = new Telegraf(TOKEN, {
-    username: USERNAME,
+    username: BOT_USERNAME,
+    telegram: {
+        ...API_ROOT && {
+            apiRoot: API_ROOT,
+        },
+    },
 });
 
 require(`./middleware`)(bot);
@@ -19,8 +25,8 @@ require(`./handlers`)(bot);
 bot.startPolling();
 
 if (LOG_CHANNEL) {
-    bot.telegram.sendMessage(LOG_CHANNEL, `@${USERNAME} is running...`);
+    bot.telegram.sendMessage(LOG_CHANNEL, `@${BOT_USERNAME} is running...`);
 } else {
     // eslint-disable-next-line no-console
-    console.log(`@${USERNAME} is running...`);
+    console.log(`@${BOT_USERNAME} is running...`);
 }
