@@ -2,38 +2,48 @@ const { isLight, adjustBrightness, mixBrightness, themeData } = require(`./helpe
 
 module.exports = (name, colors) => {
     const {
-        author,
-        background,
-        filling,
-        isLightTheme,
-        primary,
-        secondaryText,
-        text,
-        textOnPrimary,
-        backgroundText,
-    } = themeData(colors);
+            author,
+            background,
+            filling,
+            themeIsLight,
+            primary,
+            secondaryText,
+            text,
+            textOnPrimary,
+            backgroundText,
+        } = themeData(colors),
+        headerBackground = themeIsLight ? primary : adjustBrightness(filling, -2),
+        headerText = themeIsLight ? textOnPrimary : text,
+        headerTabColor = themeIsLight ? textOnPrimary : primary;
 
     return `
         !
         name: "${name}"
         author: "${author}"
         @
-        shadowDepth: ${isLightTheme ? .65 : 1}
+        shadowDepth: ${themeIsLight ? .65 : 1}
         wallpaperId: 0
         lightStatusBar: ${isLight(primary) ? 1 : 0}
-        dark: ${isLightTheme ? 0 : 1}
-        parentTheme: ${isLightTheme ? 11 : 10}
+        dark: ${themeIsLight ? 0 : 1}
+        parentTheme: ${themeIsLight ? 11 : 10}
         wallpaperUsageId: 2
         #
         background: ${background}
+        chatBackground: ${themeIsLight ? filling : background}
         background_text, background_textLight, background_icon: ${backgroundText}
 
-        headerLightBackground: ${filling}
-        headerLightIcon, headerLightText: ${text}
+        headerBackground: ${headerBackground}
+        headerLightBackground: ${themeIsLight ? filling : headerBackground}
+        headerText, headerIcon: ${headerText}
+        headerLightIcon, headerLightText: ${themeIsLight ? text : headerText}
+        headerTabActiveText, headerTabActive: ${headerTabColor}
+        headerButton: ${themeIsLight ? filling : primary}
+        headerButtonIcon: ${themeIsLight ? secondaryText : textOnPrimary}
 
-        headerBackground, iconActive, progress, controlActive, checkActive, sliderActive, togglerActive, inputActive, inlineIcon, inlineOutline, bubbleOut_inlineOutline, inlineText, bubbleOut_inlineText, bubbleOut_inlineIcon, ticks, ticksRead, bubbleOut_ticks, bubbleOut_ticksRead, bubbleOut_file, file, bubbleOut_waveformActive, waveformActive, bubbleIn_textLink, bubbleOut_textLink, textLink, chatSendButton, textSearchQueryHighlight, profileSectionActive, profileSectionActiveContent, badge, bubbleOut_chatVerticalLine, messageVerticalLine, bubbleOut_messageAuthor, messageAuthor, messageSwipeBackground, unreadText, bubble_unreadText, bubble_unreadText_noWallpaper, textNeutral, seekDone, promo, online, playerButtonActive, chatListVerify, fillingPositive, passcode, notification, notificationSecure, notificationPlayer, headerBarCallActive, fileAttach: ${primary}
+        iconActive, progress, controlActive, checkActive, sliderActive, togglerActive, inputActive, inlineIcon, inlineOutline, bubbleOut_inlineOutline, inlineText, bubbleOut_inlineText, bubbleOut_inlineIcon, ticks, ticksRead, bubbleOut_ticks, bubbleOut_ticksRead, bubbleOut_file, file, bubbleOut_waveformActive, waveformActive, bubbleIn_textLink, bubbleOut_textLink, textLink, chatSendButton, textSearchQueryHighlight, profileSectionActive, profileSectionActiveContent, badge, bubbleOut_chatVerticalLine, messageVerticalLine, bubbleOut_messageAuthor, messageAuthor, messageSwipeBackground, unreadText, bubble_unreadText, bubble_unreadText_noWallpaper, textNeutral, seekDone, promo, online, playerButtonActive, chatListVerify, fillingPositive, passcode, notification, notificationSecure, notificationPlayer, headerBarCallActive, fileAttach: ${primary}
 
-        headerTabActiveText, headerTabActive, headerText, headerIcon, messageSwipeContent, passcodeIcon, passcodeText, fillingPositiveContent, attachText, chatListAction: ${textOnPrimary}
+        messageSwipeContent, passcodeIcon, passcodeText, fillingPositiveContent, attachText, chatListAction: ${textOnPrimary}
+
 
         circleButtonRegular, circleButtonTheme: ${primary}
         circleButtonNewSecret, fileGreen: ${adjustBrightness(primary, 3)}
@@ -41,27 +51,27 @@ module.exports = (name, colors) => {
         circleButtonNewGroup: ${adjustBrightness(primary, 12)}
         circleButtonNewChat, fileRed: ${adjustBrightness(primary, 6.3)}
         circleButtonChat, circleButtonOverlay: ${filling}
-        circleButtonChatIcon, circleButtonOverlayIcon, bubbleIn_time, bubbleOut_time, bubbleOut_progress: ${secondaryText}
+        circleButtonChatIcon, circleButtonOverlayIcon, bubbleIn_time, bubbleOut_time, bubbleOut_progress, textPlaceholder: ${secondaryText}
 
         controlInactive, headerRemoveBackgroundHighlight, introSectionActive, playerButton, text: ${text}
 
-        avatarCyan, nameCyan, attachContact: ${mixBrightness(primary, isLightTheme, 17)}
-        avatarBlue, nameBlue: ${mixBrightness(primary, isLightTheme, 15)}
-        avatarGreen, nameGreen, attachFile: ${mixBrightness(primary, isLightTheme, 10)}
-        avatarViolet, nameViolet: ${mixBrightness(primary, isLightTheme, 5)}
-        avatarRed, nameRed, attachPhoto: ${mixBrightness(primary, isLightTheme, -5)}
-        avatarPink, namePink, attachLocation: ${mixBrightness(primary, isLightTheme, -10)}
-        avatarYellow, nameYellow, attachInlineBot: ${mixBrightness(primary, isLightTheme, -15)}
-        avatarOrange, nameOrange: ${mixBrightness(primary, isLightTheme, -17)}
+        avatarCyan, nameCyan, attachContact: ${mixBrightness(primary, themeIsLight, 17)}
+        avatarBlue, nameBlue: ${mixBrightness(primary, themeIsLight, 15)}
+        avatarGreen, nameGreen, attachFile: ${mixBrightness(primary, themeIsLight, 10)}
+        avatarViolet, nameViolet: ${mixBrightness(primary, themeIsLight, 5)}
+        avatarRed, nameRed, attachPhoto: ${mixBrightness(primary, themeIsLight, -5)}
+        avatarPink, namePink, attachLocation: ${mixBrightness(primary, themeIsLight, -10)}
+        avatarYellow, nameYellow, attachInlineBot: ${mixBrightness(primary, themeIsLight, -15)}
+        avatarOrange, nameOrange: ${mixBrightness(primary, themeIsLight, -17)}
         avatarSavedMessages: ${primary}
 
-        bubbleIn_background, chatBackground, chatKeyboard, checkContent, controlContent, filling, headerButton, inlineContentActive, overlayFilling, placeholder, promoContent: ${filling}
+        bubbleIn_background, chatKeyboard, checkContent, controlContent, filling, inlineContentActive, overlayFilling, placeholder, promoContent: ${filling}
 
-        chatKeyboardButton, inputInactive, introSection, sliderInactive, textLight, chatListMute, icon, iconLight, headerButtonIcon, playerCoverIcon: ${secondaryText}
+        chatKeyboardButton, inputInactive, introSection, sliderInactive, textLight, chatListMute, icon, iconLight, playerCoverIcon: ${secondaryText}
 
         bubbleIn_textLinkPressHighlight, textSelectionHighlight, bubbleOut_textLinkPressHighlight, textLinkPressHighlight: ${primary}31
 
-        bubbleOut_background: ${adjustBrightness(isLightTheme ? primary : filling, isLightTheme ? 41 : -3)}
+        bubbleOut_background: ${adjustBrightness(themeIsLight ? primary : filling, themeIsLight ? 41 : -3)}
         fillingPressed: ${secondaryText}31
         messageSelection, bubble_messageSelectionNoWallpaper: ${primary}24
         bubble_messageSelection: ${primary}48
@@ -73,10 +83,9 @@ module.exports = (name, colors) => {
         headerTabInactiveText: ${textOnPrimary}97
         togglerActiveBackground: ${primary}97
         unread, bubble_unread, bubble_unread_noWallpaper: ${primary}18
-        textPlaceholder: ${text}66
         previewBackground: ${filling}C0
-        togglerInactive: ${mixBrightness(secondaryText, isLightTheme, 10)}
-        togglerInactiveBackground: ${mixBrightness(secondaryText, isLightTheme, 10)}64
+        togglerInactive: ${mixBrightness(secondaryText, themeIsLight, 10)}
+        togglerInactiveBackground: ${mixBrightness(secondaryText, themeIsLight, 10)}64
         badgeText: ${textOnPrimary}
         badgeMuted: ${text}65
         badgeMutedText: ${filling}
