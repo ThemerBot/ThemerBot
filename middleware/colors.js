@@ -17,6 +17,7 @@ module.exports = bot => {
         const svgFile = await fs.readFile(svgPath, `utf8`);
         const svg = new DOMParser().parseFromString(svgFile);
 
+        // Get rect
         const rects = svg.getElementsByTagName(`rect`);
         const texts = svg.getElementsByTagName(`text`);
         for (let i = 0; i < 5; i++) {
