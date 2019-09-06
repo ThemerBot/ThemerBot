@@ -13,18 +13,21 @@ const adjustBrightness = (color, ratio) => {
 };
 
 /**
- * Changes the brightness of `a` according to `b` using `adjustBrightness()`. if `b` is false, `ratio` will be negated.
+ * Darkens or brightens a color, depending to a given boolean value, using `adjustBrigtness()`.
+ * @param color target color
+ * @param {boolean} light if false, `ratio` is negated and resulting color is darker.
+ * @param {number} ratio
  */
-const mixBrightness = (a, b, ratio) => adjustBrightness(a, b ? ratio : -ratio);
+const mixBrightness = (color, light, ratio) => adjustBrightness(color, light ? ratio : -ratio);
 
 const getFgColor = bg => isLight(bg) ? adjustBrightness(bg, -45) : `#ffffff`;
 
 const themeData = colors => {
     const [filling, text, secondaryText, primary] = colors,
-        isLightTheme = isLight(filling),
+        themeIsLight = isLight(filling),
         textOnPrimary = getFgColor(primary),
         background = adjustBrightness(filling, -6.5),
-        backgroundText = mixBrightness(text, isLightTheme, 8);
+        backgroundText = mixBrightness(secondaryText, themeIsLight, 5);
 
     return {
         background,
@@ -34,7 +37,7 @@ const themeData = colors => {
         secondaryText,
         primary,
         textOnPrimary,
-        isLightTheme,
+        themeIsLight,
         author: process.env.BOT_USERNAME,
     };
 };
