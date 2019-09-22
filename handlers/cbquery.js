@@ -31,6 +31,7 @@ module.exports = bot => {
                     colors[0],
                     colors[4],
                     colors[3],
+                    colors[1],
                 ];
 
                 ctx.saveTheme(themeId, theme);
