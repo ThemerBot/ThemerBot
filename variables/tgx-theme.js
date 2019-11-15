@@ -59,9 +59,9 @@ module.exports = (name, colors) => {
         circleButtonNewGroup: ${adjustBrightness(primary, 12)}
         circleButtonNewChat, fileRed: ${adjustBrightness(primary, 6.3)}
         circleButtonChat, circleButtonOverlay: ${filling}
-        circleButtonChatIcon, circleButtonOverlayIcon, bubbleIn_time, bubbleOut_time, bubbleOut_progress, textPlaceholder: ${secondaryText}
+        circleButtonChatIcon, circleButtonOverlayIcon, bubbleIn_time, bubbleOut_time, bubbleOut_progress, textPlaceholder, controlInactive: ${secondaryText}
 
-        controlInactive, headerRemoveBackgroundHighlight, introSectionActive, playerButton, text: ${text}
+        headerRemoveBackgroundHighlight, introSectionActive, playerButton, text: ${text}
 
         avatarCyan, nameCyan, attachContact: ${mixBrightness(
             primary,
