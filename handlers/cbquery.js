@@ -56,6 +56,7 @@ module.exports = bot => {
                 break;
             }
 
+            case `tgios-theme`:
             case `tgx-theme`:
             case `attheme`: {
                 const typing = ctx.action(`upload_photo`);

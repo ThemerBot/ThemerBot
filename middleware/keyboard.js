@@ -18,11 +18,11 @@ module.exports = bot => {
     bot.context.typeKeyboard = function() {
         return {
             reply_markup: {
-                inline_keyboard: [
-                    [`attheme`, `tgx-theme`].map(type => {
-                        return button(`${this.i18n(type)} (.${type})`, type);
-                    }),
-                ],
+                inline_keyboard: [`attheme`, `tgx-theme`, `tgios-theme`].map(
+                    type => {
+                        return [button(`${this.i18n(type)} (.${type})`, type)];
+                    }
+                ),
             },
         };
     };

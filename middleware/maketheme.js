@@ -2,6 +2,7 @@ const Attheme = require(`attheme-js`).default;
 
 const atthemeVariables = require(`../variables/attheme`);
 const tgxVariables = require(`../variables/tgx-theme`);
+const tgiosVariables = require(`../variables/tgios-theme`);
 
 const random = max => Math.floor(Math.random() * max);
 
@@ -36,6 +37,16 @@ module.exports = bot => {
                     .map(line => line.trim())
                     .slice(1)
                     .join(`\n`);
+            }
+
+            case `tgios-theme`: {
+                const theme = tgiosVariables(name, colors);
+
+                return theme
+                    .split(`\n`)
+                    .map(line => line.slice(8))
+                    .join(`\n`)
+                    .trim();
             }
 
             default:
