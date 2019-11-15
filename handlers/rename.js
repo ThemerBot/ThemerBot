@@ -8,7 +8,8 @@ module.exports = bot => {
             const { from, document } = reply;
 
             const isFromBot = from.username === process.env.BOT_USERNAME;
-            const isThemeFile = document && isThemeFileRegex.test(document.file_name);
+            const isThemeFile =
+                document && isThemeFileRegex.test(document.file_name);
 
             if (isFromBot && isThemeFile) {
                 const file = await ctx.downloadFile();

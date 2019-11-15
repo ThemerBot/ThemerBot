@@ -3,7 +3,7 @@ const store = new Map();
 const getKey = ctx => `${ctx.chat.id}:${ctx.from.id}`;
 
 module.exports = bot => {
-    bot.context.saveTheme = function (messageId, theme) {
+    bot.context.saveTheme = function(messageId, theme) {
         const key = getKey(this);
         const usersThemes = store.get(key) || {};
 
@@ -16,7 +16,7 @@ module.exports = bot => {
         store.set(key, usersThemes);
     };
 
-    bot.context.getTheme = function (messageId) {
+    bot.context.getTheme = function(messageId) {
         const key = getKey(this);
         const usersThemes = store.get(key) || {};
         const theme = usersThemes[messageId];

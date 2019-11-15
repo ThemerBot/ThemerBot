@@ -22,24 +22,24 @@ module.exports = bot => {
         }
 
         switch (data) {
-            case `default`: { // Default button
-                await ctx.editMessageCaption(ctx.i18n(`type_of_theme`), ctx.typeKeyboard());
+            // Default button
+            case `default`: {
+                await ctx.editMessageCaption(
+                    ctx.i18n(`type_of_theme`),
+                    ctx.typeKeyboard()
+                );
 
                 const { colors } = theme;
 
-                theme.using = [
-                    colors[0],
-                    colors[4],
-                    colors[3],
-                    colors[1],
-                ];
+                theme.using = [colors[0], colors[4], colors[3], colors[1]];
 
                 ctx.saveTheme(themeId, theme);
 
                 break;
             }
 
-            case `-`: { // Backspace
+            // Backspace
+            case `-`: {
                 theme.using.pop();
                 ctx.saveTheme(themeId, theme);
 
@@ -71,7 +71,9 @@ module.exports = bot => {
                 });
 
                 const { message_id, document } = await ctx.editMessageMedia({
-                    caption: `Made by @CreateAtthemeBot\n#theme ${using.join(` `)}`,
+                    caption: `Made by @CreateAtthemeBot\n#theme ${using.join(
+                        ` `
+                    )}`,
                     type: `document`,
                     media: {
                         source: Buffer.from(completedTheme, `binary`),
@@ -91,7 +93,8 @@ module.exports = bot => {
                 break;
             }
 
-            default: { // All colors and type
+            // All colors and type
+            default: {
                 const color = theme.colors[data];
 
                 if (theme.using[0] === color) {
@@ -113,10 +116,16 @@ module.exports = bot => {
                     );
                 } else {
                     try {
-                        await ctx.editMessageCaption(ctx.i18n(`type_of_theme`), ctx.typeKeyboard());
+                        await ctx.editMessageCaption(
+                            ctx.i18n(`type_of_theme`),
+                            ctx.typeKeyboard()
+                        );
                     } catch (e) {
                         if (e.description === messageNotModified) {
-                            return await ctx.answerCbQuery(ctx.i18n(`dont_click`), true);
+                            return await ctx.answerCbQuery(
+                                ctx.i18n(`dont_click`),
+                                true
+                            );
                         }
                     }
                 }

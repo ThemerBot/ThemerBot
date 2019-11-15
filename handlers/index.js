@@ -10,6 +10,4 @@ const handlers = [
 ];
 
 module.exports = bot =>
-    handlers.forEach(handler =>
-        require(`./${handler}`)(bot)
-    );
+    handlers.forEach(handler => require(`./${handler}`)(bot));

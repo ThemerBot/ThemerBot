@@ -32,7 +32,9 @@ module.exports = bot => {
         defaultColors[2].setAttribute(`fill`, colors[0]);
 
         const svgBuffer = Buffer.from(serialize(svg), `binary`);
-        const image = await sharp(svgBuffer).png().toBuffer();
+        const image = await sharp(svgBuffer)
+            .png()
+            .toBuffer();
 
         return image;
     };

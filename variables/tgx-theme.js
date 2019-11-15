@@ -1,4 +1,9 @@
-const { isLight, adjustBrightness, mixBrightness, themeData } = require(`./helpers`);
+const {
+    isLight,
+    adjustBrightness,
+    mixBrightness,
+    themeData,
+} = require(`./helpers`);
 
 module.exports = (name, colors) => {
     const {
@@ -12,16 +17,19 @@ module.exports = (name, colors) => {
             textOnPrimary,
             backgroundText,
         } = themeData(colors),
-        headerBackground = themeIsLight ? primary : adjustBrightness(filling, -2),
+        headerBackground = themeIsLight
+            ? primary
+            : adjustBrightness(filling, -2),
         headerText = themeIsLight ? textOnPrimary : text,
         headerTabColor = themeIsLight ? textOnPrimary : primary;
 
+    /* eslint-disable indent */
     return `
         !
         name: "${name}"
         author: "${author}"
         @
-        shadowDepth: ${themeIsLight ? .65 : 1}
+        shadowDepth: ${themeIsLight ? 0.65 : 1}
         wallpaperId: 0
         lightStatusBar: ${isLight(primary) ? 1 : 0}
         dark: ${themeIsLight ? 0 : 1}
@@ -55,13 +63,33 @@ module.exports = (name, colors) => {
 
         controlInactive, headerRemoveBackgroundHighlight, introSectionActive, playerButton, text: ${text}
 
-        avatarCyan, nameCyan, attachContact: ${mixBrightness(primary, themeIsLight, 17)}
+        avatarCyan, nameCyan, attachContact: ${mixBrightness(
+            primary,
+            themeIsLight,
+            17
+        )}
         avatarBlue, nameBlue: ${mixBrightness(primary, themeIsLight, 15)}
-        avatarGreen, nameGreen, attachFile: ${mixBrightness(primary, themeIsLight, 10)}
+        avatarGreen, nameGreen, attachFile: ${mixBrightness(
+            primary,
+            themeIsLight,
+            10
+        )}
         avatarViolet, nameViolet: ${mixBrightness(primary, themeIsLight, 5)}
-        avatarRed, nameRed, attachPhoto: ${mixBrightness(primary, themeIsLight, -5)}
-        avatarPink, namePink, attachLocation: ${mixBrightness(primary, themeIsLight, -10)}
-        avatarYellow, nameYellow, attachInlineBot: ${mixBrightness(primary, themeIsLight, -15)}
+        avatarRed, nameRed, attachPhoto: ${mixBrightness(
+            primary,
+            themeIsLight,
+            -5
+        )}
+        avatarPink, namePink, attachLocation: ${mixBrightness(
+            primary,
+            themeIsLight,
+            -10
+        )}
+        avatarYellow, nameYellow, attachInlineBot: ${mixBrightness(
+            primary,
+            themeIsLight,
+            -15
+        )}
         avatarOrange, nameOrange: ${mixBrightness(primary, themeIsLight, -17)}
         avatarSavedMessages: ${primary}
 
@@ -71,7 +99,10 @@ module.exports = (name, colors) => {
 
         bubbleIn_textLinkPressHighlight, textSelectionHighlight, bubbleOut_textLinkPressHighlight, textLinkPressHighlight: ${primary}31
 
-        bubbleOut_background: ${adjustBrightness(themeIsLight ? primary : filling, themeIsLight ? 41 : -3)}
+        bubbleOut_background: ${adjustBrightness(
+            themeIsLight ? primary : filling,
+            themeIsLight ? 41 : -3
+        )}
         fillingPressed: ${secondaryText}31
         messageSelection, bubble_messageSelectionNoWallpaper: ${primary}24
         bubble_messageSelection: ${primary}48
@@ -85,10 +116,15 @@ module.exports = (name, colors) => {
         unread, bubble_unread, bubble_unread_noWallpaper: ${primary}18
         previewBackground: ${filling}C0
         togglerInactive: ${mixBrightness(secondaryText, themeIsLight, 10)}
-        togglerInactiveBackground: ${mixBrightness(secondaryText, themeIsLight, 10)}64
+        togglerInactiveBackground: ${mixBrightness(
+            secondaryText,
+            themeIsLight,
+            10
+        )}64
         badgeText: ${textOnPrimary}
         badgeMuted: ${text}65
         badgeMutedText: ${filling}
         separator: #00000023
-        `;
+    `;
+    /* eslint-enable indent */
 };

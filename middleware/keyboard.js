@@ -1,9 +1,12 @@
 module.exports = bot => {
     const backspaceButton = button(`⬅️`, `-`);
 
-    bot.context.keyboard = function (backspace) {
+    bot.context.keyboard = function(backspace) {
         const defaultButton = button(this.i18n(`default`), `default`);
-        const cancelButton = button(this.i18n(`cancel`), `cancel,${this.from.id}`);
+        const cancelButton = button(
+            this.i18n(`cancel`),
+            `cancel,${this.from.id}`
+        );
         const lastButton = backspace ? backspaceButton : defaultButton;
 
         const keys = [
@@ -29,7 +32,7 @@ module.exports = bot => {
 
     bot.context.createButton = button;
 
-    bot.context.shareKeyboard = function (fileID) {
+    bot.context.shareKeyboard = function(fileID) {
         return {
             inline_keyboard: [
                 [

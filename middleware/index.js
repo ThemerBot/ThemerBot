@@ -10,6 +10,4 @@ const modules = [
 ];
 
 module.exports = bot =>
-    modules.forEach(middleware =>
-        require(`./${middleware}`)(bot)
-    );
+    modules.forEach(middleware => require(`./${middleware}`)(bot));
