@@ -16,7 +16,7 @@ module.exports = bot => {
 
     bot.command(`credits`, async ctx => {
         await ctx.reply(
-            `This bot is created and maintained by @twitface. I would like to thank the following users for helping with translations:\n\n@ericksonx for Spanish\n@Lulzx for Hindi\n@droidOSuser for Italian\n[sh-sh-dev](https://github.com/sh-sh-dev) for Farsi`,
+            `This bot is created and maintained by @twitface. I would like to thank the following users for helping with translations:\n\n@ericksonx for Spanish\n@Lulzx for Hindi\n@droidOSuser for Italian\n@sh_sh_dev & @hkh12 for Farsi\n@hkh12 for the tgx template\n@Meh7an for the iOS template`,
             {
                 parse_mode: `markdown`,
                 disable_web_page_preview: true,
