@@ -5,6 +5,40 @@ module.exports = bot => {
         const { data } = ctx.callbackQuery;
         const { message_id: themeId } = ctx.callbackQuery.message;
         const theme = ctx.getTheme(themeId);
+        async function saveColorToTheme(color) {
+            if (theme.using[0] === color) {
+                return ctx.answerCbQuery(ctx.i18n(`cant_reuse_bg`));
+            }
+
+            theme.using.push(color);
+            ctx.saveTheme(themeId, theme);
+
+            const keyboard = ctx.keyboard(true);
+            const { length } = theme.using;
+
+            if (length < 4) {
+                await ctx.editMessageCaption(
+                    ctx.i18n(`choose_color_${length + 1}`, {
+                        colors: theme.using.join(`, `),
+                    }),
+                    { reply_markup: keyboard }
+                );
+            } else {
+                try {
+                    await ctx.editMessageCaption(
+                        ctx.i18n(`type_of_theme`),
+                        ctx.typeKeyboard()
+                    );
+                } catch (e) {
+                    if (e.description === messageNotModified) {
+                        return await ctx.answerCbQuery(
+                            ctx.i18n(`dont_click`),
+                            true
+                        );
+                    }
+                }
+            }
+        }
 
         if (data.startsWith(`cancel`)) {
             if (data.split(`,`).pop() == ctx.from.id) {
@@ -56,12 +90,22 @@ module.exports = bot => {
                 break;
             }
 
+            case `white`: {
+                await saveColorToTheme(`#ffffff`);
+                break;
+            }
+
+            case `black`: {
+                await saveColorToTheme(`#000000`);
+                break;
+            }
+            
             case `tgios-theme`:
             case `tgx-theme`:
             case `attheme`: {
                 const typing = ctx.action(`upload_photo`);
-                const name = ctx.makeThemeName();
                 const { photo, using } = theme;
+                const name = ctx.makeThemeName(using[0], using[3]);
 
                 const completedTheme = ctx.makeTheme({
                     type: data,
@@ -77,7 +121,7 @@ module.exports = bot => {
                     type: `document`,
                     media: {
                         source: Buffer.from(completedTheme, `binary`),
-                        filename: `${name} by @${process.env.BOT_USERNAME}.${data}`,
+                        filename: `${name} - @${process.env.BOT_USERNAME}.${data}`,
                     },
                 });
 
@@ -93,42 +137,8 @@ module.exports = bot => {
                 break;
             }
 
-            // All colors and type
-            default: {
-                const color = theme.colors[data];
-
-                if (theme.using[0] === color) {
-                    return ctx.answerCbQuery(ctx.i18n(`cant_reuse_bg`));
-                }
-
-                theme.using.push(color);
-                ctx.saveTheme(themeId, theme);
-
-                const keyboard = ctx.keyboard(true);
-                const { length } = theme.using;
-
-                if (length < 4) {
-                    await ctx.editMessageCaption(
-                        ctx.i18n(`choose_color_${length + 1}`, {
-                            colors: theme.using.join(`, `),
-                        }),
-                        { reply_markup: keyboard }
-                    );
-                } else {
-                    try {
-                        await ctx.editMessageCaption(
-                            ctx.i18n(`type_of_theme`),
-                            ctx.typeKeyboard()
-                        );
-                    } catch (e) {
-                        if (e.description === messageNotModified) {
-                            return await ctx.answerCbQuery(
-                                ctx.i18n(`dont_click`),
-                                true
-                            );
-                        }
-                    }
-                }
+            default: { // All colors and type
+                await saveColorToTheme(theme.colors[data]);
             }
         }
 
