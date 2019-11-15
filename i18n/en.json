@@ -1,4 +1,8 @@
 {
+    "_author": [
+        "YouTwitFace (https://github.com/YouTwitFace)",
+        "Hosein Khansari (https://github.com/hkh12)"
+    ],
     "start": "Hi {{name}}! Send me a photo.",
     "not_your_theme": "That's not your theme 😒",
     "no_theme_found": "Either that's not your theme or I can't find a theme for this message 😔\n\nNote: Themes expire after 5 minutes of not using them",

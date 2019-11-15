@@ -1,4 +1,5 @@
 {
+    "_author": "Red (https://t.me/redhz)",
     "start": "Ciao {{name}}! Inviami una foto.",
     "not_your_theme": "Questo non è il tuo tema 😒",
     "no_theme_found": "O questo non è il tuo tema o non riesco a trovare un tema per questo messaggio 😔\n\nNota: i temi scadono dopo 5 minuti di inutilizzo",

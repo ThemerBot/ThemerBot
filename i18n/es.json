@@ -1,4 +1,5 @@
 {
+    "_author": "Erickson (https://t.me/ericksonx)",
     "start": "Hola {{name}}! envíame una imagen",
     "not_your_theme": "Ese no es tu tema 😒",
     "no_theme_found": "Ese no es tu tema o no puedo encontrar un tema para este mensaje 😔\n\nNota: Los temas caducan a los 5 minutos si no son usados",

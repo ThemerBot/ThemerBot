@@ -1,4 +1,8 @@
 {
+    "_author": [
+        "Shaygan Shokrollahi (https://github.com/sh-sh-dev)",
+        "Hosein Khansari (https://github.com/hkh12)"
+    ],
     "start": "سلام {{name}}! به من یک عکس بفرست.",
     "not_your_theme": "این تم برای شما نیست 😒",
     "no_theme_found": "این تم ها برای شما نیستند و یا من تمی مربوط به این پیام پیدا نکردم 😔",
