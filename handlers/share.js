@@ -7,7 +7,7 @@ module.exports = bot => {
                 type: `document`,
                 id: fileID,
                 title: ctx.i18n(`share`),
-                caption: `Made by @CreateAtthemeBot #theme`,
+                caption: `Made by @${process.env.BOT_USERNAME} #theme`,
                 mime_type: `text/plain`,
                 document_url: fileID,
                 reply_markup: ctx.shareKeyboard(fileID),

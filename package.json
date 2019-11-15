@@ -1,5 +1,5 @@
 {
-  "name": "createatthemebot",
+  "name": "themerbot",
   "version": "0.1.0",
   "description": "Create themes for telegram android from a picture.",
   "main": "index.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YouTwitFace/CreateAtthemeBot.git"
+    "url": "git+https://github.com/YouTwitFace/ThemerBot.git"
   },
   "author": "YouTwitFace <contact@lungers.com>",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/YouTwitFace/CreateAtthemeBot/issues"
+    "url": "https://github.com/YouTwitFace/ThemerBot/issues"
   },
-  "homepage": "https://github.com/YouTwitFace/CreateAtthemeBot#readme",
+  "homepage": "https://github.com/YouTwitFace/ThemerBot#readme",
   "dependencies": {
     "attheme-js": "^2.2.1",
     "color": "^3.1.2",

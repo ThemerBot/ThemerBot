@@ -71,13 +71,13 @@ module.exports = bot => {
                 });
 
                 const { message_id, document } = await ctx.editMessageMedia({
-                    caption: `Made by @CreateAtthemeBot\n#theme ${using.join(
-                        ` `
-                    )}`,
+                    caption: `Made by @${
+                        process.env.BOT_USERNAME
+                    }\n#theme ${using.join(` `)}`,
                     type: `document`,
                     media: {
                         source: Buffer.from(completedTheme, `binary`),
-                        filename: `${name} by @CreateAtthemeBot.${data}`,
+                        filename: `${name} by @${process.env.BOT_USERNAME}.${data}`,
                     },
                 });
 
