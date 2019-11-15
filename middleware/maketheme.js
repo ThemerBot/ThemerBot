@@ -1,18 +1,13 @@
 const Attheme = require(`attheme-js`).default;
 
+const ntc = require(`./ntc`);
 const atthemeVariables = require(`../variables/attheme`);
 const tgxVariables = require(`../variables/tgx-theme`);
 const tgiosVariables = require(`../variables/tgios-theme`);
 
-const random = max => Math.floor(Math.random() * max);
-
 module.exports = bot => {
-    bot.context.makeThemeName = () => {
-        const chars = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789`;
-
-        return Array.from({ length: 5 }, () =>
-            chars.charAt(random(chars.length))
-        ).join(``);
+    bot.context.makeThemeName = (background, primary) => {
+        return `${ntc.name(primary)[1]} on ${ntc.name(background)[1]}`;
     };
 
     bot.context.makeTheme = ({ image, name, colors, type }) => {
