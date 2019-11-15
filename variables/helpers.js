@@ -18,9 +18,10 @@ const adjustBrightness = (color, ratio) => {
  * @param {boolean} light if false, `ratio` is negated and resulting color is darker.
  * @param {number} ratio
  */
-const mixBrightness = (color, light, ratio) => adjustBrightness(color, light ? ratio : -ratio);
+const mixBrightness = (color, light, ratio) =>
+    adjustBrightness(color, light ? ratio : -ratio);
 
-const getFgColor = bg => isLight(bg) ? adjustBrightness(bg, -45) : `#ffffff`;
+const getFgColor = bg => (isLight(bg) ? adjustBrightness(bg, -45) : `#ffffff`);
 
 const themeData = colors => {
     const [filling, text, secondaryText, primary] = colors,
@@ -43,5 +44,9 @@ const themeData = colors => {
 };
 
 module.exports = {
-    isLight, adjustBrightness, mixBrightness, getFgColor, themeData,
+    isLight,
+    adjustBrightness,
+    mixBrightness,
+    getFgColor,
+    themeData,
 };

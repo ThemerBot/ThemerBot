@@ -1,9 +1,12 @@
 module.exports = bot => {
     const backspaceButton = button(`⬅️`, `-`);
 
-    bot.context.keyboard = function (backspace) {
+    bot.context.keyboard = function(backspace) {
         const defaultButton = button(this.i18n(`default`), `default`);
-        const cancelButton = button(this.i18n(`cancel`), `cancel,${this.from.id}`);
+        const cancelButton = button(
+            this.i18n(`cancel`),
+            `cancel,${this.from.id}`
+        );
         const lastButton = backspace ? backspaceButton : defaultButton;
 
         const keys = [
@@ -18,18 +21,18 @@ module.exports = bot => {
     bot.context.typeKeyboard = function() {
         return {
             reply_markup: {
-                inline_keyboard: [
-                    [`attheme`, `tgx-theme`].map(type => {
-                        return button(`${this.i18n(type)} (.${type})`, type);
-                    }),
-                ],
+                inline_keyboard: [`attheme`, `tgx-theme`, `tgios-theme`].map(
+                    type => {
+                        return [button(`${this.i18n(type)} (.${type})`, type)];
+                    }
+                ),
             },
         };
     };
 
     bot.context.createButton = button;
 
-    bot.context.shareKeyboard = function (fileID) {
+    bot.context.shareKeyboard = function(fileID) {
         return {
             inline_keyboard: [
                 [

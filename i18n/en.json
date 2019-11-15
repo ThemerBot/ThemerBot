@@ -1,7 +1,7 @@
 {
     "start": "Hi {{name}}! Send me a photo.",
     "not_your_theme": "That's not your theme 😒",
-    "no_theme_found": "Either that's not your theme or I can't find a theme for this message 😔",
+    "no_theme_found": "Either that's not your theme or I can't find a theme for this message 😔\n\nNote: Themes expire after 5 minutes of not using them",
     "choose_color_1": "What color would you like for the backgrounds?",
     "choose_color_2": "What color would you like for the main text?\nCurrent colors: {{colors}}",
     "choose_color_3": "What color would you like for the secondary text?\nCurrent colors: {{colors}}",

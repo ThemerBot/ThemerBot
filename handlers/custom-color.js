@@ -15,7 +15,13 @@ module.exports = bot => {
 
         let [color] = ctx.match;
         if (color.length === 4) {
-            color = `#` + color.slice(1).split(``).map(c => c.repeat(2)).join(``);
+            color =
+                `#` +
+                color
+                    .slice(1)
+                    .split(``)
+                    .map(c => c.repeat(2))
+                    .join(``);
         }
 
         if (theme.using[0] === color) {
@@ -28,11 +34,7 @@ module.exports = bot => {
         const keyboard = ctx.keyboard(true);
         const { length } = theme.using;
 
-        const captionArgs = [
-            ctx.chat.id,
-            themeId,
-            null,
-        ];
+        const captionArgs = [ctx.chat.id, themeId, null];
 
         if (length < 4) {
             await ctx.telegram.editMessageCaption(

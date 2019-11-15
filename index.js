@@ -2,20 +2,15 @@ if (!process.env.TOKEN) {
     require(`dotenv`).config();
 }
 
-const {
-    TOKEN,
-    BOT_USERNAME = ``,
-    LOG_CHANNEL,
-    API_ROOT,
-} = process.env;
+const { TOKEN, BOT_USERNAME = ``, LOG_CHANNEL, API_ROOT } = process.env;
 
 const Telegraf = require(`telegraf`);
 const bot = new Telegraf(TOKEN, {
     username: BOT_USERNAME,
     telegram: {
-        ...API_ROOT && {
+        ...(API_ROOT && {
             apiRoot: API_ROOT,
-        },
+        }),
     },
 });
 

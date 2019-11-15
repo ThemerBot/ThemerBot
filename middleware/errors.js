@@ -9,7 +9,9 @@ module.exports = bot => {
                 { parse_mode: `markdown` }
             );
         } else {
-            console.error((error.stack || error.toString()).replace(/^/gm, `  `));
+            console.error(
+                (error.stack || error.toString()).replace(/^/gm, `  `)
+            );
         }
     });
 };

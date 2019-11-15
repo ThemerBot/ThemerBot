@@ -11,7 +11,8 @@ module.exports = bot => {
         const typing = ctx.action(`upload_photo`);
         const { document, ...message } = ctx.message;
 
-        const isThemeFile = document && isThemeFileRegex.test(document.file_name);
+        const isThemeFile =
+            document && isThemeFileRegex.test(document.file_name);
 
         if (isThemeFile) {
             const file = await ctx.downloadFile();
