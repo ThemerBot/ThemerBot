@@ -1,7 +1,7 @@
 {
     "start": "Ciao {{name}}! Inviami una foto.",
     "not_your_theme": "Questo non è il tuo tema 😒",
-    "no_theme_found": "O questo non è il tuo tema o non riesco a trovare un tema per questo messaggio 😔",
+    "no_theme_found": "O questo non è il tuo tema o non riesco a trovare un tema per questo messaggio 😔\n\nNota: i temi scadono dopo 5 minuti di inutilizzo",
     "choose_color_1": "Che colore vorresti per lo sfondo?",
     "choose_color_2": "Che colore vorresti per il testo principale?\nColori attuali: {{colors}}",
     "choose_color_3": "Che colore vorresti per il testo secondario?\nColori attuali: {{colors}}",
