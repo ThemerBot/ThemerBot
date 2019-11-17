@@ -31,7 +31,7 @@ module.exports = (name, colors) => {
         @
         shadowDepth: ${themeIsLight ? 0.65 : 1}
         wallpaperId: 0
-        lightStatusBar: ${isLight(primary) ? 1 : 0}
+        lightStatusBar: ${isLight(headerBackground) ? 1 : 0}
         dark: ${themeIsLight ? 0 : 1}
         parentTheme: ${themeIsLight ? 11 : 10}
         wallpaperUsageId: 2
