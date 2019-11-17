@@ -1,7 +1,6 @@
 const {
     isLight,
     adjustBrightness,
-    mixBrightness,
     themeData,
 } = require(`./helpers`);
 
@@ -63,34 +62,34 @@ module.exports = (name, colors) => {
 
         headerRemoveBackgroundHighlight, introSectionActive, playerButton, text: ${text}
 
-        avatarCyan, nameCyan, attachContact: ${mixBrightness(
+        avatarCyan, nameCyan, attachContact: ${adjustBrightness(
             primary,
-            themeIsLight,
-            17
+            17,
+            themeIsLight
         )}
-        avatarBlue, nameBlue: ${mixBrightness(primary, themeIsLight, 15)}
-        avatarGreen, nameGreen, attachFile: ${mixBrightness(
+        avatarBlue, nameBlue: ${adjustBrightness(primary, themeIsLight, 15)}
+        avatarGreen, nameGreen, attachFile: ${adjustBrightness(
             primary,
-            themeIsLight,
-            10
+            10,
+            themeIsLight
         )}
-        avatarViolet, nameViolet: ${mixBrightness(primary, themeIsLight, 5)}
-        avatarRed, nameRed, attachPhoto: ${mixBrightness(
+        avatarViolet, nameViolet: ${adjustBrightness(primary, 5, themeIsLight)}
+        avatarRed, nameRed, attachPhoto: ${adjustBrightness(
             primary,
-            themeIsLight,
-            -5
+            -5,
+            themeIsLight
         )}
-        avatarPink, namePink, attachLocation: ${mixBrightness(
+        avatarPink, namePink, attachLocation: ${adjustBrightness(
             primary,
-            themeIsLight,
-            -10
+            -10,
+            themeIsLight
         )}
-        avatarYellow, nameYellow, attachInlineBot: ${mixBrightness(
+        avatarYellow, nameYellow, attachInlineBot: ${adjustBrightness(
             primary,
-            themeIsLight,
-            -15
+            -15,
+            themeIsLight
         )}
-        avatarOrange, nameOrange: ${mixBrightness(primary, themeIsLight, -17)}
+        avatarOrange, nameOrange: ${adjustBrightness(primary, -17, themeIsLight)}
         avatarSavedMessages: ${primary}
 
         bubbleIn_background, chatKeyboard, checkContent, controlContent, filling, inlineContentActive, overlayFilling, placeholder, promoContent: ${filling}
@@ -115,11 +114,11 @@ module.exports = (name, colors) => {
         togglerActiveBackground: ${primary}97
         unread, bubble_unread, bubble_unread_noWallpaper: ${primary}18
         previewBackground: ${filling}C0
-        togglerInactive: ${mixBrightness(secondaryText, themeIsLight, 10)}
-        togglerInactiveBackground: ${mixBrightness(
+        togglerInactive: ${adjustBrightness(secondaryText, 10, themeIsLight)}
+        togglerInactiveBackground: ${adjustBrightness(
             secondaryText,
-            themeIsLight,
-            10
+            10,
+            themeIsLight
         )}64
         badgeText: ${textOnPrimary}
         badgeMuted: ${text}65
