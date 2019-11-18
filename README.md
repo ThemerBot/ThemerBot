@@ -15,8 +15,6 @@
 - English
   - [YouTwitFace](https://github.com/YouTwitFace)
   - [Hosein Khansari](https://github.com/hkh12)
-- Spanish
-  - [Erickson](https://t.me/ericksonx)
 - Farsi
   - [Shaygan Shokrollahi](https://github.com/sh-sh-dev)
   - [Hosein Khansari](https://github.com/hkh12)
@@ -24,3 +22,5 @@
   - [Lulzx](https://t.me/Lulzx)
 - Italian
   - [Red](https://t.me/redhz)
+- Spanish
+  - [Erickson](https://t.me/ericksonx)
