@@ -17,11 +17,15 @@ function adjustBrightness(color, ratio, invert = false) {
 
 const getFgColor = bg => (isLight(bg) ? adjustBrightness(bg, -45) : `#ffffff`);
 
-const themeData = ([filling, text, secondaryText, primary]) => {
+function themeData([filling, text, secondaryText, primary]) {
     const themeIsLight = isLight(filling),
         textOnPrimary = getFgColor(primary),
         background = adjustBrightness(filling, -6.5),
-        backgroundText = adjustBrightness(secondaryText, 5, themeIsLight);
+        backgroundText = adjustBrightness(secondaryText, 5, themeIsLight),
+        bubbleOutColor = adjustBrightness(
+            themeIsLight ? primary : filling,
+            themeIsLight ? 41 : -3
+        );
 
     // const st = Color(filling).mix(Color(text)).hex();
     return {
@@ -34,9 +38,10 @@ const themeData = ([filling, text, secondaryText, primary]) => {
         primary,
         textOnPrimary,
         themeIsLight,
+        bubbleOutColor,
         author: process.env.BOT_USERNAME,
     };
-};
+}
 
 module.exports = {
     isLight,

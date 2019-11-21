@@ -1,4 +1,4 @@
-const { adjustBrightness, themeData } = require(`./helpers`);
+const { themeData } = require(`./helpers`);
 
 module.exports = (name, colors) => {
     const {
@@ -9,11 +9,8 @@ module.exports = (name, colors) => {
         secondaryText,
         text,
         textOnPrimary,
+        bubbleOutColor: outgoingBubbleBackgroud,
     } = themeData(colors);
-    const outgoingBubbleBackgroud = adjustBrightness(
-        themeIsLight ? primary : filling,
-        themeIsLight ? 41 : -3
-    );
 
     const template = `
         name: ${name}

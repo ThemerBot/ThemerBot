@@ -15,6 +15,7 @@ module.exports = (name, colors) => {
             text,
             textOnPrimary,
             backgroundText,
+            bubbleOutColor,
         } = themeData(colors),
         headerBackground = themeIsLight
             ? primary
@@ -98,10 +99,7 @@ module.exports = (name, colors) => {
 
         bubbleIn_textLinkPressHighlight, textSelectionHighlight, bubbleOut_textLinkPressHighlight, textLinkPressHighlight: ${primary}31
 
-        bubbleOut_background: ${adjustBrightness(
-            themeIsLight ? primary : filling,
-            themeIsLight ? 41 : -3
-        )}
+        bubbleOut_background: ${bubbleOutColor}
         fillingPressed: ${secondaryText}31
         messageSelection, bubble_messageSelectionNoWallpaper: ${primary}24
         bubble_messageSelection: ${primary}48
