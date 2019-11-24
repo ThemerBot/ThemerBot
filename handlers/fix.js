@@ -8,13 +8,13 @@ module.exports = bot => {
     const isThemeFileRegex = /\.attheme$/;
 
     bot.on(`document`, async (ctx, next) => {
-        const typing = ctx.action(`upload_photo`);
         const { document, ...message } = ctx.message;
 
         const isThemeFile =
             document && isThemeFileRegex.test(document.file_name);
 
         if (isThemeFile) {
+            const typing = ctx.action(`upload_photo`);
             const file = await ctx.downloadFile();
             const fileName = document.file_name;
             const oldTheme = new Attheme(file.toString(`binary`));
