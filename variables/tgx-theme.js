@@ -63,15 +63,19 @@ module.exports = (name, colors) => {
 
         headerRemoveBackgroundHighlight, introSectionActive, playerButton, text: ${text}
 
-        avatarCyan, nameCyan, attachContact: ${adjustBrightness(
+        avatarOrange, nameOrange: ${adjustBrightness(
             primary,
-            17,
+            -12,
             themeIsLight
         )}
-        avatarBlue, nameBlue: ${adjustBrightness(primary, themeIsLight, 15)}
+        avatarBlue, nameBlue: ${adjustBrightness(
+            primary,
+            themeIsLight,
+            -10
+        )}
         avatarGreen, nameGreen, attachFile: ${adjustBrightness(
             primary,
-            10,
+            -7,
             themeIsLight
         )}
         avatarViolet, nameViolet: ${adjustBrightness(primary, 5, themeIsLight)}
@@ -82,15 +86,19 @@ module.exports = (name, colors) => {
         )}
         avatarPink, namePink, attachLocation: ${adjustBrightness(
             primary,
-            -10,
+            3,
             themeIsLight
         )}
         avatarYellow, nameYellow, attachInlineBot: ${adjustBrightness(
             primary,
-            -15,
+            7,
             themeIsLight
         )}
-        avatarOrange, nameOrange: ${adjustBrightness(primary, -17, themeIsLight)}
+        avatarCyan, nameCyan, attachContact: ${adjustBrightness(
+            primary,
+            10,
+            themeIsLight
+        )}
         avatarSavedMessages: ${primary}
 
         bubbleIn_background, chatKeyboard, checkContent, controlContent, filling, inlineContentActive, overlayFilling, placeholder, promoContent: ${filling}
@@ -112,7 +120,11 @@ module.exports = (name, colors) => {
         togglerActiveBackground: ${primary}97
         unread, bubble_unread, bubble_unread_noWallpaper: ${primary}18
         previewBackground: ${filling}C0
-        togglerInactive: ${adjustBrightness(secondaryText, 10, themeIsLight)}
+        togglerInactive: ${adjustBrightness(
+            secondaryText,
+            10,
+            themeIsLight
+        )}
         togglerInactiveBackground: ${adjustBrightness(
             secondaryText,
             10,
