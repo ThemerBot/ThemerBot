@@ -27,13 +27,11 @@ function themeData([filling, text, secondaryText, primary]) {
             themeIsLight ? 41 : -3
         );
 
-    // const st = Color(filling).mix(Color(text)).hex();
     return {
         background,
         filling,
         text,
         backgroundText,
-        // secondaryText: st,
         secondaryText,
         primary,
         textOnPrimary,
