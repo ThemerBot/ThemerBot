@@ -36,7 +36,7 @@ const main = async () => {
         // Ignore errors
     }
 
-    return new Promise(async resovle => {
+    return new Promise(async resolve => {
         for (const index in languages) {
             const { name, code } = languages[index];
             const filePath = path.join(dirPath, `${code}.json`);
@@ -51,7 +51,7 @@ const main = async () => {
                     console.log(`Saved ${name}`);
 
                     if (Number(index) === languages.length - 1) {
-                        resovle();
+                        resolve();
                     }
                 });
         }
