@@ -1,6 +1,13 @@
+const fs = require(`fs`);
+const path = require(`path`);
 const newI18n = require(`new-i18n`);
-const languages = process.env.I18N_LANGUAGES.split(`,`);
-const i18n = newI18n(`${__dirname}/../i18n`, languages, languages[0]);
+
+const i18nDir = path.join(__dirname, `../i18n`);
+const languages = fs
+    .readdirSync(i18nDir)
+    .filter(file => file.endsWith(`.json`))
+    .map(file => file.slice(0, -5));
+const i18n = newI18n(i18nDir, languages, `en`);
 
 module.exports = bot => {
     bot.context.i18n = function(keyword, variables) {
