@@ -61,7 +61,7 @@ const ntc = {
     // adopted from: Farbtastic 1.2
     // http://acko.net/dev/farbtastic
     hsl(color) {
-        const rgb = [
+        const [r, g, b] = [
             parseInt(`0x` + color.substring(1, 3)) / 255,
             parseInt(`0x` + color.substring(3, 5)) / 255,
             parseInt(`0x` + color.substring(5, 7)) / 255,
@@ -71,8 +71,7 @@ const ntc = {
         const min = Math.min(r, Math.min(g, b)),
             max = Math.max(r, Math.max(g, b)),
             delta = max - min,
-            l = (min + max) / 2,
-            [r, g, b] = rgb;
+            l = (min + max) / 2;
 
         if (l > 0 && l < 1) {
             s = delta / (l < 0.5 ? 2 * l : 2 - 2 * l);
