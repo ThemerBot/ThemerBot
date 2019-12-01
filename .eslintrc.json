@@ -8,42 +8,14 @@
         "ecmaVersion": 2018
     },
     "rules": {
-        "indent": [
-            "error",
-            4,
-            {
-                "SwitchCase": 1
-            }
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "backtick"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "eol-last": [
-            "error",
-            "always"
-        ],
-        "prefer-const": [
-            "warn",
-            {
-                "destructuring": "all"
-            }
-        ],
-        "comma-dangle": [
-            "error",
-            "always-multiline"
-        ],
-        "arrow-parens": [
-            "error",
-            "as-needed"
-        ]
+        "indent": ["error", 4, { "SwitchCase": 1 }],
+        "linebreak-style": ["error", "unix"],
+        "quotes": ["error", "backtick"],
+        "semi": ["error", "always"],
+        "eol-last": ["error", "always"],
+        "prefer-const": ["warn", { "destructuring": "all" }],
+        "comma-dangle": ["error", "always-multiline"],
+        "arrow-parens": ["error", "as-needed"],
+        "no-async-promise-executor": "error"
     }
 }
