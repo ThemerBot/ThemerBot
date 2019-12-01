@@ -32,7 +32,7 @@ module.exports = bot => {
                 removeTheme,
                 1000 * 60 * 5, // 5 minutes
                 key,
-                messageId
+                messageId,
             );
 
             usersThemes[messageId] = { ...theme, timeout };

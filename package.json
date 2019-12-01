@@ -34,6 +34,6 @@
     "xmldom": "^0.1.27"
   },
   "devDependencies": {
-    "eslint": "^5.16.0"
+    "eslint": "^6.7.2"
   }
 }

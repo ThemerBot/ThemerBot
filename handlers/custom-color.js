@@ -42,13 +42,13 @@ module.exports = bot => {
                 ctx.i18n(`choose_color_${length + 1}`, {
                     colors: theme.using.join(`, `),
                 }),
-                { reply_markup: keyboard }
+                { reply_markup: keyboard },
             );
         } else {
             await ctx.telegram.editMessageCaption(
                 ...captionArgs,
                 ctx.i18n(`type_of_theme`),
-                ctx.typeKeyboard()
+                ctx.typeKeyboard(),
             );
         }
 

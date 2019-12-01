@@ -23,7 +23,7 @@ module.exports = bot => {
                     {
                         caption: reply.caption,
                         reply_to_message_id: reply.message_id,
-                    }
+                    },
                 );
             }
         }

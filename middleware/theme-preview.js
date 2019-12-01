@@ -19,7 +19,7 @@ const parser = new DOMParser();
 const get = (node, className, tag) =>
     Array.from(node.getElementsByTagName(tag)).filter(
         element =>
-            element.getAttribute && element.getAttribute(`class`) === className
+            element.getAttribute && element.getAttribute(`class`) === className,
     );
 
 const getElementsByClassName = (node, className) => [
@@ -116,10 +116,10 @@ const createPreview = async ({ name, type, theme }) => {
 
                 element.setAttribute(
                     `xlink:href`,
-                    `data:image/png;base64,${croppedImage.toString(`base64`)}`
+                    `data:image/png;base64,${croppedImage.toString(`base64`)}`,
                 );
             }
-        })
+        }),
     );
 
     for (const element of getElementsByClassName(preview, `theme_name`)) {

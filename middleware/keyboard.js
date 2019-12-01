@@ -5,7 +5,7 @@ module.exports = bot => {
         const defaultButton = button(this.i18n(`default`), `default`);
         const cancelButton = button(
             this.i18n(`cancel`),
-            `cancel,${this.from.id}`
+            `cancel,${this.from.id}`,
         );
         const lastButton = backspace ? backspaceButton : defaultButton;
 
@@ -25,7 +25,7 @@ module.exports = bot => {
                 inline_keyboard: [`attheme`, `tgx-theme`, `tgios-theme`].map(
                     type => {
                         return [button(`${this.i18n(type)} (.${type})`, type)];
-                    }
+                    },
                 ),
             },
         };

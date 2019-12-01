@@ -15,9 +15,9 @@ const main = async () => {
     const bot = new Telegraf(TOKEN, {
         username: BOT_USERNAME,
         telegram: {
-            ...(API_ROOT && {
+            ...API_ROOT && {
                 apiRoot: API_ROOT,
-            }),
+            },
         },
     });
 

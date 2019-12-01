@@ -1,8 +1,12 @@
 module.exports = bot => {
     bot.on(`photo`, async ctx => {
         const { forward_from } = ctx.message;
-        if (forward_from && forward_from.username === process.env.BOT_USERNAME)
+        if (
+            forward_from &&
+            forward_from.username === process.env.BOT_USERNAME
+        ) {
             return;
+        }
 
         const typing = ctx.action(`upload_photo`);
 
@@ -18,7 +22,7 @@ module.exports = bot => {
                     reply_markup: keyboard,
                     caption: ctx.i18n(`choose_color_1`),
                     reply_to_message_id: ctx.message.message_id,
-                }
+                },
             );
 
             ctx.saveTheme(message_id, {

@@ -1,8 +1,4 @@
-const {
-    isLight,
-    adjustBrightness,
-    themeData,
-} = require(`./helpers`);
+const { isLight, adjustBrightness, themeData } = require(`./helpers`);
 
 module.exports = (name, colors) => {
     const {
@@ -66,31 +62,35 @@ module.exports = (name, colors) => {
         avatarCyan, nameCyan, attachContact: ${adjustBrightness(
             primary,
             17,
-            themeIsLight
+            themeIsLight,
         )}
         avatarBlue, nameBlue: ${adjustBrightness(primary, themeIsLight, 15)}
         avatarGreen, nameGreen, attachFile: ${adjustBrightness(
             primary,
             10,
-            themeIsLight
+            themeIsLight,
         )}
         avatarViolet, nameViolet: ${adjustBrightness(primary, 5, themeIsLight)}
         avatarRed, nameRed, attachPhoto: ${adjustBrightness(
             primary,
             -5,
-            themeIsLight
+            themeIsLight,
         )}
         avatarPink, namePink, attachLocation: ${adjustBrightness(
             primary,
             -10,
-            themeIsLight
+            themeIsLight,
         )}
         avatarYellow, nameYellow, attachInlineBot: ${adjustBrightness(
             primary,
             -15,
-            themeIsLight
+            themeIsLight,
         )}
-        avatarOrange, nameOrange: ${adjustBrightness(primary, -17, themeIsLight)}
+        avatarOrange, nameOrange: ${adjustBrightness(
+            primary,
+            -17,
+            themeIsLight,
+        )}
         avatarSavedMessages: ${primary}
 
         bubbleIn_background, chatKeyboard, checkContent, controlContent, filling, inlineContentActive, overlayFilling, placeholder, promoContent: ${filling}
@@ -116,7 +116,7 @@ module.exports = (name, colors) => {
         togglerInactiveBackground: ${adjustBrightness(
             secondaryText,
             10,
-            themeIsLight
+            themeIsLight,
         )}64
         badgeText: ${textOnPrimary}
         badgeMuted: ${text}65

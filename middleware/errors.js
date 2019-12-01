@@ -8,7 +8,7 @@ module.exports = bot => {
             bot.telegram.sendMessage(
                 process.env.LOG_CHANNEL,
                 '```\n' + error + '```',
-                { parse_mode: `markdown` }
+                { parse_mode: `markdown` },
             );
         } else {
             console.error(error.replace(/^/gm, `  `));

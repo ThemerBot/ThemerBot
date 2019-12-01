@@ -27,7 +27,7 @@ module.exports = bot => {
                     reply_markup: keyboard,
                     caption: ctx.i18n(`choose_color_1`),
                     reply_to_message_id: ctx.message.message_id,
-                }
+                },
             );
 
             ctx.saveTheme(message_id, {

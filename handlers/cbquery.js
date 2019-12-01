@@ -21,19 +21,19 @@ module.exports = bot => {
                     ctx.i18n(`choose_color_${length + 1}`, {
                         colors: theme.using.join(`, `),
                     }),
-                    { reply_markup: keyboard }
+                    { reply_markup: keyboard },
                 );
             } else {
                 try {
                     await ctx.editMessageCaption(
                         ctx.i18n(`type_of_theme`),
-                        ctx.typeKeyboard()
+                        ctx.typeKeyboard(),
                     );
                 } catch (e) {
                     if (e.description === messageNotModified) {
                         return await ctx.answerCbQuery(
                             ctx.i18n(`dont_click`),
-                            true
+                            true,
                         );
                     }
                 }
@@ -41,7 +41,7 @@ module.exports = bot => {
         }
 
         if (data.startsWith(`cancel`)) {
-            if (data.split(`,`).pop() == ctx.from.id) {
+            if (Number(data.split(`,`).pop()) === ctx.from.id) {
                 await ctx.deleteMessage();
                 ctx.saveTheme(themeId, null);
             } else {
@@ -60,11 +60,12 @@ module.exports = bot => {
             case `default`: {
                 await ctx.editMessageCaption(
                     ctx.i18n(`type_of_theme`),
-                    ctx.typeKeyboard()
+                    ctx.typeKeyboard(),
                 );
 
                 const { colors } = theme;
 
+                // eslint-disable-next-line require-atomic-updates
                 theme.using = [colors[0], colors[4], colors[3], colors[1]];
 
                 ctx.saveTheme(themeId, theme);
@@ -84,7 +85,7 @@ module.exports = bot => {
                     ctx.i18n(`choose_color_${length + 1}`, {
                         colors: theme.using.join(`, `),
                     }),
-                    { reply_markup: keyboard }
+                    { reply_markup: keyboard },
                 );
 
                 break;
@@ -99,7 +100,7 @@ module.exports = bot => {
                 await saveColorToTheme(`#000000`);
                 break;
             }
-            
+
             case `tgios-theme`:
             case `tgx-theme`:
             case `attheme`: {
@@ -135,7 +136,7 @@ module.exports = bot => {
                     ctx.chat.id,
                     message_id,
                     null,
-                    ctx.shareKeyboard(document.file_id)
+                    ctx.shareKeyboard(document.file_id),
                 );
 
                 preview = await preview;
@@ -145,7 +146,7 @@ module.exports = bot => {
                         {
                             caption: `Preview by @ThemePreviewBot`,
                             reply_to_message_id: message_id,
-                        }
+                        },
                     );
                 }
 
@@ -154,9 +155,9 @@ module.exports = bot => {
                 break;
             }
 
-            default: { // All colors and type
+            // All colors and type
+            default:
                 await saveColorToTheme(theme.colors[data]);
-            }
         }
 
         await ctx.answerCbQuery();

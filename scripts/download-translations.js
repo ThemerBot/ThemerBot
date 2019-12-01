@@ -36,24 +36,25 @@ const main = async () => {
         // Ignore errors
     }
 
-    return new Promise(async resovle => {
+    return new Promise(resolve => {
         for (const index in languages) {
             const { name, code } = languages[index];
             const filePath = path.join(dirPath, `${code}.json`);
-            const { url } = await getResponse(`/projects/export`, {
+
+            getResponse(`/projects/export`, {
                 language: code,
                 type: `key_value_json`,
+            }).then(({ url }) => {
+                request(url)
+                    .pipe(fs.createWriteStream(filePath))
+                    .on(`close`, () => {
+                        console.log(`Saved ${name}`);
+
+                        if (Number(index) === languages.length - 1) {
+                            resolve();
+                        }
+                    });
             });
-
-            request(url)
-                .pipe(fs.createWriteStream(filePath))
-                .on(`close`, () => {
-                    console.log(`Saved ${name}`);
-
-                    if (Number(index) === languages.length - 1) {
-                        resovle();
-                    }
-                });
         }
     });
 };
