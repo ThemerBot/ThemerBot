@@ -2,16 +2,16 @@
 
 module.exports = bot => {
     bot.catch(error => {
+        error = error.stack || error.toString();
+
         if (process.env.LOG_CHANNEL) {
             bot.telegram.sendMessage(
                 process.env.LOG_CHANNEL,
-                '```\n' + error.toString() + '```',
+                '```\n' + error + '```',
                 { parse_mode: `markdown` }
             );
         } else {
-            console.error(
-                (error.stack || error.toString()).replace(/^/gm, `  `)
-            );
+            console.error(error.replace(/^/gm, `  `));
         }
     });
 };
