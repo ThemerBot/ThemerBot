@@ -4,7 +4,7 @@ const { DOMParser, XMLSerializer } = require(`xmldom`);
 const { serializeToString: serialize } = new XMLSerializer();
 const sharp = require(`sharp`);
 const getColors = require(`get-image-colors`);
-const svgPath = path.join(__dirname, `../colors.svg`);
+const svgPath = path.join(__dirname, `../assets/colors.svg`);
 const { getFgColor } = require(`../variables/helpers`);
 
 module.exports = bot => {
