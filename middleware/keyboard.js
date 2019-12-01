@@ -12,6 +12,7 @@ module.exports = bot => {
         const keys = [
             [button(1), button(2), button(3)],
             [button(4), button(5), lastButton],
+            [button(`White`, `white`), button(`Black`, `black`)],
             [cancelButton],
         ];
 

@@ -1,7 +1,6 @@
 const {
     isLight,
     adjustBrightness,
-    mixBrightness,
     themeData,
 } = require(`./helpers`);
 
@@ -16,6 +15,7 @@ module.exports = (name, colors) => {
             text,
             textOnPrimary,
             backgroundText,
+            bubbleOutColor,
         } = themeData(colors),
         headerBackground = themeIsLight
             ? primary
@@ -31,7 +31,7 @@ module.exports = (name, colors) => {
         @
         shadowDepth: ${themeIsLight ? 0.65 : 1}
         wallpaperId: 0
-        lightStatusBar: ${isLight(primary) ? 1 : 0}
+        lightStatusBar: ${isLight(headerBackground) ? 1 : 0}
         dark: ${themeIsLight ? 0 : 1}
         parentTheme: ${themeIsLight ? 11 : 10}
         wallpaperUsageId: 2
@@ -59,38 +59,38 @@ module.exports = (name, colors) => {
         circleButtonNewGroup: ${adjustBrightness(primary, 12)}
         circleButtonNewChat, fileRed: ${adjustBrightness(primary, 6.3)}
         circleButtonChat, circleButtonOverlay: ${filling}
-        circleButtonChatIcon, circleButtonOverlayIcon, bubbleIn_time, bubbleOut_time, bubbleOut_progress, textPlaceholder: ${secondaryText}
+        circleButtonChatIcon, circleButtonOverlayIcon, bubbleIn_time, bubbleOut_time, bubbleOut_progress, textPlaceholder, controlInactive: ${secondaryText}
 
-        controlInactive, headerRemoveBackgroundHighlight, introSectionActive, playerButton, text: ${text}
+        headerRemoveBackgroundHighlight, introSectionActive, playerButton, text: ${text}
 
-        avatarCyan, nameCyan, attachContact: ${mixBrightness(
+        avatarCyan, nameCyan, attachContact: ${adjustBrightness(
             primary,
-            themeIsLight,
-            17
+            17,
+            themeIsLight
         )}
-        avatarBlue, nameBlue: ${mixBrightness(primary, themeIsLight, 15)}
-        avatarGreen, nameGreen, attachFile: ${mixBrightness(
+        avatarBlue, nameBlue: ${adjustBrightness(primary, themeIsLight, 15)}
+        avatarGreen, nameGreen, attachFile: ${adjustBrightness(
             primary,
-            themeIsLight,
-            10
+            10,
+            themeIsLight
         )}
-        avatarViolet, nameViolet: ${mixBrightness(primary, themeIsLight, 5)}
-        avatarRed, nameRed, attachPhoto: ${mixBrightness(
+        avatarViolet, nameViolet: ${adjustBrightness(primary, 5, themeIsLight)}
+        avatarRed, nameRed, attachPhoto: ${adjustBrightness(
             primary,
-            themeIsLight,
-            -5
+            -5,
+            themeIsLight
         )}
-        avatarPink, namePink, attachLocation: ${mixBrightness(
+        avatarPink, namePink, attachLocation: ${adjustBrightness(
             primary,
-            themeIsLight,
-            -10
+            -10,
+            themeIsLight
         )}
-        avatarYellow, nameYellow, attachInlineBot: ${mixBrightness(
+        avatarYellow, nameYellow, attachInlineBot: ${adjustBrightness(
             primary,
-            themeIsLight,
-            -15
+            -15,
+            themeIsLight
         )}
-        avatarOrange, nameOrange: ${mixBrightness(primary, themeIsLight, -17)}
+        avatarOrange, nameOrange: ${adjustBrightness(primary, -17, themeIsLight)}
         avatarSavedMessages: ${primary}
 
         bubbleIn_background, chatKeyboard, checkContent, controlContent, filling, inlineContentActive, overlayFilling, placeholder, promoContent: ${filling}
@@ -99,10 +99,7 @@ module.exports = (name, colors) => {
 
         bubbleIn_textLinkPressHighlight, textSelectionHighlight, bubbleOut_textLinkPressHighlight, textLinkPressHighlight: ${primary}31
 
-        bubbleOut_background: ${adjustBrightness(
-            themeIsLight ? primary : filling,
-            themeIsLight ? 41 : -3
-        )}
+        bubbleOut_background: ${bubbleOutColor}
         fillingPressed: ${secondaryText}31
         messageSelection, bubble_messageSelectionNoWallpaper: ${primary}24
         bubble_messageSelection: ${primary}48
@@ -115,11 +112,11 @@ module.exports = (name, colors) => {
         togglerActiveBackground: ${primary}97
         unread, bubble_unread, bubble_unread_noWallpaper: ${primary}18
         previewBackground: ${filling}C0
-        togglerInactive: ${mixBrightness(secondaryText, themeIsLight, 10)}
-        togglerInactiveBackground: ${mixBrightness(
+        togglerInactive: ${adjustBrightness(secondaryText, 10, themeIsLight)}
+        togglerInactiveBackground: ${adjustBrightness(
             secondaryText,
-            themeIsLight,
-            10
+            10,
+            themeIsLight
         )}64
         badgeText: ${textOnPrimary}
         badgeMuted: ${text}65
