@@ -1,5 +1,5 @@
 const messageNotModified = `Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message`;
-const queryTooOld = `Error: 400: Bad Request: query is too old and response timeout expired or query ID is invalid`;
+const queryTooOld = `Bad Request: query is too old and response timeout expired or query ID is invalid`;
 
 async function saveColorToTheme(ctx, theme, themeId, color) {
     if (theme.using[0] === color) {
@@ -23,20 +23,20 @@ async function saveColorToTheme(ctx, theme, themeId, color) {
             ctx.i18n(`choose_color_${length + 1}`, {
                 colors: theme.using.join(`, `),
             }),
-            { reply_markup: keyboard },
+            { reply_markup: keyboard }
         );
     } else {
         try {
             await ctx.editMessageCaption(
                 ctx.i18n(`type_of_theme`),
-                ctx.typeKeyboard(),
+                ctx.typeKeyboard()
             );
         } catch (e) {
             if (e.description === messageNotModified) {
                 try {
                     return await ctx.answerCbQuery(
                         ctx.i18n(`dont_click`),
-                        true,
+                        true
                     );
                 } catch (e) {
                     if (e.description !== queryTooOld) {
@@ -75,7 +75,7 @@ module.exports = bot => {
             try {
                 return await ctx.answerCbQuery(
                     ctx.i18n(`no_theme_found`),
-                    true,
+                    true
                 );
             } catch (e) {
                 if (e.description !== queryTooOld) {
@@ -89,7 +89,7 @@ module.exports = bot => {
             case `default`: {
                 await ctx.editMessageCaption(
                     ctx.i18n(`type_of_theme`),
-                    ctx.typeKeyboard(),
+                    ctx.typeKeyboard()
                 );
 
                 const { colors } = theme;
@@ -114,7 +114,7 @@ module.exports = bot => {
                     ctx.i18n(`choose_color_${length + 1}`, {
                         colors: theme.using.join(`, `),
                     }),
-                    { reply_markup: keyboard },
+                    { reply_markup: keyboard }
                 );
 
                 break;
@@ -165,7 +165,7 @@ module.exports = bot => {
                     ctx.chat.id,
                     message_id,
                     null,
-                    ctx.shareKeyboard(document.file_id),
+                    ctx.shareKeyboard(document.file_id)
                 );
 
                 preview = await preview;
@@ -175,7 +175,7 @@ module.exports = bot => {
                         {
                             caption: `Preview by @ThemePreviewBot`,
                             reply_to_message_id: message_id,
-                        },
+                        }
                     );
                 }
 
