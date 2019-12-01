@@ -6,16 +6,6 @@
 const names = require(`./names`);
 
 const ntc = {
-    init() {
-        let color, rgb, hsl;
-        for (let i = 0; i < names.length; i++) {
-            color = `#` + names[i][0];
-            rgb = ntc.rgb(color);
-            hsl = ntc.hsl(color);
-            names[i].push(rgb[0], rgb[1], rgb[2], hsl[0], hsl[1], hsl[2]);
-        }
-    },
-
     name(color) {
         color = color.toUpperCase();
         if (color.length < 3 || color.length > 7) {
@@ -114,6 +104,12 @@ const ntc = {
     },
 };
 
-ntc.init();
+let color, rgb, hsl;
+for (let i = 0; i < names.length; i++) {
+    color = `#` + names[i][0];
+    rgb = ntc.rgb(color);
+    hsl = ntc.hsl(color);
+    names[i].push(rgb[0], rgb[1], rgb[2], hsl[0], hsl[1], hsl[2]);
+}
 
 module.exports = ntc;
