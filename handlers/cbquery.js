@@ -121,7 +121,7 @@ module.exports = bot => {
                     type: `document`,
                     media: {
                         source: Buffer.from(completedTheme, `binary`),
-                        filename: `${name} - @${process.env.BOT_USERNAME}.${data}`,
+                        filename: `${name} by @${process.env.BOT_USERNAME}.${data}`,
                     },
                 });
 
