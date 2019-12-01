@@ -1,4 +1,5 @@
 const messageNotModified = `Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message`;
+const queryTooOld = `Error: 400: Bad Request: query is too old and response timeout expired or query ID is invalid`;
 
 async function saveColorToTheme(ctx, theme, themeId, color) {
     if (theme.using[0] === color) {
@@ -158,6 +159,12 @@ module.exports = bot => {
                 await saveColorToTheme(ctx, theme, themeId, theme.colors[data]);
         }
 
-        await ctx.answerCbQuery();
+        try {
+            await ctx.answerCbQuery();
+        } catch (e) {
+            if (e.description !== queryTooOld) {
+                throw e;
+            }
+        }
     });
 };
