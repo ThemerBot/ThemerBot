@@ -2,7 +2,6 @@ const handlers = [
     `help`,
     `custom-color`,
     `photos`,
-    `documents`,
     `cbquery`,
     `rename`,
     `share`,
