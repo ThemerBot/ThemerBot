@@ -1,44 +1,42 @@
 const messageNotModified = `Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message`;
 
+async function saveColorToTheme(ctx, theme, themeId, color) {
+    if (theme.using[0] === color) {
+        return ctx.answerCbQuery(ctx.i18n(`cant_reuse_bg`));
+    }
+
+    theme.using.push(color);
+    ctx.saveTheme(themeId, theme);
+
+    const keyboard = ctx.keyboard(true);
+    const { length } = theme.using;
+
+    if (length < 4) {
+        await ctx.editMessageCaption(
+            ctx.i18n(`choose_color_${length + 1}`, {
+                colors: theme.using.join(`, `),
+            }),
+            { reply_markup: keyboard },
+        );
+    } else {
+        try {
+            await ctx.editMessageCaption(
+                ctx.i18n(`type_of_theme`),
+                ctx.typeKeyboard(),
+            );
+        } catch (e) {
+            if (e.description === messageNotModified) {
+                return await ctx.answerCbQuery(ctx.i18n(`dont_click`), true);
+            }
+        }
+    }
+}
+
 module.exports = bot => {
     bot.on(`callback_query`, async ctx => {
         const { data } = ctx.callbackQuery;
         const { message_id: themeId } = ctx.callbackQuery.message;
         const theme = ctx.getTheme(themeId);
-        async function saveColorToTheme(color) {
-            if (theme.using[0] === color) {
-                return ctx.answerCbQuery(ctx.i18n(`cant_reuse_bg`));
-            }
-
-            theme.using.push(color);
-            ctx.saveTheme(themeId, theme);
-
-            const keyboard = ctx.keyboard(true);
-            const { length } = theme.using;
-
-            if (length < 4) {
-                await ctx.editMessageCaption(
-                    ctx.i18n(`choose_color_${length + 1}`, {
-                        colors: theme.using.join(`, `),
-                    }),
-                    { reply_markup: keyboard },
-                );
-            } else {
-                try {
-                    await ctx.editMessageCaption(
-                        ctx.i18n(`type_of_theme`),
-                        ctx.typeKeyboard(),
-                    );
-                } catch (e) {
-                    if (e.description === messageNotModified) {
-                        return await ctx.answerCbQuery(
-                            ctx.i18n(`dont_click`),
-                            true,
-                        );
-                    }
-                }
-            }
-        }
 
         if (data.startsWith(`cancel`)) {
             if (Number(data.split(`,`).pop()) === ctx.from.id) {
@@ -92,12 +90,12 @@ module.exports = bot => {
             }
 
             case `white`: {
-                await saveColorToTheme(`#ffffff`);
+                await saveColorToTheme(ctx, theme, themeId, `#ffffff`);
                 break;
             }
 
             case `black`: {
-                await saveColorToTheme(`#000000`);
+                await saveColorToTheme(ctx, theme, themeId, `#000000`);
                 break;
             }
 
@@ -157,7 +155,7 @@ module.exports = bot => {
 
             // All colors and type
             default:
-                await saveColorToTheme(theme.colors[data]);
+                await saveColorToTheme(ctx, theme, themeId, theme.colors[data]);
         }
 
         await ctx.answerCbQuery();
