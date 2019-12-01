@@ -7,6 +7,7 @@ const modules = [
     `colors`,
     `i18n`,
     `maketheme`,
+    `theme-preview`,
 ];
 
 module.exports = bot =>

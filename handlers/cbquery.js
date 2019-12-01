@@ -81,12 +81,29 @@ module.exports = bot => {
                     },
                 });
 
+                let preview = ctx.createThemePreview({
+                    name,
+                    type: data,
+                    theme: completedTheme,
+                });
+
                 await bot.telegram.editMessageReplyMarkup(
                     ctx.chat.id,
                     message_id,
                     null,
                     ctx.shareKeyboard(document.file_id)
                 );
+
+                preview = await preview;
+                if (preview) {
+                    await ctx.replyWithPhoto(
+                        { source: preview },
+                        {
+                            caption: `Preview by @ThemePreviewBot`,
+                            reply_to_message_id: message_id,
+                        }
+                    );
+                }
 
                 typing.stop();
                 ctx.saveTheme(themeId, null);
