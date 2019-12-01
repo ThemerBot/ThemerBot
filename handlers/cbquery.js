@@ -3,7 +3,13 @@ const queryTooOld = `Error: 400: Bad Request: query is too old and response time
 
 async function saveColorToTheme(ctx, theme, themeId, color) {
     if (theme.using[0] === color) {
-        return ctx.answerCbQuery(ctx.i18n(`cant_reuse_bg`));
+        try {
+            return ctx.answerCbQuery(ctx.i18n(`cant_reuse_bg`));
+        } catch (e) {
+            if (e.description !== queryTooOld) {
+                throw e;
+            }
+        }
     }
 
     theme.using.push(color);
@@ -27,7 +33,16 @@ async function saveColorToTheme(ctx, theme, themeId, color) {
             );
         } catch (e) {
             if (e.description === messageNotModified) {
-                return await ctx.answerCbQuery(ctx.i18n(`dont_click`), true);
+                try {
+                    return await ctx.answerCbQuery(
+                        ctx.i18n(`dont_click`),
+                        true,
+                    );
+                } catch (e) {
+                    if (e.description !== queryTooOld) {
+                        throw e;
+                    }
+                }
             }
         }
     }
@@ -44,14 +59,29 @@ module.exports = bot => {
                 await ctx.deleteMessage();
                 ctx.saveTheme(themeId, null);
             } else {
-                await ctx.answerCbQuery(ctx.i18n(`not_your_theme`));
+                try {
+                    await ctx.answerCbQuery(ctx.i18n(`not_your_theme`));
+                } catch (e) {
+                    if (e.description !== queryTooOld) {
+                        throw e;
+                    }
+                }
             }
 
             return;
         }
 
         if (!theme) {
-            return await ctx.answerCbQuery(ctx.i18n(`no_theme_found`), true);
+            try {
+                return await ctx.answerCbQuery(
+                    ctx.i18n(`no_theme_found`),
+                    true,
+                );
+            } catch (e) {
+                if (e.description !== queryTooOld) {
+                    throw e;
+                }
+            }
         }
 
         switch (data) {
