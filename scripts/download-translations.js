@@ -2,65 +2,81 @@
 
 const fs = require(`fs`);
 const path = require(`path`);
+const {
+    Open: { buffer: unzip },
+} = require(`unzipper`);
 const request = require(`request-promise`);
 
-const getResponse = async (apiPath, data) => {
-    const { PO_API_TOKEN, PO_PROJECT_ID = 235195 } = process.env;
+const LOKALISE_API_TOKEN = `25080e24f2b5608c1137c735b62860b8dde17fdb`; // Read-only
+const LOKALISE_PROJECT_ID = `188240255de857128aa437.31917744`;
 
-    const { response, result } = await request({
+const main = async () => {
+    const { bundle_url } = await request({
         method: `POST`,
-        uri: `https://api.poeditor.com/v2${apiPath}`,
+        uri: `https://api.lokalise.com/api2/projects/${LOKALISE_PROJECT_ID}/files/download`,
         json: true,
-        formData: {
-            api_token: PO_API_TOKEN,
-            id: PO_PROJECT_ID,
-            ...data,
+        headers: {
+            'X-Api-Token': LOKALISE_API_TOKEN,
+        },
+        body: {
+            all_platforms: true,
+            bundle_structure: `%LANG_ISO%.%FORMAT%`,
+            export_empty_as: `skip`,
+            export_sort: `first_added`,
+            filter_data: [`reviewed_only`],
+            format: `json`,
+            language_mapping: [
+                {
+                    original_language_iso: `hi_IN`,
+                    custom_language_iso: `hi`,
+                },
+            ],
+            original_filenames: false,
+            replace_breaks: false,
         },
     });
 
-    if (response.code !== `200`) {
-        console.log(response.message);
-        process.exit();
-    }
+    const zip = await request({
+        method: `GET`,
+        uri: bundle_url,
+        encoding: null,
+    });
 
-    return result;
-};
-
-const main = async () => {
-    const { languages } = await getResponse(`/languages/list`);
-    const dirPath = path.join(__dirname, `../i18n`);
+    const { files } = await unzip(zip);
+    const i18nDir = path.join(__dirname, `../i18n`);
 
     try {
-        fs.mkdirSync(dirPath);
+        fs.mkdirSync(i18nDir);
     } catch (_) {
         // Ignore errors
     }
 
-    return new Promise(resolve => {
-        for (const index in languages) {
-            const { name, code } = languages[index];
-            const filePath = path.join(dirPath, `${code}.json`);
+    return Promise.all(
+        files.map(file => {
+            return new Promise((resolve, reject) => {
+                if (file.type !== `File`) {
+                    return resolve();
+                }
 
-            getResponse(`/projects/export`, {
-                language: code,
-                type: `key_value_json`,
-            }).then(({ url }) => {
-                request(url)
-                    .pipe(fs.createWriteStream(filePath))
-                    .on(`close`, () => {
-                        console.log(`Saved ${name}`);
+                const filePath = path.join(i18nDir, file.path);
 
-                        if (Number(index) === languages.length - 1) {
-                            resolve();
+                file.buffer().then(buffer => {
+                    fs.writeFile(filePath, buffer, error => {
+                        if (error) {
+                            console.log(`Failed to save ${file.path}`);
+                            return reject(error);
                         }
+
+                        console.log(`Saved ${file.path}`);
+                        resolve();
                     });
+                });
             });
-        }
-    });
+        })
+    );
 };
 
 if (require.main === module) {
-    require(`dotenv`).config();
     main();
 } else {
     module.exports = main;
