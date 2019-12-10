@@ -73,15 +73,14 @@ module.exports = bot => {
 
         if (!theme) {
             try {
-                return await ctx.answerCbQuery(
-                    ctx.i18n(`no_theme_found`),
-                    true,
-                );
+                await ctx.answerCbQuery(ctx.i18n(`no_theme_found`), true);
             } catch (e) {
                 if (e.description !== queryTooOld) {
                     throw e;
                 }
             }
+
+            return;
         }
 
         switch (data) {
