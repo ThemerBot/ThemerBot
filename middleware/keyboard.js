@@ -9,10 +9,13 @@ module.exports = bot => {
         );
         const lastButton = backspace ? backspaceButton : defaultButton;
 
+        const whiteButton = button(this.i18n(`white`), `white`);
+        const blackButton = button(this.i18n(`black`), `black`);
+
         const keys = [
             [button(1), button(2), button(3)],
             [button(4), button(5), lastButton],
-            [button(`White`, `white`), button(`Black`, `black`)],
+            [whiteButton, blackButton],
             [cancelButton],
         ];
 
