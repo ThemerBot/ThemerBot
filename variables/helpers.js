@@ -4,7 +4,8 @@ const isLight = c => Color(c).isLight();
 
 /**
  * Changes to brightness of a color.
- * @param {number} ratio A number between -100 and 100 (if it is negative, `color` will be darkened)
+ * @param {number} ratio A number between -100 and 100
+ * (if it is negative, `color` will be darkened)
  * @param {boolean} [invert] if true, ratio is negated.
  * @returns {string} A color with lightness of `color.lightness() + ratio`
  */
@@ -17,8 +18,9 @@ function adjustBrightness(color, ratio, invert = false) {
 
 const getFgColor = bg => isLight(bg) ? adjustBrightness(bg, -45) : `#ffffff`;
 
-function themeData([filling, text, secondaryText, primary]) {
-    const themeIsLight = isLight(filling),
+function themeData([filling, text,, primary]) {
+    const secondaryText = Color(filling).mix(Color(text)).hex(),
+        themeIsLight = isLight(filling),
         textOnPrimary = getFgColor(primary),
         background = adjustBrightness(filling, -6.5),
         backgroundText = adjustBrightness(secondaryText, 5, themeIsLight),
@@ -27,13 +29,11 @@ function themeData([filling, text, secondaryText, primary]) {
             themeIsLight ? 41 : -3,
         );
 
-    // const st = Color(filling).mix(Color(text)).hex();
     return {
         background,
         filling,
         text,
         backgroundText,
-        // secondaryText: st,
         secondaryText,
         primary,
         textOnPrimary,
