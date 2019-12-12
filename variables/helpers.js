@@ -18,7 +18,7 @@ function adjustBrightness(color, ratio, invert = false) {
 
 const getFgColor = bg => isLight(bg) ? adjustBrightness(bg, -45) : `#ffffff`;
 
-function themeData([filling, text,, primary]) {
+function themeData([filling, text, primary]) {
     const secondaryText = Color(filling).mix(Color(text)).hex(),
         themeIsLight = isLight(filling),
         textOnPrimary = getFgColor(primary),
