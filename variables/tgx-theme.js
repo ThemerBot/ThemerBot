@@ -38,57 +38,61 @@ module.exports = (name, colors) => {
 
         headerBackground: ${headerBackground}
         headerLightBackground: ${themeIsLight ? filling : headerBackground}
-        headerText, headerIcon: ${headerText}
+        headerText, headerIcon, chatListAction: ${headerText}
         headerLightIcon, headerLightText: ${themeIsLight ? text : headerText}
         headerTabActiveText, headerTabActive: ${headerTabColor}
         headerButton: ${themeIsLight ? filling : primary}
-        headerButtonIcon: ${themeIsLight ? secondaryText : textOnPrimary}
+        headerButtonIcon, circleButtonRegularIcon, circleButtonThemeIcon: ${themeIsLight ? secondaryText : textOnPrimary}
 
-        iconActive, progress, controlActive, checkActive, sliderActive, togglerActive, inputActive, inlineIcon, inlineOutline, bubbleOut_inlineOutline, inlineText, bubbleOut_inlineText, bubbleOut_inlineIcon, ticks, ticksRead, bubbleOut_ticks, bubbleOut_ticksRead, bubbleOut_file, file, bubbleOut_waveformActive, waveformActive, bubbleIn_textLink, bubbleOut_textLink, textLink, chatSendButton, textSearchQueryHighlight, profileSectionActive, profileSectionActiveContent, badge, bubbleOut_chatVerticalLine, messageVerticalLine, bubbleOut_messageAuthor, messageAuthor, messageSwipeBackground, unreadText, bubble_unreadText, bubble_unreadText_noWallpaper, textNeutral, seekDone, promo, online, playerButtonActive, chatListVerify, fillingPositive, passcode, notification, notificationSecure, notificationPlayer, headerBarCallActive, fileAttach: ${primary}
+        iconActive, progress, controlActive, checkActive, sliderActive, togglerActive, inputActive, inlineIcon, inlineOutline, bubbleOut_inlineOutline, inlineText, bubbleOut_inlineText, bubbleOut_inlineIcon, ticks, ticksRead, bubbleOut_ticks, bubbleOut_ticksRead, bubbleOut_file, file, bubbleOut_waveformActive, waveformActive, bubbleIn_textLink, bubbleOut_textLink, textLink, chatSendButton, textSearchQueryHighlight, profileSectionActive, profileSectionActiveContent, badge, bubbleOut_chatVerticalLine, messageVerticalLine, bubbleOut_messageAuthor, messageAuthor, messageSwipeBackground, unreadText, bubble_unreadText, bubble_unreadText_noWallpaper, textNeutral, seekDone, promo, online, playerButtonActive, chatListVerify, fillingPositive, notification, notificationSecure, notificationPlayer, headerBarCallActive, fileAttach: ${primary}
 
-        messageSwipeContent, passcodeIcon, passcodeText, fillingPositiveContent, attachText, chatListAction: ${textOnPrimary}
+        messageSwipeContent, fillingPositiveContent: ${textOnPrimary}
+        
+        passcode: ${headerBackground}
+        passcodeIcon, passcodeText: ${headerText}
 
-
-        circleButtonRegular, circleButtonTheme: ${primary}
-        circleButtonNewSecret, fileGreen: ${adjustBrightness(primary, 3)}
-        circleButtonNewChannel, fileYellow: ${adjustBrightness(primary, 5.5)}
-        circleButtonNewGroup: ${adjustBrightness(primary, 12)}
-        circleButtonNewChat, fileRed: ${adjustBrightness(primary, 6.3)}
+        circleButtonRegular, circleButtonTheme, circleButtonNewGroup, circleButtonNewSecret,  circleButtonNewChannel, circleButtonNewChat: ${primary}
+        circleButtonNewGroupIcon, circleButtonNewSecretIcon,  circleButtonNewChannelIcon, circleButtonNewChatIcon: ${textOnPrimary}
+        fileGreen: ${adjustBrightness(primary, 3)}
+        fileYellow: ${adjustBrightness(primary, 5.5)}
+        fileRed: ${adjustBrightness(primary, 6.3)}
         circleButtonChat, circleButtonOverlay: ${filling}
         circleButtonChatIcon, circleButtonOverlayIcon, bubbleIn_time, bubbleOut_time, bubbleOut_progress, textPlaceholder, controlInactive: ${secondaryText}
 
         headerRemoveBackgroundHighlight, introSectionActive, playerButton, text: ${text}
 
-        avatarCyan, nameCyan, attachContact: ${adjustBrightness(
+        attachContact, attachFile, attachPhoto, attachLocation, attachInlineBot: ${headerBackground}
+        attachText: ${headerText}
+        avatarCyan, nameCyan: ${adjustBrightness(
             primary,
-            17,
+            8,
             themeIsLight,
         )}
         avatarBlue, nameBlue: ${adjustBrightness(primary, themeIsLight, 15)}
-        avatarGreen, nameGreen, attachFile: ${adjustBrightness(
+        avatarGreen, nameGreen: ${adjustBrightness(
             primary,
-            10,
+            4,
             themeIsLight,
         )}
         avatarViolet, nameViolet: ${adjustBrightness(primary, 5, themeIsLight)}
-        avatarRed, nameRed, attachPhoto: ${adjustBrightness(
+        avatarRed, nameRed: ${adjustBrightness(
+            primary,
+            -2,
+            themeIsLight,
+        )}
+        avatarPink, namePink: ${adjustBrightness(
             primary,
             -5,
             themeIsLight,
         )}
-        avatarPink, namePink, attachLocation: ${adjustBrightness(
+        avatarYellow, nameYellow: ${adjustBrightness(
             primary,
-            -10,
-            themeIsLight,
-        )}
-        avatarYellow, nameYellow, attachInlineBot: ${adjustBrightness(
-            primary,
-            -15,
+            -9,
             themeIsLight,
         )}
         avatarOrange, nameOrange: ${adjustBrightness(
             primary,
-            -17,
+            -12,
             themeIsLight,
         )}
         avatarSavedMessages: ${primary}
@@ -108,7 +112,7 @@ module.exports = (name, colors) => {
         bubbleOut_waveformInactive, waveformInactive: ${secondaryText}74
         bubbleOut_text, bubbleIn_text: ${text}
         seekEmpty, seekReady, playerCoverPlaceholder: ${text}19
-        headerTabInactiveText: ${textOnPrimary}97
+        headerTabInactiveText: ${headerText}97
         togglerActiveBackground: ${primary}97
         unread, bubble_unread, bubble_unread_noWallpaper: ${primary}18
         previewBackground: ${filling}C0
