@@ -19,11 +19,11 @@ function adjustBrightness(color, ratio, invert = false) {
 const getFgColor = bg => isLight(bg) ? adjustBrightness(bg, -45) : `#ffffff`;
 
 function themeData([filling, text, primary]) {
-    const secondaryText = Color(filling).mix(Color(text)).hex(),
-        themeIsLight = isLight(filling),
+    const themeIsLight = isLight(filling),
         textOnPrimary = getFgColor(primary),
         background = adjustBrightness(filling, -6.5),
-        backgroundText = adjustBrightness(secondaryText, 5, themeIsLight),
+        secondaryText = Color(filling).mix(Color(text), .4).hex(),
+        backgroundText = adjustBrightness(secondaryText, -10, themeIsLight),
         bubbleOutColor = adjustBrightness(
             themeIsLight ? primary : filling,
             themeIsLight ? 41 : -3,
