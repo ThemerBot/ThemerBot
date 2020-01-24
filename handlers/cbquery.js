@@ -20,7 +20,7 @@ async function saveColorToTheme(ctx, theme, themeId, color) {
 
     if (length < 3) {
         await ctx.editMessageCaption(
-            ctx.i18n(`choose_color_${length + (length === 2 ? 2 : 1)}`, {
+            ctx.i18n(`choose_color_${length + 1}`, {
                 colors: theme.using.join(`, `),
             }),
             { reply_markup: keyboard },
