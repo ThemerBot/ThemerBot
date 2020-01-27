@@ -18,7 +18,7 @@ async function saveColorToTheme(ctx, theme, themeId, color) {
     const keyboard = ctx.keyboard(true);
     const { length } = theme.using;
 
-    if (length < 4) {
+    if (length < 3) {
         await ctx.editMessageCaption(
             ctx.i18n(`choose_color_${length + 1}`, {
                 colors: theme.using.join(`, `),
@@ -134,7 +134,7 @@ module.exports = bot => {
             case `attheme`: {
                 const typing = ctx.action(`upload_photo`);
                 const { photo, using } = theme;
-                const name = ctx.makeThemeName(using[0], using[3]);
+                const name = ctx.makeThemeName(using[0], using[2]);
 
                 const completedTheme = ctx.makeTheme({
                     type: data,
