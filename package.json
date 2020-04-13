@@ -22,19 +22,19 @@
     "@snejugal/color": "^2.1.1",
     "attheme-js": "^3.0.0",
     "color": "^3.1.2",
-    "dotenv": "^7.0.0",
+    "dotenv": "^8.2.0",
     "get-image-colors": "^2.0.0",
     "image-size": "^0.8.3",
-    "new-i18n": "^1.2.0",
-    "promise-fs": "^2.1.0",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.4",
-    "sharp": "^0.22.1",
-    "telegraf": "^3.34.1",
-    "unzipper": "^0.10.5",
-    "xmldom": "^0.1.27"
+    "new-i18n": "^1.4.0",
+    "promise-fs": "^2.1.1",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.5",
+    "sharp": "^0.25.2",
+    "telegraf": "^3.37.0",
+    "unzipper": "^0.10.10",
+    "xmldom": "^0.3.0"
   },
   "devDependencies": {
-    "eslint": "^6.7.2"
+    "eslint": "^6.8.0"
   }
 }
