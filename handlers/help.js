@@ -1,18 +1,25 @@
 module.exports = bot => {
-    bot.command(`start`, async ctx => {
+    bot.command(`start`, ctx => {
         if (ctx.chat.type === `private`) {
             const { first_name, last_name } = ctx.from;
             const name = `${first_name} ${last_name || ``}`.trim();
 
-            await ctx.reply(ctx.i18n(`start`, { name }));
+            ctx.reply(ctx.i18n(`start`, { name }));
         }
     });
 
-    bot.command(`help`, async () => {
+    bot.command(`help`, () => {
         // TODO
     });
 
-    bot.command(`credits`, async ctx => {
-        await ctx.reply(ctx.i18n(`credits`));
+    bot.command(`credits`, ctx => {
+        ctx.reply(ctx.i18n(`credits`));
+    });
+
+    bot.command(`privacy`, ctx => {
+        ctx.reply(ctx.i18n(`privacy`), {
+            parse_mode: `markdown`,
+            disable_web_page_preview: true,
+        });
     });
 };
