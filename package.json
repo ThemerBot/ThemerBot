@@ -31,6 +31,7 @@
     "request-promise": "^4.2.5",
     "sharp": "^0.25.2",
     "telegraf": "^3.37.0",
+    "telegraf-plugin-tgan": "^1.0.1",
     "unzipper": "^0.10.10",
     "xmldom": "^0.3.0"
   },

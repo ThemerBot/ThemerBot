@@ -1,3 +1,5 @@
+const tgan = require(`telegraf-plugin-tgan`);
+
 const modules = [
     `storage`,
     `errors`,
@@ -10,5 +12,8 @@ const modules = [
     `theme-preview`,
 ];
 
-module.exports = bot =>
+module.exports = bot => {
+    bot.use(tgan());
+
     modules.forEach(middleware => require(`./${middleware}`)(bot));
+};
