@@ -23,19 +23,19 @@
     "attheme-js": "^3.0.0",
     "color": "^3.1.2",
     "dotenv": "^8.2.0",
-    "get-image-colors": "^2.0.0",
+    "get-image-colors": "^2.0.1",
     "image-size": "^0.8.3",
-    "new-i18n": "^1.4.0",
+    "new-i18n": "^3.0.0-0",
     "promise-fs": "^2.1.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
-    "sharp": "^0.25.2",
-    "telegraf": "^3.37.0",
+    "sharp": "^0.25.4",
+    "telegraf": "^3.38.0",
     "telegraf-plugin-tgan": "^1.0.1",
-    "unzipper": "^0.10.10",
+    "unzipper": "^0.10.11",
     "xmldom": "^0.3.0"
   },
   "devDependencies": {
-    "eslint": "^6.8.0"
+    "eslint": "^7.4.0"
   }
 }
