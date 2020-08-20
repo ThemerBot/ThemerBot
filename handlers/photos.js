@@ -1,3 +1,5 @@
+const Sentry = require(`@sentry/node`);
+
 const allowedMimeTypes = [`image/png`, `image/jpeg`];
 
 module.exports = bot => {
@@ -51,6 +53,7 @@ module.exports = bot => {
                 using: [],
             });
         } catch (e) {
+            Sentry.captureException(e);
             await ctx.reply(ctx.i18n(`error`));
         } finally {
             typing.stop();

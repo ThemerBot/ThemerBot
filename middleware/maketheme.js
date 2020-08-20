@@ -45,7 +45,7 @@ module.exports = bot => {
             }
 
             default:
-                throw new TypeError(`Unknow type: ${type}`);
+                throw new TypeError(`Unknown type: ${type}`);
         }
     };
 };

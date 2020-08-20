@@ -1,3 +1,5 @@
+const Sentry = require(`@sentry/node`);
+
 const messageNotModified = `Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message`;
 const queryTooOld = `Bad Request: query is too old and response timeout expired or query ID is invalid`;
 
@@ -7,7 +9,8 @@ async function saveColorToTheme(ctx, theme, themeId, color) {
             return ctx.answerCbQuery(ctx.i18n(`cant_reuse_bg`));
         } catch (e) {
             if (e.description !== queryTooOld) {
-                throw e;
+                Sentry.captureException(e);
+                return;
             }
         }
     }
@@ -40,9 +43,11 @@ async function saveColorToTheme(ctx, theme, themeId, color) {
                     );
                 } catch (e) {
                     if (e.description !== queryTooOld) {
-                        throw e;
+                        Sentry.captureException(e);
                     }
                 }
+            } else {
+                Sentry.captureException(e);
             }
         }
     }
@@ -63,7 +68,7 @@ module.exports = bot => {
                     await ctx.answerCbQuery(ctx.i18n(`not_your_theme`));
                 } catch (e) {
                     if (e.description !== queryTooOld) {
-                        throw e;
+                        Sentry.captureException(e);
                     }
                 }
             }
@@ -76,7 +81,7 @@ module.exports = bot => {
                 await ctx.answerCbQuery(ctx.i18n(`no_theme_found`), true);
             } catch (e) {
                 if (e.description !== queryTooOld) {
-                    throw e;
+                    Sentry.captureException(e);
                 }
             }
 
@@ -192,7 +197,7 @@ module.exports = bot => {
             await ctx.answerCbQuery();
         } catch (e) {
             if (e.description !== queryTooOld) {
-                throw e;
+                Sentry.captureException(e);
             }
         }
     });

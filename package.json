@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/YouTwitFace/ThemerBot#readme",
   "dependencies": {
+    "@sentry/node": "^5.21.1",
     "@snejugal/color": "^2.1.1",
     "attheme-js": "^3.0.0",
     "color": "^3.1.2",

@@ -6,6 +6,7 @@ const {
     Open: { buffer: unzip },
 } = require(`unzipper`);
 const request = require(`request-promise`);
+const Sentry = require(`@sentry/node`);
 
 const LOKALISE_API_TOKEN = `25080e24f2b5608c1137c735b62860b8dde17fdb`; // Read-only
 const LOKALISE_PROJECT_ID = `188240255de857128aa437.31917744`;
@@ -47,8 +48,14 @@ const main = async () => {
 
     try {
         fs.mkdirSync(i18nDir);
-    } catch (_) {
-        // Ignore errors
+    } catch (error) {
+        if (error.code !== `EEXIST`) {
+            throw error;
+        } else {
+            Sentry.captureException(error);
+            console.log(`There was an error`);
+            return;
+        }
     }
 
     return Promise.all(

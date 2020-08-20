@@ -1,8 +1,8 @@
 const tgan = require(`telegraf-plugin-tgan`);
 
 const modules = [
-    `storage`,
     `errors`,
+    `storage`,
     `action`,
     `download`,
     `keyboard`,
