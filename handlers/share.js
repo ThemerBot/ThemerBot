@@ -5,7 +5,7 @@ module.exports = bot => {
         const results = [
             {
                 type: `document`,
-                id: fileID,
+                id: `share`,
                 title: ctx.i18n(`share`),
                 caption: `Made by @${process.env.BOT_USERNAME} #theme`,
                 mime_type: `text/plain`,
