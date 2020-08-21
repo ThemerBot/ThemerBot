@@ -19,11 +19,19 @@ module.exports = bot => {
             const fileName = document.file_name;
             const oldTheme = new Attheme(file.toString(`binary`));
 
-            const colors = [
-                toHex(oldTheme.get(`actionBarActionModeDefault`)),
-                toHex(oldTheme.get(`actionBarActionModeDefaultIcon`)),
-                toHex(oldTheme.get(`chat_outVoiceSeekbar`)),
+            let colors = [
+                oldTheme.get(`actionBarActionModeDefault`),
+                oldTheme.get(`actionBarActionModeDefaultIcon`),
+                oldTheme.get(`chat_outVoiceSeekbar`),
             ];
+
+            if (colors.some(color => !color)) {
+                await ctx.reply(ctx.i18n(`cannot_fix`));
+                typing.stop();
+                return next();
+            }
+
+            colors = colors.map(color => toHex(color));
 
             const theme = ctx.makeTheme({
                 type: fileName.split(`.`).pop(),
