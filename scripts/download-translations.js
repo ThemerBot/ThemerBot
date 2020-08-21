@@ -51,10 +51,6 @@ const main = async () => {
     } catch (error) {
         if (error.code !== `EEXIST`) {
             throw error;
-        } else {
-            Sentry.captureException(error);
-            console.log(`There was an error`);
-            return;
         }
     }
 
