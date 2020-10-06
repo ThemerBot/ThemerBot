@@ -1,5 +1,3 @@
-const tgan = require(`telegraf-plugin-tgan`);
-
 const modules = [
     `errors`,
     `storage`,
@@ -13,7 +11,10 @@ const modules = [
 ];
 
 module.exports = bot => {
-    bot.use(tgan());
+    if (process.env.ENABLE_STATS) {
+        const tgan = require(`telegraf-plugin-tgan`);
+        bot.use(tgan());
+    }
 
     modules.forEach(middleware => require(`./${middleware}`)(bot));
 };
