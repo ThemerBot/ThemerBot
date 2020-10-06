@@ -1,8 +1,7 @@
 const { isLight, adjustBrightness, themeData } = require(`./helpers`);
 
-module.exports = (name, colors) => {
+module.exports = (name, colors, author) => {
     const {
-            author,
             background,
             filling,
             themeIsLight,

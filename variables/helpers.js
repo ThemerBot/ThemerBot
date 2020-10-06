@@ -39,9 +39,8 @@ function themeData([filling, text, primary]) {
         textOnPrimary,
         themeIsLight,
         bubbleOutColor,
-        author: process.env.BOT_USERNAME,
     };
-}
+};
 
 module.exports = {
     isLight,

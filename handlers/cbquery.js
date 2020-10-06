@@ -150,12 +150,12 @@ module.exports = bot => {
 
                 const { message_id, document } = await ctx.editMessageMedia({
                     caption: `Made by @${
-                        process.env.BOT_USERNAME
+                        ctx.botInfo.username
                     }\n#theme ${using.join(` `)}`,
                     type: `document`,
                     media: {
                         source: Buffer.from(completedTheme, `binary`),
-                        filename: `${name} by @${process.env.BOT_USERNAME}.${data}`,
+                        filename: `${name} by @${ctx.botInfo.username}.${data}`,
                     },
                 });
 

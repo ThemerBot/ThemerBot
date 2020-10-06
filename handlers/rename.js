@@ -7,7 +7,7 @@ module.exports = bot => {
         if (reply) {
             const { from, document } = reply;
 
-            const isFromBot = from.username === process.env.BOT_USERNAME;
+            const isFromBot = from.id === ctx.botInfo.id;
             const isThemeFile =
                 document && isThemeFileRegex.test(document.file_name);
 
@@ -18,7 +18,7 @@ module.exports = bot => {
                 await ctx.replyWithDocument(
                     {
                         source: Buffer.from(file, `binary`),
-                        filename: `${text} by @${process.env.BOT_USERNAME}.${fileExt}`,
+                        filename: `${text} by @${ctx.botInfo.username}.${fileExt}`,
                     },
                     {
                         caption: reply.caption,

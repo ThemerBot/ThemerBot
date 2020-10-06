@@ -1,10 +1,6 @@
 /* eslint-disable no-console */
 
-if (!process.env.TOKEN) {
-    require(`dotenv`).config();
-}
-
-const { TOKEN, BOT_USERNAME = ``, API_ROOT } = process.env;
+require(`dotenv`).config();
 
 const fs = require(`fs`);
 const path = require(`path`);
@@ -19,12 +15,9 @@ const main = async () => {
         });
     }
 
-    const bot = new Telegraf(TOKEN, {
-        username: BOT_USERNAME,
+    const bot = new Telegraf(process.env.BOT_TOKEN, {
         telegram: {
-            ...API_ROOT && {
-                apiRoot: API_ROOT,
-            },
+            apiRoot: process.env.API_ROOT || `https://api.telegram.org`,
         },
     });
 
@@ -43,9 +36,8 @@ const main = async () => {
     require(`./middleware`)(bot);
     require(`./handlers`)(bot);
 
-    bot.startPolling();
-
-    console.log(`@${BOT_USERNAME} is running...`);
+    await bot.launch();
+    console.log(`@${bot.context.botInfo.username} is running...`);
 };
 
 main();

@@ -10,7 +10,7 @@ module.exports = bot => {
         return `${ntc.name(primary)[1]} on ${ntc.name(background)[1]}`;
     };
 
-    bot.context.makeTheme = ({ image, name, colors, type }) => {
+    bot.context.makeTheme = function ({ image, name, colors, type }) {
         switch (type) {
             case `attheme`: {
                 const variables = atthemeVariables(colors)
@@ -25,7 +25,7 @@ module.exports = bot => {
             }
 
             case `tgx-theme`: {
-                const theme = tgxVariables(name, colors);
+                const theme = tgxVariables(name, colors, this.botInfo.username);
 
                 return theme
                     .split(`\n`)

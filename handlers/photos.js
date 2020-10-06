@@ -5,10 +5,7 @@ const allowedMimeTypes = [`image/png`, `image/jpeg`];
 module.exports = bot => {
     bot.on([`photo`, `document`], async (ctx, next) => {
         const { forward_from } = ctx.message;
-        if (
-            forward_from &&
-            forward_from.username === process.env.BOT_USERNAME
-        ) {
+        if (forward_from && forward_from.id === ctx.botInfo.id) {
             return;
         }
 
