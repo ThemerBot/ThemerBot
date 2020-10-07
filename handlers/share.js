@@ -14,6 +14,6 @@ module.exports = bot => {
             },
         ];
 
-        ctx.answerInlineQuery(results);
+        await ctx.answerInlineQuery(results);
     });
 };

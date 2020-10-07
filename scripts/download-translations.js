@@ -6,7 +6,6 @@ const {
     Open: { buffer: unzip },
 } = require(`unzipper`);
 const request = require(`request-promise`);
-const Sentry = require(`@sentry/node`);
 
 const LOKALISE_API_TOKEN = `25080e24f2b5608c1137c735b62860b8dde17fdb`; // Read-only
 const LOKALISE_PROJECT_ID = `188240255de857128aa437.31917744`;
@@ -54,7 +53,7 @@ const main = async () => {
         }
     }
 
-    return Promise.all(
+    await Promise.all(
         files.map(file => {
             return new Promise((resolve, reject) => {
                 if (file.type !== `File`) {

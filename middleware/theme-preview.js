@@ -88,7 +88,10 @@ const createPreview = async ({ name, type, theme }) => {
             const ratio = chatHeight / chatWidth;
 
             if (theme.hasWallpaper()) {
-                const imageBuffer = Buffer.from(theme.getWallpaper(), `binary`);
+                const imageBuffer = Buffer.from(
+                    theme.getWallpaper(),
+                    `binary`,
+                );
 
                 const { width, height } = sizeOf(imageBuffer);
                 const imageRatio = height / width;
@@ -132,9 +135,7 @@ const createPreview = async ({ name, type, theme }) => {
 
     const templateBuffer = Buffer.from(serialize(preview), `binary`);
 
-    return sharp(templateBuffer, { density: 150 })
-        .png()
-        .toBuffer();
+    return sharp(templateBuffer, { density: 150 }).png().toBuffer();
 };
 
 module.exports = bot => {

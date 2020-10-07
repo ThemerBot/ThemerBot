@@ -10,10 +10,10 @@ const languages = fs
 const i18n = new I18n(i18nDir, languages, `en`);
 
 module.exports = bot => {
-    bot.context.i18n = function(keyword, variables) {
+    bot.context.i18n = function (keyword, variables) {
         let lang = this.from.language_code;
-        lang = i18n.languages.includes(lang) ? lang : `en`;
+        lang = lang && i18n.languages.includes(lang) ? lang : `en`;
 
-        return i18n.translate(lang, keyword, variables);
+        return i18n.translate(lang, keyword, variables) || ``;
     };
 };

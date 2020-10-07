@@ -2,21 +2,21 @@ const { isLight, adjustBrightness, themeData } = require(`./helpers`);
 
 module.exports = (name, colors, author) => {
     const {
-            background,
-            filling,
-            themeIsLight,
-            primary,
-            secondaryText,
-            text,
-            textOnPrimary,
-            backgroundText,
-            bubbleOutColor,
-        } = themeData(colors),
-        headerBackground = themeIsLight
-            ? primary
-            : adjustBrightness(filling, -2),
-        headerText = themeIsLight ? textOnPrimary : text,
-        headerTabColor = themeIsLight ? textOnPrimary : primary;
+        background,
+        filling,
+        themeIsLight,
+        primary,
+        secondaryText,
+        text,
+        textOnPrimary,
+        backgroundText,
+        bubbleOutColor,
+    } = themeData(colors);
+    const headerBackground = themeIsLight
+        ? primary
+        : adjustBrightness(filling, -2);
+    const headerText = themeIsLight ? textOnPrimary : text;
+    const headerTabColor = themeIsLight ? textOnPrimary : primary;
 
     /* eslint-disable indent */
     return `
@@ -41,7 +41,9 @@ module.exports = (name, colors, author) => {
         headerLightIcon, headerLightText: ${themeIsLight ? text : headerText}
         headerTabActiveText, headerTabActive: ${headerTabColor}
         headerButton: ${themeIsLight ? filling : primary}
-        headerButtonIcon, circleButtonRegularIcon, circleButtonThemeIcon: ${themeIsLight ? secondaryText : textOnPrimary}
+        headerButtonIcon, circleButtonRegularIcon, circleButtonThemeIcon: ${
+            themeIsLight ? secondaryText : textOnPrimary
+        }
 
         iconActive, progress, controlActive, checkActive, sliderActive, togglerActive, inputActive, inlineIcon, inlineOutline, bubbleOut_inlineOutline, inlineText, bubbleOut_inlineText, bubbleOut_inlineIcon, ticks, ticksRead, bubbleOut_ticks, bubbleOut_ticksRead, bubbleOut_file, file, bubbleOut_waveformActive, waveformActive, bubbleIn_textLink, bubbleOut_textLink, textLink, chatSendButton, textSearchQueryHighlight, profileSectionActive, profileSectionActiveContent, badge, bubbleOut_chatVerticalLine, messageVerticalLine, bubbleOut_messageAuthor, messageAuthor, messageSwipeBackground, unreadText, bubble_unreadText, bubble_unreadText_noWallpaper, textNeutral, seekDone, promo, online, playerButtonActive, chatListVerify, fillingPositive, notification, notificationSecure, notificationPlayer, headerBarCallActive, fileAttach: ${primary}
 
@@ -62,33 +64,13 @@ module.exports = (name, colors, author) => {
 
         attachContact, attachFile, attachPhoto, attachLocation, attachInlineBot: ${headerBackground}
         attachText: ${headerText}
-        avatarCyan, nameCyan: ${adjustBrightness(
-            primary,
-            8,
-            themeIsLight,
-        )}
+        avatarCyan, nameCyan: ${adjustBrightness(primary, 8, themeIsLight)}
         avatarBlue, nameBlue: ${adjustBrightness(primary, themeIsLight, 15)}
-        avatarGreen, nameGreen: ${adjustBrightness(
-            primary,
-            4,
-            themeIsLight,
-        )}
+        avatarGreen, nameGreen: ${adjustBrightness(primary, 4, themeIsLight)}
         avatarViolet, nameViolet: ${adjustBrightness(primary, 5, themeIsLight)}
-        avatarRed, nameRed: ${adjustBrightness(
-            primary,
-            -2,
-            themeIsLight,
-        )}
-        avatarPink, namePink: ${adjustBrightness(
-            primary,
-            -5,
-            themeIsLight,
-        )}
-        avatarYellow, nameYellow: ${adjustBrightness(
-            primary,
-            -9,
-            themeIsLight,
-        )}
+        avatarRed, nameRed: ${adjustBrightness(primary, -2, themeIsLight)}
+        avatarPink, namePink: ${adjustBrightness(primary, -5, themeIsLight)}
+        avatarYellow, nameYellow: ${adjustBrightness(primary, -9, themeIsLight)}
         avatarOrange, nameOrange: ${adjustBrightness(
             primary,
             -12,

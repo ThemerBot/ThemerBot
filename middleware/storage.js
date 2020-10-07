@@ -17,7 +17,7 @@ const removeTheme = (key, messageId) => {
 };
 
 module.exports = bot => {
-    bot.context.saveTheme = function(messageId, theme) {
+    bot.context.saveTheme = function (messageId, theme) {
         const key = getKey(this);
         const usersThemes = store.get(key) || {};
 
@@ -45,7 +45,7 @@ module.exports = bot => {
         }
     };
 
-    bot.context.getTheme = function(messageId) {
+    bot.context.getTheme = function (messageId) {
         const key = getKey(this);
         const usersThemes = store.get(key) || {};
         const theme = usersThemes[messageId];
