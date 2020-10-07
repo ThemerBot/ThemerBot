@@ -9,7 +9,7 @@ module.exports = (name, colors) => {
         secondaryText,
         text,
         textOnPrimary,
-        bubbleOutColor: outgoingBubbleBackgroud,
+        bubbleOutColor: outgoingBubbleBackground,
     } = themeData(colors);
 
     const template = `
@@ -214,13 +214,13 @@ module.exports = (name, colors) => {
             outgoing:
               bubble:
                 withWp:
-                  bg: ${outgoingBubbleBackgroud}
+                  bg: ${outgoingBubbleBackground}
                   highlightedBg: ccdadade
-                  stroke: ${outgoingBubbleBackgroud}
+                  stroke: ${outgoingBubbleBackground}
                 withoutWp:
-                  bg: ${outgoingBubbleBackgroud}
+                  bg: ${outgoingBubbleBackground}
                   highlightedBg: ccdadade
-                  stroke: ${outgoingBubbleBackgroud}
+                  stroke: ${outgoingBubbleBackground}
               primaryText: ffffff
               secondaryText: a5ffffff
               linkText: ffffff
