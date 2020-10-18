@@ -148,7 +148,7 @@ module.exports = bot => {
                     colors: using,
                 });
 
-                const { message_id, document } = await ctx.editMessageMedia({
+                const { message_id } = await ctx.editMessageMedia({
                     caption: `Made by @${
                         ctx.botInfo.username
                     }\n#theme ${using.join(` `)}`,
@@ -164,13 +164,6 @@ module.exports = bot => {
                     type: data,
                     theme: completedTheme,
                 });
-
-                await bot.telegram.editMessageReplyMarkup(
-                    ctx.chat.id,
-                    message_id,
-                    null,
-                    ctx.shareKeyboard(document.file_id),
-                );
 
                 preview = await preview;
                 if (preview) {

@@ -1,5 +1,7 @@
+// TODO: remove this at some point
+
 module.exports = bot => {
-    bot.inlineQuery(/^share (\w+)$/, async ctx => {
+    bot.inlineQuery(/^share (\S+)$/, async ctx => {
         const [, fileID] = ctx.match;
 
         const results = [
@@ -10,7 +12,6 @@ module.exports = bot => {
                 caption: `Made by @${ctx.botInfo.username} #theme`,
                 mime_type: `text/plain`,
                 document_url: fileID,
-                reply_markup: ctx.shareKeyboard(fileID),
             },
         ];
 

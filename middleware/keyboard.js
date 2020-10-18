@@ -33,25 +33,15 @@ module.exports = bot => {
     };
 
     bot.context.createButton = button;
-
-    bot.context.shareKeyboard = function (fileID) {
-        return {
-            inline_keyboard: [
-                [
-                    {
-                        text: this.i18n(`share`),
-                        switch_inline_query: `share ${fileID}`,
-                    },
-                ],
-            ],
-        };
-    };
 };
 
 function button(text, data) {
-    if (!data && !isNaN(text)) {
+    if (!data && typeof text === `number`) {
         data = text - 1;
     }
 
-    return { text, callback_data: data };
+    return {
+        text: text.toString(),
+        callback_data: data.toString(),
+    };
 }

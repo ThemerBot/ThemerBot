@@ -40,7 +40,7 @@ module.exports = bot => {
                 colors: colors,
             });
 
-            const reply = await ctx.replyWithDocument(
+            await ctx.replyWithDocument(
                 {
                     source: Buffer.from(theme.toString(`int`), `binary`),
                     filename: fileName,
@@ -49,13 +49,6 @@ module.exports = bot => {
                     caption: `#theme ${colors.join(` `)}`,
                     reply_to_message_id: message.message_id,
                 },
-            );
-
-            await bot.telegram.editMessageReplyMarkup(
-                ctx.chat.id,
-                reply.message_id,
-                null,
-                ctx.shareKeyboard(reply.document.file_id),
             );
 
             typing.stop();
