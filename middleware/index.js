@@ -1,7 +1,6 @@
 const modules = [
     `errors`,
     `storage`,
-    `action`,
     `download`,
     `keyboard`,
     `colors`,

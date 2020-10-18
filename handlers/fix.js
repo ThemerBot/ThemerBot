@@ -14,7 +14,6 @@ module.exports = bot => {
             document && isThemeFileRegex.test(document.file_name);
 
         if (isThemeFile) {
-            const typing = ctx.action(`upload_photo`);
             const file = await ctx.downloadFile();
             const fileName = document.file_name;
             const oldTheme = new Attheme(file.toString(`binary`));
@@ -27,7 +26,6 @@ module.exports = bot => {
 
             if (colors.some(color => !color)) {
                 await ctx.reply(ctx.i18n(`cannot_fix`));
-                typing.stop();
                 return next();
             }
 
@@ -50,8 +48,6 @@ module.exports = bot => {
                     reply_to_message_id: message.message_id,
                 },
             );
-
-            typing.stop();
         }
 
         return next();

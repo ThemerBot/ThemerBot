@@ -137,7 +137,6 @@ module.exports = bot => {
             case `tgios-theme`:
             case `tgx-theme`:
             case `attheme`: {
-                const typing = ctx.action(`upload_photo`);
                 const { photo, using } = theme;
                 const name = ctx.makeThemeName(using[0], using[2]);
 
@@ -176,7 +175,6 @@ module.exports = bot => {
                     );
                 }
 
-                typing.stop();
                 ctx.saveTheme(themeId, null);
                 break;
             }

@@ -21,8 +21,6 @@ module.exports = bot => {
             }
         }
 
-        const typing = ctx.action(`upload_photo`);
-
         try {
             let photo;
             if (ctx.message.document) {
@@ -52,8 +50,6 @@ module.exports = bot => {
         } catch (e) {
             Sentry.captureException(e);
             await ctx.reply(ctx.i18n(`error`));
-        } finally {
-            typing.stop();
         }
     });
 };
