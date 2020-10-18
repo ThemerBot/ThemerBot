@@ -57,21 +57,25 @@ const createPreview = async ({ name, type, theme }) => {
         return null;
     }
 
-    theme = new Attheme(theme);
-    theme.fallbackToSelf(fallbacks);
+    const attheme = new Attheme(theme);
+    attheme.fallbackToSelf(fallbacks);
 
     const preview = parser.parseFromString(template);
 
-    const inBubble = theme.get(`chat_inBubble`);
-    const outBubble = theme.get(`chat_outBubble`);
+    const inBubble = attheme.get(`chat_inBubble`);
+    const outBubble = attheme.get(`chat_outBubble`);
 
-    if (Color.brightness(inBubble) > Color.brightness(outBubble)) {
-        theme.set(`chat_{in/out}Bubble__darkest`, inBubble);
-    } else {
-        theme.set(`chat_{in/out}Bubble__darkest`, outBubble);
+    if (
+        inBubble &&
+        outBubble &&
+        Color.brightness(inBubble) > Color.brightness(outBubble)
+    ) {
+        attheme.set(`chat_{in/out}Bubble__darkest`, inBubble);
+    } else if (outBubble) {
+        attheme.set(`chat_{in/out}Bubble__darkest`, outBubble);
     }
 
-    for (const [variable, color] of theme) {
+    for (const [variable, color] of attheme) {
         const elements = getElementsByClassName(preview, variable);
 
         for (const element of elements) {
@@ -87,9 +91,9 @@ const createPreview = async ({ name, type, theme }) => {
             const chatHeight = Number(element.getAttribute(`height`));
             const ratio = chatHeight / chatWidth;
 
-            if (theme.hasWallpaper()) {
+            if (attheme.hasWallpaper()) {
                 const imageBuffer = Buffer.from(
-                    theme.getWallpaper(),
+                    attheme.getWallpaper(),
                     `binary`,
                 );
 
