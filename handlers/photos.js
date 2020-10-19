@@ -42,12 +42,13 @@ module.exports = bot => {
                 },
             );
 
-            ctx.saveTheme(message_id, {
+            await ctx.saveTheme(message_id, {
                 photo,
                 colors,
                 using: [],
             });
         } catch (e) {
+            console.error(e);
             Sentry.captureException(e);
             await ctx.reply(ctx.i18n(`error`));
         }

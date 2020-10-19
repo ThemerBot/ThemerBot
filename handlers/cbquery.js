@@ -16,7 +16,7 @@ async function saveColorToTheme(ctx, theme, themeId, color) {
     }
 
     theme.using.push(color);
-    ctx.saveTheme(themeId, theme);
+    await ctx.saveTheme(themeId, theme);
 
     const keyboard = ctx.keyboard(true);
     const { length } = theme.using;
@@ -57,12 +57,12 @@ module.exports = bot => {
     bot.on(`callback_query`, async ctx => {
         const { data } = ctx.callbackQuery;
         const { message_id: themeId } = ctx.callbackQuery.message;
-        const theme = ctx.getTheme(themeId);
+        const theme = await ctx.getTheme(themeId);
 
         if (data.startsWith(`cancel`)) {
             if (Number(data.split(`,`).pop()) === ctx.from.id) {
                 await ctx.deleteMessage();
-                ctx.saveTheme(themeId, null);
+                await ctx.saveTheme(themeId, null);
             } else {
                 try {
                     await ctx.answerCbQuery(ctx.i18n(`not_your_theme`));
@@ -101,7 +101,7 @@ module.exports = bot => {
                 // eslint-disable-next-line require-atomic-updates
                 theme.using = [colors[0], colors[4], colors[3], colors[1]];
 
-                ctx.saveTheme(themeId, theme);
+                await ctx.saveTheme(themeId, theme);
 
                 break;
             }
@@ -109,7 +109,7 @@ module.exports = bot => {
             // Backspace
             case `-`: {
                 theme.using.pop();
-                ctx.saveTheme(themeId, theme);
+                await ctx.saveTheme(themeId, theme);
 
                 const { length } = theme.using;
                 const keyboard = ctx.keyboard(length > 0);
@@ -143,7 +143,7 @@ module.exports = bot => {
                 const completedTheme = ctx.makeTheme({
                     type: data,
                     name: name,
-                    image: photo,
+                    image: await ctx.getThemePhoto(photo),
                     colors: using,
                 });
 
@@ -175,7 +175,7 @@ module.exports = bot => {
                     );
                 }
 
-                ctx.saveTheme(themeId, null);
+                await ctx.saveTheme(themeId, null);
                 break;
             }
 

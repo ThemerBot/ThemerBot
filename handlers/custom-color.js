@@ -9,7 +9,7 @@ module.exports = bot => {
         }
 
         const { message_id: themeId } = reply;
-        const theme = ctx.getTheme(themeId);
+        const theme = await ctx.getTheme(themeId);
 
         if (!theme) {
             return await ctx.reply(ctx.i18n(`no_theme_found`));
@@ -31,7 +31,7 @@ module.exports = bot => {
         }
 
         theme.using.push(color);
-        ctx.saveTheme(themeId, theme);
+        await ctx.saveTheme(themeId, theme);
 
         const keyboard = ctx.keyboard(true);
         const { length } = theme.using;
