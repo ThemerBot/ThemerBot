@@ -1,7 +1,9 @@
 // TODO: remove this at some point
 
+const { asyncHandler } = require(`../middleware/errors`);
+
 module.exports = bot => {
-    bot.inlineQuery(/^share (\S+)$/, async ctx => {
+    bot.inlineQuery(/^share (\S+)$/, asyncHandler(async ctx => {
         const [, fileID] = ctx.match;
 
         const results = [
@@ -16,5 +18,5 @@ module.exports = bot => {
         ];
 
         await ctx.answerInlineQuery(results);
-    });
+    }));
 };

@@ -1,7 +1,9 @@
+const {asyncHandler} = require(`../middleware/errors`);
+
 module.exports = bot => {
     const isThemeFileRegex = /\.(?:at|tgx-)theme$/;
 
-    bot.on(`text`, async ctx => {
+    bot.on(`text`, asyncHandler(async ctx => {
         const { text, reply_to_message: reply } = ctx.message;
 
         if (reply) {
@@ -27,5 +29,5 @@ module.exports = bot => {
                 );
             }
         }
-    });
+    }));
 };

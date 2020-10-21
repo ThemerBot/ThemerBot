@@ -1,4 +1,5 @@
 const Sentry = require(`@sentry/node`);
+const { asyncHandler } = require(`../middleware/errors`);
 
 const messageNotModified = `Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message`;
 const queryTooOld = `Bad Request: query is too old and response timeout expired or query ID is invalid`;
@@ -54,7 +55,7 @@ async function saveColorToTheme(ctx, theme, themeId, color) {
 }
 
 module.exports = bot => {
-    bot.on(`callback_query`, async ctx => {
+    bot.on(`callback_query`, asyncHandler(async ctx => {
         const { data } = ctx.callbackQuery;
         const { message_id: themeId } = ctx.callbackQuery.message;
         const theme = await ctx.getTheme(themeId);
@@ -191,5 +192,5 @@ module.exports = bot => {
                 Sentry.captureException(e);
             }
         }
-    });
+    }));
 };

@@ -1,7 +1,8 @@
 const Sentry = require(`@sentry/node`);
+const { asyncHandler } = require(`../middleware/errors`);
 
 module.exports = bot => {
-    bot.hears(/^#(?:[\da-f]{3}){1,2}$/i, async ctx => {
+    bot.hears(/^#(?:[\da-f]{3}){1,2}$/i, asyncHandler(async ctx => {
         const { reply_to_message: reply } = ctx.message;
 
         if (!reply) {
@@ -59,5 +60,5 @@ module.exports = bot => {
         } catch (error) {
             Sentry.captureException(error);
         }
-    });
+    }));
 };
