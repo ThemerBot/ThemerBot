@@ -11,6 +11,10 @@ const LOKALISE_API_TOKEN = `25080e24f2b5608c1137c735b62860b8dde17fdb`; // Read-o
 const LOKALISE_PROJECT_ID = `188240255de857128aa437.31917744`;
 
 const main = async () => {
+    console.log(
+        `Downloading zip from https://app.lokalise.com/project/${LOKALISE_PROJECT_ID}/`,
+    );
+
     const { bundle_url } = await request({
         method: `POST`,
         uri: `https://api.lokalise.com/api2/projects/${LOKALISE_PROJECT_ID}/files/download`,
@@ -41,6 +45,8 @@ const main = async () => {
         uri: bundle_url,
         encoding: null,
     });
+
+    console.log(`Unzipping...`);
 
     const { files } = await unzip(zip);
     const i18nDir = path.join(__dirname, `../i18n`);
