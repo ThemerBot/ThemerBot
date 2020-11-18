@@ -1,3 +1,4 @@
+const env = require(`../env`);
 const { promises: fs } = require(`fs`);
 const path = require(`path`);
 const mkdirp = require(`mkdirp`);
@@ -6,9 +7,8 @@ const Sentry = require(`@sentry/node`);
 const redis = require(`redis`);
 
 const client = redis.createClient();
-const imagesPath = process.env.IMAGES_PATH || `/tmp/ThemerBot`;
 
-mkdirp.sync(imagesPath);
+mkdirp.sync(env.IMAGES_PATH);
 
 client.on(`error`, error => {
     console.error(error);
@@ -35,7 +35,7 @@ module.exports = bot => {
             const _theme = { ...theme };
 
             if (typeof theme.photo !== `string`) {
-                _theme.photo = path.join(imagesPath, key);
+                _theme.photo = path.join(env.IMAGES_PATH, key);
                 await fs.writeFile(_theme.photo, theme.photo);
             }
 

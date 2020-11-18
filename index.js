@@ -1,5 +1,4 @@
-require(`dotenv`).config();
-
+const env = require(`./env`);
 const fs = require(`fs`);
 const path = require(`path`);
 const downloadTranslations = require(`./scripts/download-translations`);
@@ -7,15 +6,15 @@ const Telegraf = require(`telegraf`);
 const Sentry = require(`@sentry/node`);
 
 const main = async () => {
-    if (process.env.SENTRY_DSN) {
+    if (env.SENTRY_DSN) {
         Sentry.init({
-            dsn: process.env.SENTRY_DSN,
+            dsn: env.SENTRY_DSN,
         });
     }
 
-    const bot = new Telegraf(process.env.BOT_TOKEN, {
+    const bot = new Telegraf(env.BOT_TOKEN, {
         telegram: {
-            apiRoot: process.env.API_ROOT || `https://api.telegram.org`,
+            apiRoot: env.API_ROOT,
         },
     });
 

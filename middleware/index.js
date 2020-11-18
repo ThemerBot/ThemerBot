@@ -1,3 +1,5 @@
+const env = require(`../env`);
+
 const modules = [
     `errors`,
     `storage`,
@@ -10,7 +12,7 @@ const modules = [
 ];
 
 module.exports = bot => {
-    if (process.env.ENABLE_STATS) {
+    if (env.ENABLE_STATS) {
         const tgan = require(`telegraf-plugin-tgan`);
         bot.use(tgan());
     }
