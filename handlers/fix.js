@@ -14,7 +14,7 @@ module.exports = bot => {
             document && isThemeFileRegex.test(document.file_name);
 
         if (isThemeFile) {
-            const file = await ctx.downloadFile();
+            const file = await ctx.downloadFile(true);
             const fileName = document.file_name;
             const oldTheme = new Attheme(file.toString(`binary`));
 

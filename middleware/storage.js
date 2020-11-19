@@ -8,7 +8,9 @@ const redis = require(`redis`);
 
 const client = redis.createClient();
 
-mkdirp.sync(env.IMAGES_PATH);
+if (!env.LOCAL_API_ROOT) {
+    mkdirp.sync(env.IMAGES_PATH);
+}
 
 client.on(`error`, error => {
     console.error(error);
@@ -25,16 +27,18 @@ module.exports = bot => {
         const key = getKey(this, messageId);
 
         if (theme === null) {
-            const _theme = await this.getTheme(messageId);
-            if (_theme !== null) {
-                await fs.unlink(_theme.photo);
+            if (!env.LOCAL_API_ROOT) {
+                const _theme = await this.getTheme(messageId);
+                if (_theme !== null) {
+                    await fs.unlink(_theme.photo);
+                }
             }
 
             await del(key);
         } else {
             const _theme = { ...theme };
 
-            if (typeof theme.photo !== `string`) {
+            if (!env.LOCAL_API_ROOT && typeof theme.photo !== `string`) {
                 _theme.photo = path.join(env.IMAGES_PATH, key);
                 await fs.writeFile(_theme.photo, theme.photo);
             }

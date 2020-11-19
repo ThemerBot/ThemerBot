@@ -1,4 +1,4 @@
-const {asyncHandler} = require(`../middleware/errors`);
+const { asyncHandler } = require(`../middleware/errors`);
 
 module.exports = bot => {
     const isThemeFileRegex = /\.(?:at|tgx-)theme$/;
@@ -14,7 +14,7 @@ module.exports = bot => {
                 document && isThemeFileRegex.test(document.file_name);
 
             if (isFromBot && isThemeFile) {
-                const file = await ctx.downloadFile();
+                const file = await ctx.downloadFile(true);
                 const fileExt = document.file_name.split(`.`).pop();
 
                 await ctx.replyWithDocument(
