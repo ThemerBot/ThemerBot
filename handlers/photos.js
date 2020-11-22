@@ -4,7 +4,7 @@ const allowedMimeTypes = [`image/png`, `image/jpeg`];
 
 module.exports = bot => {
     bot.on([`photo`, `document`], async (ctx, next) => {
-        const { forward_from } = ctx.message;
+        const { sender_chat, forward_from } = ctx.message;
         if (forward_from && forward_from.id === ctx.botInfo.id) {
             return;
         }
@@ -19,6 +19,11 @@ module.exports = bot => {
             } else if (fileSize > 1000000) {
                 return await ctx.reply(ctx.i18n(`image_too_big`));
             }
+        }
+
+        if (sender_chat) {
+            await ctx.reply(ctx.i18n(`anonymous_admins`));
+            return;
         }
 
         try {
