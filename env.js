@@ -14,4 +14,5 @@ module.exports = cleanEnv(process.env, {
     API_ROOT: url({ default: `https://api.telegram.org` }),
     LOCAL_API_ROOT: bool({ default: false }),
     ENABLE_STATS: bool({ default: false }),
+    TGAN_API_URL: url({ default: undefined }),
 });

@@ -14,7 +14,7 @@ const modules = [
 module.exports = bot => {
     if (env.ENABLE_STATS) {
         const tgan = require(`telegraf-plugin-tgan`);
-        bot.use(tgan());
+        bot.use(tgan(env.TGAN_API_URL));
     }
 
     modules.forEach(middleware => require(`./${middleware}`)(bot));
