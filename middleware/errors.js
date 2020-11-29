@@ -1,7 +1,8 @@
 const Sentry = require(`@sentry/node`);
+const debug = require(`debug`)(`themerbot:middleware:errors`);
 
 const handleError = error => {
-    console.error((error.stack || error.toString()).replace(/^/gm, `  `));
+    debug(error);
     Sentry.captureException(error);
 };
 

@@ -1,27 +1,34 @@
 const Sentry = require(`@sentry/node`);
 const { asyncHandler } = require(`../middleware/errors`);
+const debug = require(`debug`)(`themerbot:handlers:cbquery`);
 
 const messageNotModified = `Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message`;
 const queryTooOld = `Bad Request: query is too old and response timeout expired or query ID is invalid`;
 
 async function saveColorToTheme(ctx, theme, themeId, color) {
+    debug(`Saving color to theme`);
     if (theme.using[0] === color) {
         try {
+            debug(`Not allowing to use color`);
             return ctx.answerCbQuery(ctx.i18n(`cant_reuse_bg`));
-        } catch (e) {
-            if (e.description !== queryTooOld) {
-                Sentry.captureException(e);
+        } catch (error) {
+            if (error.description !== queryTooOld) {
+                debug(error);
+                Sentry.captureException(error);
                 return;
             }
         }
     }
 
     theme.using.push(color);
+    debug(`Saving theme to storage`);
     await ctx.saveTheme(themeId, theme);
 
+    debug(`Generating keyboard`);
     const keyboard = ctx.keyboard(true);
     const { length } = theme.using;
 
+    debug(`Editing message`);
     if (length < 3) {
         await ctx.editMessageCaption(
             ctx.i18n(`choose_color_${length + 1}`, {
@@ -31,24 +38,20 @@ async function saveColorToTheme(ctx, theme, themeId, color) {
         );
     } else {
         try {
-            await ctx.editMessageCaption(
-                ctx.i18n(`type_of_theme`),
-                ctx.typeKeyboard(),
-            );
-        } catch (e) {
-            if (e.description === messageNotModified) {
+            await ctx.editMessageCaption(ctx.i18n(`type_of_theme`), ctx.typeKeyboard());
+        } catch (error) {
+            if (error.description === messageNotModified) {
                 try {
-                    return await ctx.answerCbQuery(
-                        ctx.i18n(`dont_click`),
-                        true,
-                    );
-                } catch (e) {
-                    if (e.description !== queryTooOld) {
-                        Sentry.captureException(e);
+                    return await ctx.answerCbQuery(ctx.i18n(`dont_click`), true);
+                } catch (error) {
+                    if (error.description !== queryTooOld) {
+                        debug(error);
+                        Sentry.captureException(error);
                     }
                 }
             } else {
-                Sentry.captureException(e);
+                debug(error);
+                Sentry.captureException(error);
             }
         }
     }
@@ -57,8 +60,11 @@ async function saveColorToTheme(ctx, theme, themeId, color) {
 module.exports = bot => {
     bot.on(`callback_query`, asyncHandler(async ctx => {
         const { data } = ctx.callbackQuery;
+        debug(`Handling button click: %s`, data);
         const { message_id: themeId } = ctx.callbackQuery.message;
+        debug(`Fetching theme from storage`);
         const theme = await ctx.getTheme(themeId);
+        debug(`Fetched theme`);
 
         if (data.startsWith(`cancel`)) {
             if (Number(data.split(`,`).pop()) === ctx.from.id) {
@@ -67,9 +73,10 @@ module.exports = bot => {
             } else {
                 try {
                     await ctx.answerCbQuery(ctx.i18n(`not_your_theme`));
-                } catch (e) {
-                    if (e.description !== queryTooOld) {
-                        Sentry.captureException(e);
+                } catch (error) {
+                    if (error.description !== queryTooOld) {
+                        debug(error);
+                        Sentry.captureException(error);
                     }
                 }
             }
@@ -80,9 +87,10 @@ module.exports = bot => {
         if (!theme) {
             try {
                 await ctx.answerCbQuery(ctx.i18n(`no_theme_found`), true);
-            } catch (e) {
-                if (e.description !== queryTooOld) {
-                    Sentry.captureException(e);
+            } catch (error) {
+                if (error.description !== queryTooOld) {
+                    debug(error);
+                    Sentry.captureException(error);
                 }
             }
 
@@ -139,15 +147,20 @@ module.exports = bot => {
             case `tgx-theme`:
             case `attheme`: {
                 const { photo, using } = theme;
+                debug(`Generating theme name`);
                 const name = ctx.makeThemeName(using[0], using[2]);
+                debug(`Generated theme name: %s`, name);
 
+                debug(`Generating theme`);
                 const completedTheme = ctx.makeTheme({
                     type: data,
                     name: name,
                     image: await ctx.getThemePhoto(photo),
                     colors: using,
                 });
+                debug(`Generated theme`);
 
+                debug(`Editing message to theme`);
                 const { message_id } = await ctx.editMessageMedia({
                     caption: `Made by @${
                         ctx.botInfo.username
@@ -158,7 +171,9 @@ module.exports = bot => {
                         filename: `${name} by @${ctx.botInfo.username}.${data}`,
                     },
                 });
+                debug(`Edited message to theme`);
 
+                debug(`Generating theme preview`);
                 let preview = ctx.createThemePreview({
                     name,
                     type: data,
@@ -166,7 +181,9 @@ module.exports = bot => {
                 });
 
                 preview = await preview;
+                debug(`Generated theme preview`);
                 if (preview) {
+                    debug(`Sending preview`);
                     await ctx.replyWithPhoto(
                         { source: preview },
                         {
@@ -174,8 +191,11 @@ module.exports = bot => {
                             reply_to_message_id: message_id,
                         },
                     );
+                } else {
+                    debug(`%s themes don't support previews`, data);
                 }
 
+                debug(`Deleting theme from storage`);
                 await ctx.saveTheme(themeId, null);
                 break;
             }
@@ -185,11 +205,13 @@ module.exports = bot => {
                 await saveColorToTheme(ctx, theme, themeId, theme.colors[data]);
         }
 
+        debug(`Answering callback query`);
         try {
             await ctx.answerCbQuery();
-        } catch (e) {
-            if (e.description !== queryTooOld) {
-                Sentry.captureException(e);
+        } catch (error) {
+            if (error.description !== queryTooOld) {
+                debug(error);
+                Sentry.captureException(error);
             }
         }
     }));

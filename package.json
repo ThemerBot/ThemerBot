@@ -23,6 +23,7 @@
     "@snejugal/color": "^2.1.1",
     "attheme-js": "^3.0.0",
     "color": "^3.1.2",
+    "debug": "^4.3.1",
     "dotenv": "^8.2.0",
     "envalid": "^6.0.2",
     "get-image-colors": "^2.0.1",

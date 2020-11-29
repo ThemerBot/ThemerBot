@@ -5,6 +5,7 @@ const mkdirp = require(`mkdirp`);
 const { promisify } = require(`util`);
 const Sentry = require(`@sentry/node`);
 const redis = require(`redis`);
+const debug = require(`debug`)(`themerbot:middleware:storage`);
 
 const client = redis.createClient();
 
@@ -13,7 +14,7 @@ if (!env.LOCAL_API_ROOT) {
 }
 
 client.on(`error`, error => {
-    console.error(error);
+    debug(error);
     Sentry.captureException(error);
 });
 

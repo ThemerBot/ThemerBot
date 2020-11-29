@@ -1,3 +1,4 @@
+const debug = require(`debug`)(`themerbot:core`);
 const env = require(`./env`);
 const fs = require(`fs`);
 const path = require(`path`);
@@ -7,6 +8,7 @@ const Sentry = require(`@sentry/node`);
 
 const main = async () => {
     if (env.SENTRY_DSN) {
+        debug(`Initializing Sentry logs`);
         Sentry.init({
             dsn: env.SENTRY_DSN,
         });
@@ -19,7 +21,7 @@ const main = async () => {
     });
 
     if (!fs.existsSync(path.join(__dirname, `i18n`))) {
-        console.log(`Downloading i18n files`);
+        debug(`Downloading i18n files`);
         await downloadTranslations();
     }
 
@@ -30,11 +32,14 @@ const main = async () => {
         }
     });
 
+    debug(`Loading middleware`);
     require(`./middleware`)(bot);
+    debug(`Loading handlers`);
     require(`./handlers`)(bot);
 
+    debug(`Launching bot`);
     await bot.launch();
-    console.log(`@${bot.context.botInfo.username} is running...`);
+    debug(`@${bot.context.botInfo.username} is running`);
 };
 
 main();

@@ -1,4 +1,5 @@
 const Sentry = require(`@sentry/node`);
+const debug = require(`debug`)(`themerbot:handler:photos`);
 
 const allowedMimeTypes = [`image/png`, `image/jpeg`];
 
@@ -52,9 +53,9 @@ module.exports = bot => {
                 colors,
                 using: [],
             });
-        } catch (e) {
-            console.error(e);
-            Sentry.captureException(e);
+        } catch (error) {
+            debug(error);
+            Sentry.captureException(error);
             await ctx.reply(ctx.i18n(`error`));
         }
     });

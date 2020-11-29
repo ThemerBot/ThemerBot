@@ -1,5 +1,6 @@
 const Sentry = require(`@sentry/node`);
 const { asyncHandler } = require(`../middleware/errors`);
+const debug = require(`debug`)(`themerbot:handlers:custom-color`);
 
 module.exports = bot => {
     bot.hears(/^#(?:[\da-f]{3}){1,2}$/i, asyncHandler(async ctx => {
@@ -58,6 +59,7 @@ module.exports = bot => {
         try {
             await ctx.deleteMessage();
         } catch (error) {
+            debug(error);
             Sentry.captureException(error);
         }
     }));

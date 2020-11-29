@@ -1,4 +1,5 @@
 const Attheme = require(`attheme-js`).default;
+const debug = require(`debug`)(`themerbot:handlers:fix`);
 
 const toHex = ({ red, green, blue }) =>
     `#${red.toString(16)}${green.toString(16)}${blue.toString(16)}`;
@@ -14,7 +15,9 @@ module.exports = bot => {
             document && isThemeFileRegex.test(document.file_name);
 
         if (isThemeFile) {
+            debug(`Downloading theme file`);
             const file = await ctx.downloadFile(true);
+            debug(`Theme downloaded successfully`);
             const fileName = document.file_name;
             const oldTheme = new Attheme(file.toString(`binary`));
 
@@ -31,6 +34,7 @@ module.exports = bot => {
 
             colors = colors.map(color => toHex(color));
 
+            debug(`Recreating theme`);
             const theme = ctx.makeTheme({
                 type: fileName.split(`.`).pop(),
                 name: fileName,
@@ -38,6 +42,7 @@ module.exports = bot => {
                 colors: colors,
             });
 
+            debug(`Sending theme`);
             await ctx.replyWithDocument(
                 {
                     source: Buffer.from(theme.toString(`int`), `binary`),
