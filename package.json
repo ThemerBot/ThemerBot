@@ -19,14 +19,14 @@
   },
   "homepage": "https://github.com/YouTwitFace/ThemerBot#readme",
   "dependencies": {
-    "@sentry/node": "^5.21.3",
+    "@sentry/node": "^5.28.0",
     "@snejugal/color": "^2.1.1",
     "attheme-js": "^3.0.0",
-    "color": "^3.1.2",
+    "color": "^3.1.3",
     "debug": "^4.3.1",
     "dotenv": "^8.2.0",
     "envalid": "^6.0.2",
-    "get-image-colors": "^2.0.1",
+    "get-image-colors": "^4.0.0",
     "image-size": "^0.8.3",
     "mkdirp": "^1.0.4",
     "new-i18n": "^3.0.0-0",
@@ -41,6 +41,6 @@
     "xmldom": "^0.3.0"
   },
   "devDependencies": {
-    "eslint": "^7.10.0"
+    "eslint": "^7.14.0"
   }
 }
