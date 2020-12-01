@@ -1,6 +1,6 @@
 const env = require(`../env`);
 const fs = require(`promise-fs`);
-const request = require(`request-promise`);
+const fetch = require(`node-fetch`);
 
 module.exports = bot => {
     const getFileLink = async fileID => {
@@ -22,10 +22,8 @@ module.exports = bot => {
             return await fs.readFile(link);
         }
 
-        return await request({
-            uri: link,
-            encoding: null,
-        });
+        const response = await fetch(link);
+        return response.buffer();
     };
 
     bot.context.downloadFile = async function (forceDownload) {
