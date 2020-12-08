@@ -4,6 +4,10 @@ module.exports = bot => {
     const isThemeFileRegex = /\.(?:at|tgx-)theme$/;
 
     bot.on(`text`, asyncHandler(async ctx => {
+        if (ctx.chat.type !== `private`) {
+            return;
+        }
+
         const { text, reply_to_message: reply } = ctx.message;
 
         if (reply) {
