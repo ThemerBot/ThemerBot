@@ -1,11 +1,14 @@
 const path = require(`path`);
 const fs = require(`promise-fs`);
+const { default: querySelector } = require(`query-selector`);
 const { DOMParser, XMLSerializer } = require(`xmldom`);
 const { serializeToString: serialize } = new XMLSerializer();
 const sharp = require(`sharp`);
 const getColors = require(`get-image-colors`);
 const svgPath = path.join(__dirname, `../assets/colors.svg`);
-const { getFgColor } = require(`../variables/helpers`);
+const { isLight } = require(`../variables/helpers`);
+
+const querySelectorAll = (context, query) => querySelector(query, context);
 
 module.exports = bot => {
     bot.context.getImageColors = async (buffer, type) => {
@@ -17,24 +20,28 @@ module.exports = bot => {
         const svgFile = await fs.readFile(svgPath, `utf8`);
         const svg = new DOMParser().parseFromString(svgFile);
 
-        // Get rect
-        const rects = svg.getElementsByTagName(`rect`);
-        const texts = svg.getElementsByTagName(`text`);
-        for (let i = 0; i < 5; i++) {
-            const color = colors[i];
-            rects[i].setAttribute(`fill`, color);
-            texts[i].setAttribute(`fill`, getFgColor(color));
-        }
+        const backgrounds = querySelectorAll(svg, `.color .bg`);
+        const texts = querySelectorAll(svg, `.color .text`);
 
-        const defaultColors = svg.getElementsByTagName(`path`);
-        defaultColors[0].setAttribute(`fill`, colors[4]);
-        defaultColors[1].setAttribute(`fill`, colors[3]);
-        defaultColors[2].setAttribute(`fill`, colors[0]);
+        colors.forEach((color, index) => {
+            const background = backgrounds[index];
+            const text = texts[index];
+
+            background.setAttribute(`fill`, color);
+            text.setAttribute(`fill`, isLight(color) ? `#000000` : `#ffffff`);
+        });
+
+        const autoBackgrounds = querySelectorAll(svg, `.bg-auto`);
+        const [autoText] = querySelectorAll(svg, `.text-auto`);
+
+        autoText.setAttribute(`fill`, isLight(colors[4]) ? `#000000` : `#ffffff`);
+
+        autoBackgrounds[0].setAttribute(`fill`, colors[4]);
+        autoBackgrounds[1].setAttribute(`fill`, colors[3]);
+        autoBackgrounds[2].setAttribute(`fill`, colors[0]);
 
         const svgBuffer = Buffer.from(serialize(svg), `binary`);
-        const image = await sharp(svgBuffer)
-            .png()
-            .toBuffer();
+        const image = await sharp(svgBuffer).png().toBuffer();
 
         return image;
     };
