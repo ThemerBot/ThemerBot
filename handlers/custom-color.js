@@ -28,11 +28,14 @@ module.exports = bot => {
                     .join(``);
         }
 
-        if (theme.using[0] === color) {
+        if (theme.using[0] && theme.using[0].color === color) {
             return ctx.reply(ctx.i18n(`cant_reuse_bg`));
         }
 
-        theme.using.push(color);
+        theme.using.push({
+            label: ctx.getColorName(color),
+            color,
+        });
         await ctx.saveTheme(themeId, theme);
 
         const keyboard = ctx.keyboard(true);
@@ -44,7 +47,7 @@ module.exports = bot => {
             await ctx.telegram.editMessageCaption(
                 ...captionArgs,
                 ctx.i18n(`choose_color_${length + 1}`, {
-                    colors: theme.using.join(`, `),
+                    colors: ctx.labelColors(theme.using).join(`, `),
                 }),
                 { reply_markup: keyboard },
             );

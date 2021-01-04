@@ -4,12 +4,24 @@ const { default: querySelector } = require(`query-selector`);
 const { DOMParser, XMLSerializer } = require(`xmldom`);
 const { serializeToString: serialize } = new XMLSerializer();
 const getColors = require(`get-image-colors`);
+const ntc = require(`./ntc`);
 const svgPath = path.join(__dirname, `../assets/colors.svg`);
 const { isLight } = require(`../variables/helpers`);
 
 const querySelectorAll = (context, query) => querySelector(query, context);
 
 module.exports = bot => {
+    bot.context.labelColors = (colors, includeLabel = true) => {
+        return colors.map(x => {
+            const color = x.color.toUpperCase();
+            return includeLabel && x.label ? `${x.label} (${color})` : color;
+        });
+    };
+
+    bot.context.getColorName = color => {
+        return ntc.name(color)[1];
+    };
+
     bot.context.getImageColors = async (buffer, type) => {
         const colors = await getColors(buffer, type || `image/jpeg`);
         return colors.map(color => color.hex());

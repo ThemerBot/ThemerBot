@@ -1,19 +1,20 @@
 const Attheme = require(`attheme-js`).default;
 
-const ntc = require(`./ntc`);
 const atthemeVariables = require(`../variables/attheme`);
 const tgxVariables = require(`../variables/tgx-theme`);
 const tgiosVariables = require(`../variables/tgios-theme`);
 
 module.exports = bot => {
-    bot.context.makeThemeName = (background, primary) => {
-        return `${ntc.name(primary)[1]} on ${ntc.name(background)[1]}`;
+    bot.context.makeThemeName = function (background, primary) {
+        return `${this.getColorName(primary)} on ${this.getColorName(background)}`;
     };
 
     bot.context.makeTheme = function ({ image, name, colors, type }) {
+        const _colors = colors.map(x => x.color);
+
         switch (type) {
             case `attheme`: {
-                const variables = atthemeVariables(colors)
+                const variables = atthemeVariables(_colors)
                     .split(`\n`)
                     .map(line => line.trim())
                     .join(`\n`);
@@ -25,7 +26,7 @@ module.exports = bot => {
             }
 
             case `tgx-theme`: {
-                const theme = tgxVariables(name, colors, this.botInfo.username);
+                const theme = tgxVariables(name, _colors, this.botInfo.username);
 
                 return theme
                     .split(`\n`)
@@ -35,7 +36,7 @@ module.exports = bot => {
             }
 
             case `tgios-theme`: {
-                const theme = tgiosVariables(name, colors);
+                const theme = tgiosVariables(name, _colors);
 
                 return theme
                     .split(`\n`)

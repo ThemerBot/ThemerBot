@@ -5,9 +5,9 @@ const debug = require(`debug`)(`themerbot:handlers:cbquery`);
 const messageNotModified = `Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message`;
 const queryTooOld = `Bad Request: query is too old and response timeout expired or query ID is invalid`;
 
-async function saveColorToTheme(ctx, theme, themeId, color) {
+async function saveColorToTheme({ ctx, theme, themeId, color, label }) {
     debug(`Saving color to theme`);
-    if (theme.using[0] === color) {
+    if (theme.using[0] && theme.using[0].color === color) {
         try {
             debug(`Not allowing to use color`);
             return ctx.answerCbQuery(ctx.i18n(`cant_reuse_bg`));
@@ -20,7 +20,7 @@ async function saveColorToTheme(ctx, theme, themeId, color) {
         }
     }
 
-    theme.using.push(color);
+    theme.using.push({ color, label });
     debug(`Saving theme to storage`);
     await ctx.saveTheme(themeId, theme);
 
@@ -32,7 +32,7 @@ async function saveColorToTheme(ctx, theme, themeId, color) {
     if (length < 3) {
         await ctx.editMessageCaption(
             ctx.i18n(`choose_color_${length + 1}`, {
-                colors: theme.using.join(`, `),
+                colors: ctx.labelColors(theme.using).join(`, `),
             }),
             { reply_markup: keyboard },
         );
@@ -108,7 +108,12 @@ module.exports = bot => {
                 const { colors } = theme;
 
                 // eslint-disable-next-line require-atomic-updates
-                theme.using = [colors[0], colors[4], colors[3], colors[1]];
+                theme.using = [
+                    { label: `1`, color: colors[0] },
+                    { label: `5`, color: colors[4] },
+                    { label: `4`, color: colors[3] },
+                    { label: `2`, color: colors[1] },
+                ];
 
                 await ctx.saveTheme(themeId, theme);
 
@@ -125,7 +130,7 @@ module.exports = bot => {
 
                 await ctx.editMessageCaption(
                     ctx.i18n(`choose_color_${length + 1}`, {
-                        colors: theme.using.join(`, `),
+                        colors: ctx.labelColors(theme.using).join(`, `),
                     }),
                     { reply_markup: keyboard },
                 );
@@ -134,12 +139,24 @@ module.exports = bot => {
             }
 
             case `white`: {
-                await saveColorToTheme(ctx, theme, themeId, `#ffffff`);
+                await saveColorToTheme({
+                    ctx,
+                    theme,
+                    themeId,
+                    color: `#ffffff`,
+                    label: `White`,
+                });
                 break;
             }
 
             case `black`: {
-                await saveColorToTheme(ctx, theme, themeId, `#000000`);
+                await saveColorToTheme({
+                    ctx,
+                    theme,
+                    themeId,
+                    color: `#000000`,
+                    label: `Black`,
+                });
                 break;
             }
 
@@ -148,7 +165,7 @@ module.exports = bot => {
             case `attheme`: {
                 const { photo, using } = theme;
                 debug(`Generating theme name`);
-                const name = ctx.makeThemeName(using[0], using[2]);
+                const name = ctx.makeThemeName(using[0].color, using[2].color);
                 debug(`Generated theme name: %s`, name);
 
                 debug(`Generating theme`);
@@ -164,7 +181,7 @@ module.exports = bot => {
                 const { message_id } = await ctx.editMessageMedia({
                     caption: `Made by @${
                         ctx.botInfo.username
-                    }\n#theme ${using.join(` `)}`,
+                    }\n#theme ${ctx.labelColors(using, false).join(` `)}`,
                     type: `document`,
                     media: {
                         source: Buffer.from(completedTheme, `binary`),
@@ -201,8 +218,16 @@ module.exports = bot => {
             }
 
             // All colors and type
-            default:
-                await saveColorToTheme(ctx, theme, themeId, theme.colors[data]);
+            default: {
+                const _data = Number(data);
+                await saveColorToTheme({
+                    ctx,
+                    theme,
+                    themeId,
+                    color: theme.colors[_data],
+                    label: _data + 1,
+                });
+            }
         }
 
         debug(`Answering callback query`);
