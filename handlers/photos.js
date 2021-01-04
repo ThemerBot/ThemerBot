@@ -56,7 +56,9 @@ module.exports = bot => {
         } catch (error) {
             debug(error);
             Sentry.captureException(error);
-            await ctx.reply(ctx.i18n(`error`));
+            await ctx.reply(ctx.i18n(`error`), {
+                reply_to_message_id: ctx.message.message_id,
+            });
         }
     });
 };
