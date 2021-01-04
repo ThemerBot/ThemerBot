@@ -52,7 +52,7 @@ const fill = (node, color) => {
     }
 };
 
-const createPreview = async ({ name, type, theme }) => {
+const createPreview = async (browser, { name, type, theme }) => {
     if (![`attheme`].includes(type)) {
         return null;
     }
@@ -137,11 +137,33 @@ const createPreview = async ({ name, type, theme }) => {
         element.textContent = `by @ThemerBot`;
     }
 
-    const templateBuffer = Buffer.from(serialize(preview), `binary`);
+    const svg = preview.getElementsByTagName(`svg`)[0];
+    const width = Number(svg.getAttribute(`width`).replace(`px`, ``));
+    const height = Number(svg.getAttribute(`height`).replace(`px`, ``));
 
-    return sharp(templateBuffer, { density: 150 }).png().toBuffer();
+    const page = await browser.newPage();
+    await page.setViewport({
+        width,
+        height,
+        deviceScaleFactor: 0,
+    });
+
+    await page.goto(`data:text/html,`);
+    await page.setContent(`
+        <style>
+            * {
+                margin: 0;
+            }
+        </style>
+        ${serialize(preview)}
+    `);
+
+    const screenshot = await page.screenshot();
+    await page.close();
+    
+    return screenshot;
 };
 
 module.exports = bot => {
-    bot.context.createThemePreview = createPreview;
+    bot.context.createThemePreview = createPreview.bind(null, bot.context.browser);
 };
