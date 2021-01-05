@@ -2,10 +2,19 @@ const Sentry = require(`@sentry/node`);
 const debug = require(`debug`)(`themerbot:handler:photos`);
 
 const allowedMimeTypes = [`image/png`, `image/jpeg`];
+const mediaGroupIds = new Map(); // chatId => lastGroupId
 
 module.exports = bot => {
+    bot.on(`message`, (ctx, next) => {
+        if (!ctx.message.media_group_id) {
+            mediaGroupIds.delete(ctx.chat.id);
+        }
+
+        next();
+    });
+
     bot.on([`photo`, `document`], async (ctx, next) => {
-        const { sender_chat, forward_from } = ctx.message;
+        const { sender_chat, forward_from, media_group_id } = ctx.message;
         if (forward_from && forward_from.id === ctx.botInfo.id) {
             return;
         }
@@ -25,6 +34,15 @@ module.exports = bot => {
         if (sender_chat) {
             await ctx.reply(ctx.i18n(`anonymous_admins`));
             return;
+        }
+
+        if (media_group_id) {
+            if (mediaGroupIds.has(ctx.chat.id) && mediaGroupIds.get(ctx.chat.id) === media_group_id) {
+                debug(`Ignoring media with group ID ${media_group_id}`);
+                return;
+            }
+
+            mediaGroupIds.set(ctx.chat.id, media_group_id);
         }
 
         try {
