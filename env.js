@@ -1,4 +1,4 @@
-const { cleanEnv, str, bool, url } = require(`envalid`);
+const { cleanEnv, str, bool, url, host, port } = require(`envalid`);
 const dotenv = require(`dotenv`);
 
 dotenv.config();
@@ -15,4 +15,6 @@ module.exports = cleanEnv(process.env, {
     LOCAL_API_ROOT: bool({ default: false }),
     ENABLE_STATS: bool({ default: false }),
     TGAN_API_URL: url({ default: undefined }),
+    REDIS_HOST: host({ default: `127.0.0.1` }),
+    REDIS_PORT: port({ default: 6379 }),
 });

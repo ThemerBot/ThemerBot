@@ -4,10 +4,22 @@ services:
     redis:
         image: redis
         restart: always
-        ports:
-            - '6379:6379'
+        expose:
+            - "6379"
         volumes:
             - data:/data
+
+    themerbot:
+        image: themerbot
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        env_file: ./.env
+        cap_add:
+          - SYS_ADMIN
+        shm_size: 1gb
+        depends_on:
+          - redis
 
 volumes:
     data:
