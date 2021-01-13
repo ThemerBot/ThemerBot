@@ -8,8 +8,8 @@ const redis = require(`redis`);
 const debug = require(`debug`)(`themerbot:middleware:storage`);
 
 const client = redis.createClient({
-    host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT,
+    host: env.REDIS_HOST,
+    port: env.REDIS_PORT,
 });
 
 if (!env.LOCAL_API_ROOT) {
