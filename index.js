@@ -5,7 +5,6 @@ const path = require(`path`);
 const downloadTranslations = require(`./scripts/download-translations`);
 const Telegraf = require(`telegraf`);
 const Sentry = require(`@sentry/node`);
-const puppeteer = require(`puppeteer`);
 
 const main = async () => {
     if (env.SENTRY_DSN) {
@@ -32,8 +31,6 @@ const main = async () => {
             ctx.reply(`The bot is up.`);
         }
     });
-
-    bot.context.browser = await puppeteer.launch();
 
     debug(`Loading middleware`);
     require(`./middleware`)(bot);
