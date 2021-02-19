@@ -1,3 +1,4 @@
+const env = require(`../env`);
 const Sentry = require(`@sentry/node`);
 const { asyncHandler } = require(`../middleware/errors`);
 const debug = require(`debug`)(`themerbot:handlers:cbquery`);
@@ -177,16 +178,28 @@ module.exports = bot => {
                 });
                 debug(`Generated theme`);
 
+                const caption = [
+                    `Made by @${ctx.botInfo.username}`,
+                    `#theme ${ctx.labelColors(using, false).join(` `)}`,
+                ];
+
+                if (env.STRIPE_TOKEN) {
+                    caption.push(``);
+                    caption.push(
+                        `If you'd like to help support the bot, please <a href="https://t.me/${ctx.botInfo.username}?start=donate">donate</a>.`,
+                    );
+                }
+
                 debug(`Editing message to theme`);
                 const { message_id } = await ctx.editMessageMedia({
-                    caption: `Made by @${
-                        ctx.botInfo.username
-                    }\n#theme ${ctx.labelColors(using, false).join(` `)}`,
+                    caption: caption.join(`\n`),
                     type: `document`,
                     media: {
                         source: Buffer.from(completedTheme, `binary`),
                         filename: `${name} by @${ctx.botInfo.username}.${data}`,
                     },
+                }, {
+                    parse_mode: `HTML`,
                 });
                 debug(`Edited message to theme`);
 
