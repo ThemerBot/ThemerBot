@@ -54,7 +54,9 @@ const main = async () => {
         debug(`Worker %d started`, process.pid);
 
         const bot = require(`./bot`);
-        bot.context.botInfo = await bot.telegram.getMe();
+        const me = await bot.telegram.getMe();
+        bot.options.username = me.username;
+        bot.context.botInfo = me;
 
         process.on(`message`, update => {
             bot.handleUpdate(update);
