@@ -17,4 +17,6 @@ module.exports = cleanEnv(process.env, {
     TGAN_API_URL: url({ default: undefined }),
     REDIS_HOST: host({ default: `127.0.0.1` }),
     REDIS_PORT: port({ default: 6379 }),
+
+    STRIPE_TOKEN: str({ default: undefined }),
 });

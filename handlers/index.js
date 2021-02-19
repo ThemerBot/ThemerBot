@@ -1,4 +1,5 @@
 const handlers = [
+    `donate`,
     `help`,
     `custom-color`,
     `photos`,
