@@ -99,18 +99,18 @@ module.exports = bot => {
 
             let _amount;
             switch (amount) {
+                case `1`:
+                    _amount = 100;
+                    break;
+                case `3`:
+                    _amount = 300;
+                    break;
+                default:
                 case `5`:
                     _amount = 500;
                     break;
-                default:
                 case `10`:
                     _amount = 1000;
-                    break;
-                case `20`:
-                    _amount = 2000;
-                    break;
-                case `50`:
-                    _amount = 5000;
                     break;
             }
 
