@@ -7,6 +7,7 @@ const Telegraf = require(`telegraf`);
 const Sentry = require(`@sentry/node`);
 const os = require(`os`);
 const cluster = require(`cluster`);
+const puppeteer = require(`puppeteer`);
 
 const main = async () => {
     if (env.SENTRY_DSN) {
@@ -55,8 +56,10 @@ const main = async () => {
 
         const bot = require(`./bot`);
         const me = await bot.telegram.getMe();
+
         bot.options.username = me.username;
         bot.context.botInfo = me;
+        bot.context.browser = await puppeteer.launch();
 
         process.on(`message`, update => {
             bot.handleUpdate(update);
