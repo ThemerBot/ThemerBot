@@ -24,7 +24,7 @@ client.on(`error`, error => {
 const get = promisify(client.get).bind(client);
 const set = promisify(client.set).bind(client);
 const del = promisify(client.del).bind(client);
-const getKey = (ctx, messageId) => `themerbot-${ctx.chat.id}-${ctx.from.id}-${messageId}`;
+const getKey = (ctx, messageId) => `themerbot_${ctx.chat.id}_${ctx.from.id}_${messageId}`;
 
 module.exports = bot => {
     bot.context.saveTheme = async function (messageId, theme) {
