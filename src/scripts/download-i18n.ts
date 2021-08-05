@@ -1,35 +1,30 @@
-const debug = require(`debug`)(`themerbot:i18n`);
-const fs = require(`fs`);
-const path = require(`path`);
-const {
-    Open: { buffer: unzip },
-} = require(`unzipper`);
-const fetch = require(`node-fetch`);
+import fs from 'fs';
+import path from 'path';
+import { Open as unzip } from 'unzipper';
+import fetch from 'node-fetch';
 
-const LOKALISE_API_TOKEN = `25080e24f2b5608c1137c735b62860b8dde17fdb`; // Read-only
-const LOKALISE_PROJECT_ID = `188240255de857128aa437.31917744`;
+const LOKALISE_API_TOKEN = '25080e24f2b5608c1137c735b62860b8dde17fdb'; // Read-only
+const LOKALISE_PROJECT_ID = '188240255de857128aa437.31917744';
 
-const main = async () => {
-    debug(`Downloading zip from https://app.lokalise.com/project/${LOKALISE_PROJECT_ID}/`);
-
+const download = async (): Promise<void> => {
     const downloadResponse = await fetch(
         `https://api.lokalise.com/api2/projects/${LOKALISE_PROJECT_ID}/files/download`,
         {
-            method: `POST`,
+            method: 'POST',
             headers: {
                 'X-Api-Token': LOKALISE_API_TOKEN,
             },
             body: JSON.stringify({
                 all_platforms: true,
-                bundle_structure: `%LANG_ISO%.%FORMAT%`,
-                export_empty_as: `skip`,
-                export_sort: `first_added`,
-                filter_data: [`reviewed_only`],
-                format: `json`,
+                bundle_structure: '%LANG_ISO%.%FORMAT%',
+                export_empty_as: 'skip',
+                export_sort: 'first_added',
+                filter_data: ['reviewed_only'],
+                format: 'json',
                 language_mapping: [
                     {
-                        original_language_iso: `hi_IN`,
-                        custom_language_iso: `hi`,
+                        original_language_iso: 'hi_IN',
+                        custom_language_iso: 'hi',
                     },
                 ],
                 original_filenames: false,
@@ -42,23 +37,21 @@ const main = async () => {
     const zipResponse = await fetch(bundle_url);
     const zip = await zipResponse.buffer();
 
-    debug(`Unzipping...`);
-
-    const { files } = await unzip(zip);
-    const i18nDir = path.join(__dirname, `../i18n`);
+    const { files } = await unzip.buffer(zip);
+    const i18nDir = path.join(__dirname, '../../i18n');
 
     try {
         fs.mkdirSync(i18nDir);
     } catch (error) {
-        if (error.code !== `EEXIST`) {
+        if (error.code !== 'EEXIST') {
             throw error;
         }
     }
 
     await Promise.all(
         files.map(file => {
-            return new Promise((resolve, reject) => {
-                if (file.type !== `File`) {
+            return new Promise<void>((resolve, reject) => {
+                if (file.type !== 'File') {
                     return resolve();
                 }
 
@@ -67,11 +60,9 @@ const main = async () => {
                 file.buffer().then(buffer => {
                     fs.writeFile(filePath, buffer, error => {
                         if (error) {
-                            debug(`Failed to save ${file.path}`);
                             return reject(error);
                         }
 
-                        debug(`Saved ${file.path}`);
                         resolve();
                     });
                 });
@@ -81,7 +72,7 @@ const main = async () => {
 };
 
 if (require.main === module) {
-    main();
-} else {
-    module.exports = main;
+    download();
 }
+
+export default download;
