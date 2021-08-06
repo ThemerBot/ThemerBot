@@ -43,7 +43,6 @@
   },
   "devDependencies": {
     "@types/color": "^3.0.2",
-    "@types/debug": "^4.1.7",
     "@types/get-image-colors": "^4.0.1",
     "@types/mkdirp": "^1.0.2",
     "@types/node": "^16.4.12",
