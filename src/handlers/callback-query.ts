@@ -107,7 +107,7 @@ requireTheme.callbackQuery(
         await ctx.editMessageMedia({
             type: 'document',
             media: new InputFile(
-                Buffer.from(theme),
+                Buffer.from(theme, 'binary'),
                 `${name} by @${ctx.me.username}.${ctx.callbackQuery.data}`,
             ),
             caption: caption.join('\n'),

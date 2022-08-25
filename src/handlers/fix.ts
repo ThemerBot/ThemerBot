@@ -45,14 +45,14 @@ composer.filter(
 
         const theme = createTheme({
             username: ctx.me.username,
-            image: Buffer.from(oldTheme.getWallpaper() ?? ''),
+            image: Buffer.from(oldTheme.getWallpaper() ?? '', 'binary'),
             name: fileName,
             colors: hexColors,
             type: fileName.split('.').pop() as ThemeType,
         });
 
         await ctx.replyWithDocument(
-            new InputFile(Buffer.from(theme), fileName),
+            new InputFile(Buffer.from(theme, 'binary'), fileName),
             {
                 caption: `#theme ${hexColors.join(' ')}`,
                 reply_to_message_id: ctx.msg.message_id,
