@@ -97,8 +97,13 @@ requireTheme.callbackQuery(
             `#theme ${labelColors(using, false).join(' ')}`,
         ];
 
+        if (ctx.callbackQuery.data === 'tgx-theme') {
+            caption.push('');
+            caption.push(ctx.i18n('tgx_wallpaper'));
+        }
+
         if (env.STRIPE_TOKEN) {
-            caption.push(' ');
+            caption.push('');
             caption.push(
                 `If you'd like to help support the bot, please <a href="https://t.me/${ctx.me.username}?start=donate">donate</a>.`,
             );
