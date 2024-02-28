@@ -9,6 +9,25 @@ services:
         volumes:
             - data:/data
 
+    mysql:
+        image: mysql
+        restart: always
+        expose:
+            - '3306'
+        volumes:
+            - data:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: themerbot
+            MYSQL_USER: themerbot
+            MYSQL_PASSWORD: themerbot
+            MYSQL_RANDOM_ROOT_PASSWORD: true
+
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8080:8080
+
     themerbot:
         image: themerbot
         build:
@@ -20,6 +39,8 @@ services:
         shm_size: 1gb
         depends_on:
             - redis
+            - mysql
 
 volumes:
     data:
+    mysql:

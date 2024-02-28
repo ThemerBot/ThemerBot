@@ -6,6 +6,7 @@ import fs from 'fs';
 import handlers from './handlers';
 import path from 'path';
 import { middleware as i18n } from './utils/i18n';
+import { middleware as stats } from './utils/stats';
 import { I18nContext } from './types';
 import downloadI18n from './scripts/download-i18n';
 
@@ -36,6 +37,9 @@ const main = async () => {
 
     bot.api.config.use(apiThrottler());
 
+    if (env.ENABLE_STATS) {
+        bot.use(await stats());
+    }
     bot.use(i18n());
     bot.use(handlers);
 
