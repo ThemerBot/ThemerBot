@@ -33,7 +33,6 @@
     "get-image-colors": "^4.0.0",
     "grammy": "^1.2.1",
     "image-size": "^0.8.3",
-    "mkdirp": "^1.0.4",
     "mysql2": "^3.9.2",
     "new-i18n": "^3.0.0-5",
     "node-fetch": "^2.6.1",

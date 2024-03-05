@@ -1,10 +1,10 @@
-import env from '../env';
+import { mkdirSync } from 'fs';
 import fs from 'fs/promises';
-import path from 'path';
-import mkdirp from 'mkdirp';
-import { promisify } from 'util';
-import redis from 'redis';
 import { Context } from 'grammy';
+import path from 'path';
+import redis from 'redis';
+import { promisify } from 'util';
+import env from '../env';
 import { Theme } from '../types';
 
 const client = redis.createClient({
@@ -13,7 +13,7 @@ const client = redis.createClient({
 });
 
 if (!env.LOCAL_API_ROOT) {
-    mkdirp.sync(env.IMAGES_PATH);
+    mkdirSync(env.IMAGES_PATH, { recursive: true });
 }
 
 client.on('error', error => {
