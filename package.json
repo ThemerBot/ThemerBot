@@ -36,7 +36,7 @@
     "mysql2": "^3.9.2",
     "new-i18n": "^3.0.0-5",
     "node-fetch": "^2.6.1",
-    "redis": "^3.1.2",
+    "redis": "^4.6.13",
     "sharp": "^0.28.3",
     "unzipper": "^0.10.11",
     "xmldom": "^0.6.0"
@@ -47,7 +47,6 @@
     "@types/mkdirp": "^1.0.2",
     "@types/node": "^16.4.12",
     "@types/node-fetch": "^2.5.12",
-    "@types/redis": "^2.8.31",
     "@types/sharp": "^0.28.5",
     "@types/unzipper": "^0.10.4",
     "@types/xmldom": "^0.1.31",

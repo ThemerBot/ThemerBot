@@ -1,14 +1,15 @@
-import { Bot } from 'grammy';
-import { apiThrottler } from '@grammyjs/transformer-throttler';
 import { run } from '@grammyjs/runner';
-import env from './env';
+import { apiThrottler } from '@grammyjs/transformer-throttler';
 import fs from 'fs';
-import handlers from './handlers';
+import { Bot } from 'grammy';
 import path from 'path';
+import env from './env';
+import handlers from './handlers';
+import downloadI18n from './scripts/download-i18n';
+import { I18nContext } from './types';
 import { middleware as i18n } from './utils/i18n';
 import { middleware as stats } from './utils/stats';
-import { I18nContext } from './types';
-import downloadI18n from './scripts/download-i18n';
+import { client as redisClient } from './utils/storage';
 
 const main = async () => {
     if (!fs.existsSync(path.join(__dirname, 'i18n'))) {
@@ -42,6 +43,8 @@ const main = async () => {
     }
     bot.use(i18n());
     bot.use(handlers);
+
+    await redisClient.connect();
 
     run(bot);
     console.log('Bot started');

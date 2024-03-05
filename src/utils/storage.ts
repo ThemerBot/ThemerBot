@@ -2,14 +2,15 @@ import { mkdirSync } from 'fs';
 import fs from 'fs/promises';
 import { Context } from 'grammy';
 import path from 'path';
-import redis from 'redis';
-import { promisify } from 'util';
+import { createClient } from 'redis';
 import env from '../env';
 import { Theme } from '../types';
 
-const client = redis.createClient({
-    host: env.REDIS_HOST,
-    port: env.REDIS_PORT,
+export const client = createClient({
+    socket: {
+        host: env.REDIS_HOST,
+        port: env.REDIS_PORT,
+    },
 });
 
 if (!env.LOCAL_API_ROOT) {
@@ -19,10 +20,6 @@ if (!env.LOCAL_API_ROOT) {
 client.on('error', error => {
     console.error(error);
 });
-
-const get = promisify(client.get).bind(client);
-const set = promisify(client.set).bind(client);
-const del = promisify(client.del).bind(client);
 
 const getKey = (ctx: Context, messageId: number) =>
     `themerbot_${ctx.chat?.id}_${ctx.from?.id}_${messageId}`;
@@ -42,8 +39,7 @@ export const saveTheme = async (
             }
         }
 
-        // @ts-expect-error the types seem to be broken when using `util.promisify`
-        await del(key);
+        await client.del(key);
     } else {
         const _theme = { ...theme };
 
@@ -52,7 +48,7 @@ export const saveTheme = async (
             await fs.writeFile(_theme.photo, theme.photo);
         }
 
-        await set(key, JSON.stringify(_theme));
+        await client.set(key, JSON.stringify(_theme));
     }
 };
 
@@ -61,7 +57,7 @@ export const getTheme = async (
     messageId: number,
 ): Promise<Theme | null> => {
     const key = getKey(ctx, messageId);
-    const theme = await get(key);
+    const theme = await client.get(key);
 
     return theme ? JSON.parse(theme) : null;
 };
