@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { Open as unzip } from 'unzipper';
-import fetch from 'node-fetch';
 
 const LOKALISE_API_TOKEN = '25080e24f2b5608c1137c735b62860b8dde17fdb'; // Read-only
 const LOKALISE_PROJECT_ID = '188240255de857128aa437.31917744';
@@ -35,18 +34,12 @@ const download = async (): Promise<void> => {
     const { bundle_url } = await downloadResponse.json();
 
     const zipResponse = await fetch(bundle_url);
-    const zip = await zipResponse.buffer();
+    const zip = Buffer.from(await zipResponse.arrayBuffer());
 
     const { files } = await unzip.buffer(zip);
     const i18nDir = path.join(__dirname, '../../i18n');
 
-    try {
-        fs.mkdirSync(i18nDir);
-    } catch (error) {
-        if (error.code !== 'EEXIST') {
-            throw error;
-        }
-    }
+    fs.mkdirSync(i18nDir, { recursive: true });
 
     await Promise.all(
         files.map(file => {

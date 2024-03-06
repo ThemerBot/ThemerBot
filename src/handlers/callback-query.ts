@@ -11,7 +11,7 @@ import { createTheme, getThemeName } from '../utils/themes';
 const composer = new Composer<I18nContext>();
 
 composer.callbackQuery(/^cancel,(\d+)$/, async ctx => {
-    if (Number(ctx.match![1]) === ctx.from.id) {
+    if (Number(ctx.match[1]) === ctx.from.id) {
         await ctx.deleteMessage();
         await ctx.answerCallbackQuery();
 
@@ -24,13 +24,7 @@ composer.callbackQuery(/^cancel,(\d+)$/, async ctx => {
 });
 
 const requireTheme = composer.filter(
-    (ctx): ctx is I18nContext & { msg: object; theme: object } => {
-        if (!ctx.msg) {
-            return false;
-        }
-
-        return true;
-    },
+    (ctx): ctx is I18nContext & { msg: object; theme: object } => !!ctx.msg,
 );
 
 requireTheme.on('callback_query', async (ctx, next) => {

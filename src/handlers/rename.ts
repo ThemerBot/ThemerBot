@@ -1,5 +1,5 @@
-import { Composer } from 'grammy';
-import { Chat, InputFile } from 'grammy/out/platform';
+import { Composer, InputFile } from 'grammy';
+import { Chat } from 'grammy/types';
 import { I18nContext } from '../types';
 import { downloadFile } from '../utils/download';
 

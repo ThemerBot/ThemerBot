@@ -1,7 +1,6 @@
+import fs from 'fs/promises';
 import { Context } from 'grammy';
 import env from '../env';
-import fs from 'fs/promises';
-import fetch from 'node-fetch';
 
 const getFileLink = async (ctx: Context, fileId: string) => {
     const file = await ctx.api.getFile(fileId);
@@ -23,7 +22,7 @@ const getPhoto = async (link: string, forceDownload = false) => {
     }
 
     const response = await fetch(link);
-    return response.buffer();
+    return Buffer.from(await response.arrayBuffer());
 };
 
 export const downloadFile = async (
@@ -57,7 +56,6 @@ export const downloadPhoto = async (
     }
 
     const photos = ctx.msg.photo;
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const photo = photos.pop()!.file_id;
     const link = await getFileLink(ctx, photo);
 

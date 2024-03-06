@@ -59,11 +59,7 @@ composer.hears(/^#(?:[0-9a-f]{3}){1,2}$/i, async ctx => {
         });
     }
 
-    try {
-        await ctx.deleteMessage();
-    } catch (error) {
-        console.error(error);
-    }
+    await ctx.deleteMessage().catch(() => {});
 });
 
 export default composer;

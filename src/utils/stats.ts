@@ -22,7 +22,7 @@ export const middleware = async (): Promise<Middleware<I18nContext>> => {
                     [
                         ctx.from.id,
                         Object.entries(ctx.update).find(
-                            ([key, value]) => typeof value === 'object',
+                            ([, value]) => typeof value === 'object',
                         )?.[0] ?? null,
                         new Date(),
                     ],

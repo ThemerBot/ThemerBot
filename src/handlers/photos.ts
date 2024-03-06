@@ -20,9 +20,12 @@ composer.on('message', async (ctx, next) => {
 });
 
 composer.on([':photo', ':document'], async (ctx, next) => {
-    const { forward_from, media_group_id } = ctx.msg;
+    const { forward_origin, media_group_id } = ctx.msg;
 
-    if (forward_from?.id === ctx.me.id) {
+    if (
+        forward_origin?.type === 'user' &&
+        forward_origin.sender_user.id === ctx.me.id
+    ) {
         await next();
         return;
     }

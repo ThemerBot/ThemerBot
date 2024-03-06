@@ -42,6 +42,13 @@ interface InvalidInvoice {
 }
 
 const getInvoice = (amount: number): ValidInvoice | InvalidInvoice => {
+    if (!env.STRIPE_TOKEN) {
+        return {
+            valid: false,
+            text: 'Sorry, donations aren\'t enabled for this bot.',
+        };
+    }
+
     if (isNaN(amount)) {
         return {
             valid: false,
@@ -62,7 +69,8 @@ const getInvoice = (amount: number): ValidInvoice | InvalidInvoice => {
     return {
         valid: true,
         title: 'Donate',
-        description: 'Do you enjoy this bot and want to help cover the costs of running a popular bot? Donate now!',
+        description:
+            'Do you enjoy this bot and want to help cover the costs of running a popular bot? Donate now!',
         payload: `donate:${amount}`,
         provider_token: env.STRIPE_TOKEN,
         currency: 'USD',
@@ -147,8 +155,7 @@ composer.callbackQuery(/^donate:(\d+|custom)$/, async ctx => {
         return;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const [, amount] = ctx.match!;
+    const [, amount] = ctx.match;
 
     if (amount === 'custom') {
         await ctx.editMessageText(
@@ -199,8 +206,7 @@ privateFilter.hears(amountRegex, async (ctx, next) => {
         return next();
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const [, dollars, cents] = ctx.match!;
+    const [, dollars, cents] = ctx.match;
     const amount = Number(`${dollars || 0}${(cents || '').padStart(2, '0')}`);
     const invoice = getInvoice(amount);
 
