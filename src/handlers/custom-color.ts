@@ -3,6 +3,7 @@ import { I18nContext } from '../types';
 import { getColorName, labelColors } from '../utils/colors';
 import { getKeyboard, getTypeKeyboard } from '../utils/keyboard';
 import { getTheme, saveTheme } from '../utils/storage';
+import { getSponsor } from '../utils/sponsor';
 
 const composer = new Composer<I18nContext>();
 
@@ -47,15 +48,18 @@ composer.hears(/^#(?:[0-9a-f]{3}){1,2}$/i, async ctx => {
 
     if (length < 3) {
         await ctx.api.editMessageCaption(ctx.chat.id, themeId, {
-            caption: ctx.i18n(`choose_color_${length + 1}`, {
-                colors: labelColors(theme.using).join(', '),
-            }),
+            caption:
+                ctx.i18n(`choose_color_${length + 1}`, {
+                    colors: labelColors(theme.using).join(', '),
+                }) + getSponsor(),
             reply_markup: keyboard,
+            parse_mode: 'Markdown',
         });
     } else {
         await ctx.api.editMessageCaption(ctx.chat.id, themeId, {
-            caption: ctx.i18n('type_of_theme'),
+            caption: ctx.i18n('type_of_theme') + getSponsor(),
             reply_markup: getTypeKeyboard(ctx),
+            parse_mode: 'Markdown',
         });
     }
 

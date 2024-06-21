@@ -24,4 +24,7 @@ export default cleanEnv(process.env, {
 
     STRIPE_TOKEN: str({ default: undefined }),
     ENABLE_STATS: bool({ default: false }),
+
+    SPONSORED_BY: str({ default: undefined }),
+    SPONSOR_MESSAGE: str({ default: undefined }),
 });

@@ -7,6 +7,7 @@ import { getKeyboard, getTypeKeyboard } from '../utils/keyboard';
 import { getTheme, saveTheme } from '../utils/storage';
 import createThemePreview from '../utils/theme-preview';
 import { createTheme, getThemeName } from '../utils/themes';
+import { getSponsor } from '../utils/sponsor';
 
 const composer = new Composer<I18nContext>();
 
@@ -52,8 +53,9 @@ requireTheme.callbackQuery('default', async ctx => {
 
     await saveTheme(ctx, ctx.msg.message_id, ctx.theme);
     await ctx.editMessageCaption({
-        caption: ctx.i18n('type_of_theme'),
+        caption: ctx.i18n('type_of_theme') + getSponsor(),
         reply_markup: getTypeKeyboard(ctx),
+        parse_mode: 'Markdown',
     });
 });
 
@@ -65,10 +67,12 @@ requireTheme.callbackQuery('-', async ctx => {
     const keyboard = getKeyboard(ctx, length > 0);
 
     await ctx.editMessageCaption({
-        caption: ctx.i18n(`choose_color_${length + 1}`, {
-            colors: labelColors(ctx.theme.using).join(', '),
-        }),
+        caption:
+            ctx.i18n(`choose_color_${length + 1}`, {
+                colors: labelColors(ctx.theme.using).join(', '),
+            }) + getSponsor(),
         reply_markup: keyboard,
+        parse_mode: 'Markdown',
     });
 });
 
@@ -171,15 +175,18 @@ requireTheme.on('callback_query', async ctx => {
 
     if (length < 3) {
         await ctx.editMessageCaption({
-            caption: ctx.i18n(`choose_color_${length + 1}`, {
-                colors: labelColors(ctx.theme.using).join(', '),
-            }),
+            caption:
+                ctx.i18n(`choose_color_${length + 1}`, {
+                    colors: labelColors(ctx.theme.using).join(', '),
+                }) + getSponsor(),
             reply_markup: keyboard,
+            parse_mode: 'Markdown',
         });
     } else {
         await ctx.editMessageCaption({
-            caption: ctx.i18n('type_of_theme'),
+            caption: ctx.i18n('type_of_theme') + getSponsor(),
             reply_markup: getTypeKeyboard(ctx),
+            parse_mode: 'Markdown',
         });
     }
 });

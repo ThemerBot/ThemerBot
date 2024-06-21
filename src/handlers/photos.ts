@@ -5,6 +5,7 @@ import { getImageColors } from '../utils/colors';
 import { downloadFile, downloadPhoto } from '../utils/download';
 import { getKeyboard } from '../utils/keyboard';
 import { saveTheme } from '../utils/storage';
+import { getSponsor } from '../utils/sponsor';
 
 const composer = new Composer<I18nContext>();
 
@@ -78,8 +79,9 @@ composer.on([':photo', ':document'], async (ctx, next) => {
                 .join('/')}`,
             {
                 reply_markup: keyboard,
-                caption: ctx.i18n('choose_color_1'),
+                caption: ctx.i18n('choose_color_1') + getSponsor(),
                 reply_to_message_id: ctx.msg.message_id,
+                parse_mode: 'Markdown',
             },
         );
 
