@@ -39,7 +39,7 @@ const main = async () => {
     bot.api.config.use(apiThrottler());
 
     if (env.ENABLE_STATS) {
-        bot.use(await stats());
+        bot.use(stats());
     }
     bot.use(i18n());
     bot.use(handlers);
