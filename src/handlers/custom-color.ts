@@ -23,7 +23,7 @@ composer.hears(/^#(?:[0-9a-f]{3}){1,2}$/i, async ctx => {
         return;
     }
 
-    let [color] = ctx.match as RegExpMatchArray;
+    let color = (ctx.match as RegExpMatchArray)[0].toLowerCase();
     if (color.length === 4) {
         color = `#${color
             .slice(1)

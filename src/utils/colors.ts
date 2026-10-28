@@ -24,7 +24,7 @@ export const getImageColors = async (
         .toBuffer();
 
     return getPalette(pixels, 5).map(([red, green, blue]) =>
-        Color({ r: red, g: green, b: blue }).hex(),
+        Color({ r: red, g: green, b: blue }).hex().toLowerCase(),
     );
 };
 
