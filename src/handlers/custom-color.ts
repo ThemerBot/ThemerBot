@@ -7,8 +7,14 @@ import { getSponsor } from '../utils/sponsor';
 
 const composer = new Composer<I18nContext>();
 
-composer.hears(/^#(?:[0-9a-f]{3}){1,2}$/i, async ctx => {
+composer.hears(/^#(?:[0-9a-f]{3}){1,2}$/i, async (ctx, next) => {
     const { reply_to_message: reply } = ctx.msg;
+    const isPrivate = ctx.chat.type === 'private';
+
+    if (!isPrivate && reply?.from?.id !== ctx.me.id) {
+        await next();
+        return;
+    }
 
     if (!reply) {
         await ctx.reply(ctx.i18n('invalid_reply'));
@@ -20,6 +26,11 @@ composer.hears(/^#(?:[0-9a-f]{3}){1,2}$/i, async ctx => {
 
     if (!theme) {
         await ctx.reply(ctx.i18n('no_theme_found'));
+        return;
+    }
+
+    if (theme.using.length >= 3) {
+        await ctx.reply(ctx.i18n('type_of_theme'));
         return;
     }
 
