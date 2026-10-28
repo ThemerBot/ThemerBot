@@ -78,7 +78,7 @@ composer.on([':photo', ':document'], async (ctx, next) => {
             {
                 reply_markup: keyboard,
                 caption: ctx.i18n('choose_color_1') + getSponsor(),
-                reply_to_message_id: ctx.msg.message_id,
+                reply_parameters: { message_id: ctx.msg.message_id },
                 parse_mode: 'Markdown',
             },
         );
@@ -91,7 +91,7 @@ composer.on([':photo', ':document'], async (ctx, next) => {
     } catch (error) {
         console.error(error);
         await ctx.reply(ctx.i18n('error'), {
-            reply_to_message_id: ctx.msg.message_id,
+            reply_parameters: { message_id: ctx.msg.message_id },
         });
     }
 });

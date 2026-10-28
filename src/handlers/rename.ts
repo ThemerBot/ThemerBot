@@ -41,7 +41,7 @@ composer
             {
                 caption: reply.caption,
                 caption_entities: reply.caption_entities,
-                reply_to_message_id: reply.message_id,
+                reply_parameters: { message_id: reply.message_id },
             },
         );
     });

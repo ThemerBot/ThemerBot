@@ -136,7 +136,7 @@ requireTheme.callbackQuery(
             if (preview) {
                 await ctx.replyWithPhoto(new InputFile(preview), {
                     caption: 'Preview by @ThemePreviewBot',
-                    reply_to_message_id: ctx.msg.message_id,
+                    reply_parameters: { message_id: ctx.msg.message_id },
                 });
             }
         }

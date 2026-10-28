@@ -55,7 +55,7 @@ composer.filter(
             new InputFile(Buffer.from(theme, 'binary'), fileName),
             {
                 caption: `#theme ${hexColors.join(' ')}`,
-                reply_to_message_id: ctx.msg.message_id,
+                reply_parameters: { message_id: ctx.msg.message_id },
             },
         );
     },
