@@ -22,6 +22,13 @@ const getPhoto = async (link: string, forceDownload = false) => {
     }
 
     const response = await fetch(link);
+
+    if (!response.ok) {
+        throw new Error(
+            `Failed to download file: ${response.status} ${response.statusText}`,
+        );
+    }
+
     return Buffer.from(await response.arrayBuffer());
 };
 
