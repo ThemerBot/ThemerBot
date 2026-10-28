@@ -63,12 +63,10 @@ composer.on([':photo', ':document'], async (ctx, next) => {
     }
 
     try {
-        let photo;
-        if (ctx.msg.document) {
-            photo = await downloadFile(ctx, true);
-        } else {
-            photo = await downloadPhoto(ctx, true);
-        }
+        // with a local bot api server this is the file's path, which is what gets stored; otherwise it's the downloaded image
+        const photo = ctx.msg.document
+            ? await downloadFile(ctx)
+            : await downloadPhoto(ctx);
 
         const colors = await getImageColors(photo);
         const keyboard = getKeyboard(ctx);
