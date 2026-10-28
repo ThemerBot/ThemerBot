@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
 import { Open as unzip } from 'unzipper';
 
@@ -33,44 +33,55 @@ const download = async (): Promise<void> => {
     );
     const { error, bundle_url } = await downloadResponse.json();
 
-    if (error) {
-        console.error('Error downloading i18n:', error.message);
-        return;
+    if (!downloadResponse.ok || error) {
+        throw new Error(
+            `Error downloading i18n: ${error?.message ?? downloadResponse.statusText}`,
+        );
     }
 
     const zipResponse = await fetch(bundle_url);
+
+    if (!zipResponse.ok) {
+        throw new Error(
+            `Error downloading i18n bundle: ${zipResponse.status} ${zipResponse.statusText}`,
+        );
+    }
+
     const zip = Buffer.from(await zipResponse.arrayBuffer());
-
     const { files } = await unzip.buffer(zip);
+
     const i18nDir = path.join(__dirname, '../../i18n');
+    const tempDir = `${i18nDir}.tmp-${process.pid}`;
 
-    fs.mkdirSync(i18nDir, { recursive: true });
+    await fs.rm(tempDir, { recursive: true, force: true });
+    await fs.mkdir(tempDir, { recursive: true });
 
-    await Promise.all(
-        files.map(file => {
-            return new Promise<void>((resolve, reject) => {
-                if (file.type !== 'File') {
-                    return resolve();
-                }
+    try {
+        await Promise.all(
+            files
+                .filter(file => file.type === 'File')
+                .map(async file => {
+                    const filePath = path.join(
+                        tempDir,
+                        path.basename(file.path),
+                    );
+                    await fs.writeFile(filePath, await file.buffer());
+                }),
+        );
 
-                const filePath = path.join(i18nDir, file.path);
-
-                file.buffer().then(buffer => {
-                    fs.writeFile(filePath, buffer, error => {
-                        if (error) {
-                            return reject(error);
-                        }
-
-                        resolve();
-                    });
-                });
-            });
-        }),
-    );
+        await fs.rm(i18nDir, { recursive: true, force: true });
+        await fs.rename(tempDir, i18nDir);
+    } catch (writeError) {
+        await fs.rm(tempDir, { recursive: true, force: true });
+        throw writeError;
+    }
 };
 
 if (require.main === module) {
-    download();
+    download().catch(error => {
+        console.error(error);
+        process.exitCode = 1;
+    });
 }
 
 export default download;
