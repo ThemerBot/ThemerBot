@@ -1,7 +1,6 @@
 FROM node:24-slim AS build
 
 ENV NODE_ENV=production
-ENV DEBUG=themerbot:core,themerbot:middleware:errors
 
 WORKDIR /usr/src/app
 COPY ["package*.json", "./"]
@@ -12,7 +11,6 @@ RUN npm run build && npm prune --omit=dev
 FROM node:24-slim
 
 ENV NODE_ENV=production
-ENV DEBUG=themerbot:core,themerbot:middleware:errors
 
 WORKDIR /usr/src/app
 RUN chown node:node /usr/src/app
