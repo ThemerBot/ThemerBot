@@ -19,6 +19,7 @@ module.exports = [
             '@typescript-eslint': tsPlugin,
         },
         rules: {
+            ...tsPlugin.configs['eslint-recommended'].overrides[0].rules,
             ...tsPlugin.configs.recommended.rules,
             'array-callback-return': 'error',
             'arrow-parens': ['error', 'as-needed'],
