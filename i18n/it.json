@@ -1,0 +1,18 @@
+{
+    "not_your_theme": "Questo non è il tuo tema 😒",
+    "no_theme_found": "O questo non è il tuo tema o non riesco a trovare un tema per questo messaggio 😔",
+    "choose_color_1": "Che colore vorresti per lo sfondo?",
+    "choose_color_2": "Che colore vorresti per il testo principale?\nColori attuali: {{colors}}",
+    "choose_color_3": "Che colore vorresti per il testo secondario?\nColori attuali: {{colors}}",
+    "choose_color_4": "Che colore vorresti come colore primario?\nColori attuali: {{colors}}",
+    "cant_reuse_bg": "Non posso permetterti di riutilizzare il colore dello sfondo 🚫",
+    "type_of_theme": "Che tipo di tema vuoi?",
+    "error": "C'è stato un errore. Per favore prova con un'altra foto.",
+    "cancel": "Annulla",
+    "share": "Condividi",
+    "share_theme": "Condividi tema",
+    "image_too_big": "Questa immagine è troppo grande. Prova ad inviarla come foto.",
+    "invalid_reply": "Devi rispondere al messaggio.",
+    "dont_click": "Non cliccare così velocemente 💨",
+    "privacy": "Themer Bot memorizza le statistiche di base come l'ID utente, la data in cui il primo e l'ultimo messaggio sono stati inviati al bot e il numero di messaggi inviati al bot. \n\nThemer Bot è scritto e gestito da [Avrumy](tg:\/\/user?id=234480941) e alcuni collaboratori (\/credits) ed è [open source](https:\/\/github.com\/ThemerBot\/ThemerBot) sotto il Licenza AGPL versione 3."
+}

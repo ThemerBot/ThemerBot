@@ -17,6 +17,7 @@ RUN chown node:node /usr/src/app
 COPY --from=build --chown=node:node /usr/src/app/node_modules ./node_modules
 COPY --from=build --chown=node:node /usr/src/app/build ./build
 COPY --from=build --chown=node:node /usr/src/app/assets ./assets
+COPY --from=build --chown=node:node /usr/src/app/i18n ./i18n
 
 USER node
 CMD ["node", "build/index.js"]
