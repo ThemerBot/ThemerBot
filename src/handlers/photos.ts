@@ -77,7 +77,7 @@ composer.on([':photo', ':document'], async (ctx, next) => {
                 .join('/')}`,
             {
                 reply_markup: keyboard,
-                caption: ctx.i18n('choose_color_1') + getSponsor(),
+                caption: ctx.i18n('choose_color_1') + getSponsor(ctx),
                 reply_parameters: { message_id: ctx.msg.message_id },
                 parse_mode: 'Markdown',
             },

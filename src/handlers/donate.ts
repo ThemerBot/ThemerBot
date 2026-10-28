@@ -1,19 +1,22 @@
 import { Composer, InlineKeyboard } from 'grammy';
 import env from '../env';
+import { I18nContext } from '../types';
 
-const composer = new Composer();
+type Translate = I18nContext['i18n'];
+
+const composer = new Composer<I18nContext>();
 
 const privateFilter = composer.filter(ctx => ctx.chat?.type === 'private');
 
-const amountButtons = new InlineKeyboard()
-    .text('$5', 'donate:5')
-    .text('$10', 'donate:10')
-    .row()
-    .text('$20', 'donate:20')
-    .text('$50', 'donate:50')
-    .row()
-    .text('Custom', 'donate:custom');
-const replyButtons = new InlineKeyboard().pay('Donate ❤️');
+const amountButtons = (t: Translate) =>
+    new InlineKeyboard()
+        .text('$5', 'donate:5')
+        .text('$10', 'donate:10')
+        .row()
+        .text('$20', 'donate:20')
+        .text('$50', 'donate:50')
+        .row()
+        .text(t('custom'), 'donate:custom');
 const amountRegex = /^(?:USD)?\s*\$?\s*(\d+)(?:\s*\.\s*(\d{2})\d*)?$/i;
 
 interface ValidInvoice {
@@ -53,41 +56,31 @@ export const parseAmount = (text: string): number | null => {
     return Number(`${dollars}${(cents ?? '').padStart(2, '0')}`);
 };
 
-export const getInvoice = (amount: number): ValidInvoice | InvalidInvoice => {
+export const getInvoice = (
+    amount: number,
+    t: Translate,
+): ValidInvoice | InvalidInvoice => {
     if (!env.STRIPE_TOKEN) {
-        return {
-            valid: false,
-            text: "Sorry, donations aren't enabled for this bot.",
-        };
+        return { valid: false, text: t('donations_disabled') };
     }
 
     if (isNaN(amount)) {
-        return {
-            valid: false,
-            text: 'Please specify a proper amount.',
-        };
+        return { valid: false, text: t('donate_invalid_amount') };
     } else if (amount < 100) {
-        return {
-            valid: false,
-            text: 'Sorry, Telegram has a minimum of $1.',
-        };
+        return { valid: false, text: t('donate_min_amount') };
     } else if (amount > 1000000) {
-        return {
-            valid: false,
-            text: "Sorry, Telegram doesn't allow more than $10,000.",
-        };
+        return { valid: false, text: t('donate_max_amount') };
     }
 
     return {
         valid: true,
-        title: 'Donate',
-        description:
-            'Do you enjoy this bot and want to help cover the costs of running a popular bot? Donate now!',
+        title: t('donate'),
+        description: t('donate_description'),
         payload: `donate:${amount}`,
         currency: 'USD',
         prices: [
             {
-                label: 'Donate',
+                label: t('donate'),
                 amount: amount,
             },
         ],
@@ -95,7 +88,7 @@ export const getInvoice = (amount: number): ValidInvoice | InvalidInvoice => {
             provider_token: env.STRIPE_TOKEN,
             start_parameter: `donate_${amount}`,
             photo_url: 'https://telegra.ph/file/f695296a04e5a44c6776b.png',
-            reply_markup: replyButtons,
+            reply_markup: new InlineKeyboard().pay(t('donate_button')),
         },
     };
 };
@@ -112,10 +105,10 @@ privateFilter.command('start', async (ctx, next) => {
     }
 
     if (!env.STRIPE_TOKEN) {
-        await ctx.reply("Sorry, donations aren't enabled for this bot.");
+        await ctx.reply(ctx.i18n('donations_disabled'));
     } else if (payload.includes('_')) {
         const amount = Number(payload.split('_')[1]);
-        const invoice = getInvoice(amount);
+        const invoice = getInvoice(amount, ctx.i18n);
 
         if (invoice.valid) {
             await ctx.replyWithInvoice(
@@ -131,26 +124,26 @@ privateFilter.command('start', async (ctx, next) => {
         }
     } else {
         await ctx.reply(
-            `Thanks for helping support @${ctx.me.username}! How much would you like to donate? (All amounts are in USD)`,
-            { reply_markup: amountButtons },
+            ctx.i18n('donate_choose_amount', { username: ctx.me.username }),
+            { reply_markup: amountButtons(ctx.i18n) },
         );
     }
 });
 
 composer.command('donate', async ctx => {
     if (!env.STRIPE_TOKEN) {
-        await ctx.reply("Sorry, donations aren't enabled for this bot.");
+        await ctx.reply(ctx.i18n('donations_disabled'));
     } else if (ctx.chat.type === 'private') {
         await ctx.reply(
-            `Thanks for helping support @${ctx.me.username}! How much would you like to donate? (All amounts are in USD)`,
-            { reply_markup: amountButtons },
+            ctx.i18n('donate_choose_amount', { username: ctx.me.username }),
+            { reply_markup: amountButtons(ctx.i18n) },
         );
     } else {
         await ctx.reply(
-            `Thanks for your interest in helping support @${ctx.me.username}! Please contact me in PM to donate.`,
+            ctx.i18n('donate_in_private', { username: ctx.me.username }),
             {
                 reply_markup: new InlineKeyboard().url(
-                    'Donate',
+                    ctx.i18n('donate'),
                     `https://t.me/${ctx.me.username}?start=donate`,
                 ),
             },
@@ -161,7 +154,7 @@ composer.command('donate', async ctx => {
 composer.callbackQuery(/^donate:(\d+|custom)$/, async ctx => {
     if (!env.STRIPE_TOKEN) {
         await ctx.answerCallbackQuery({
-            text: "Sorry, donations aren't enabled for this bot.",
+            text: ctx.i18n('donations_disabled'),
         });
         return;
     }
@@ -170,7 +163,7 @@ composer.callbackQuery(/^donate:(\d+|custom)$/, async ctx => {
 
     if (amount === 'custom') {
         await ctx.editMessageText(
-            `Thanks for helping support @${ctx.me.username}! Please specify the amount you want to donate (in USD).`,
+            ctx.i18n('donate_custom_amount', { username: ctx.me.username }),
         );
         await ctx.answerCallbackQuery();
         return;
@@ -193,7 +186,7 @@ composer.callbackQuery(/^donate:(\d+|custom)$/, async ctx => {
             break;
     }
 
-    const invoice = getInvoice(_amount);
+    const invoice = getInvoice(_amount, ctx.i18n);
 
     if (invoice.valid) {
         await ctx.replyWithInvoice(
@@ -216,7 +209,10 @@ privateFilter.hears(amountRegex, async (ctx, next) => {
         return next();
     }
 
-    const invoice = getInvoice(parseAmount(ctx.match[0]) ?? NaN);
+    const invoice = getInvoice(
+        parseAmount(ctx.match[0]) ?? NaN,
+        ctx.i18n,
+    );
 
     if (invoice.valid) {
         await ctx.replyWithInvoice(
@@ -238,7 +234,7 @@ composer.on(':successful_payment', async ctx => {
     const { total_amount } = ctx.msg.successful_payment;
     const amount = (total_amount / Math.pow(10, 2)).toFixed(2);
 
-    await ctx.reply(`Thanks for donating $${amount}!`);
+    await ctx.reply(ctx.i18n('donate_thanks', { amount }));
 });
 
 export default composer;

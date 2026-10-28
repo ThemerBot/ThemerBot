@@ -1,6 +1,10 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import { getInvoice, parseAmount } from '../src/handlers/donate';
+import { createTranslator } from '../src/utils/i18n';
+
+const translate = createTranslator();
+const t = (keyword: string) => translate('en', keyword);
 
 describe('parseAmount', () => {
     it('parses whole and fractional dollar amounts into cents', () => {
@@ -17,13 +21,16 @@ describe('parseAmount', () => {
 
 describe('getInvoice', () => {
     it('enforces Telegram limits', () => {
-        assert.equal(getInvoice(99).valid, false);
-        assert.equal(getInvoice(1000001).valid, false);
-        assert.equal(getInvoice(NaN).valid, false);
+        assert.deepEqual(getInvoice(99, t), {
+            valid: false,
+            text: 'Sorry, Telegram has a minimum of $1.',
+        });
+        assert.equal(getInvoice(1000001, t).valid, false);
+        assert.equal(getInvoice(NaN, t).valid, false);
     });
 
     it('creates an invoice for a valid amount', () => {
-        const invoice = getInvoice(500);
+        const invoice = getInvoice(500, t);
 
         assert.equal(invoice.valid, true);
         if (invoice.valid) {

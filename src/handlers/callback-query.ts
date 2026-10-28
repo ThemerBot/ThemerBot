@@ -55,7 +55,7 @@ requireTheme.callbackQuery('default', async ctx => {
 
     await saveTheme(ctx, ctx.msg.message_id, ctx.theme);
     await ctx.editMessageCaption({
-        caption: ctx.i18n('type_of_theme') + getSponsor(),
+        caption: ctx.i18n('type_of_theme') + getSponsor(ctx),
         reply_markup: getTypeKeyboard(ctx),
         parse_mode: 'Markdown',
     });
@@ -74,7 +74,7 @@ requireTheme.callbackQuery('-', async ctx => {
         caption:
             ctx.i18n(`choose_color_${length + 1}`, {
                 colors: labelColors(ctx.theme.using).join(', '),
-            }) + getSponsor(),
+            }) + getSponsor(ctx),
         reply_markup: keyboard,
         parse_mode: 'Markdown',
     });
@@ -97,7 +97,7 @@ requireTheme.callbackQuery(
         });
 
         const caption = [
-            `Made by @${ctx.me.username}`,
+            ctx.i18n('made_by', { username: ctx.me.username }),
             `#theme ${labelColors(using, false).join(' ')}`,
         ];
 
@@ -109,7 +109,9 @@ requireTheme.callbackQuery(
         if (env.STRIPE_TOKEN) {
             caption.push('');
             caption.push(
-                `If you'd like to help support the bot, please <a href="https://t.me/${ctx.me.username}?start=donate">donate</a>.`,
+                ctx.i18n('donate_caption', {
+                    link: `https://t.me/${ctx.me.username}?start=donate`,
+                }),
             );
         }
 
@@ -135,7 +137,9 @@ requireTheme.callbackQuery(
 
             if (preview) {
                 await ctx.replyWithPhoto(new InputFile(preview), {
-                    caption: 'Preview by @ThemePreviewBot',
+                    caption: ctx.i18n('preview_by', {
+                        username: 'ThemePreviewBot',
+                    }),
                     reply_parameters: { message_id: ctx.msg.message_id },
                 });
             }
@@ -191,13 +195,13 @@ requireTheme.on('callback_query', async ctx => {
             caption:
                 ctx.i18n(`choose_color_${length + 1}`, {
                     colors: labelColors(ctx.theme.using).join(', '),
-                }) + getSponsor(),
+                }) + getSponsor(ctx),
             reply_markup: keyboard,
             parse_mode: 'Markdown',
         });
     } else {
         await ctx.editMessageCaption({
-            caption: ctx.i18n('type_of_theme') + getSponsor(),
+            caption: ctx.i18n('type_of_theme') + getSponsor(ctx),
             reply_markup: getTypeKeyboard(ctx),
             parse_mode: 'Markdown',
         });

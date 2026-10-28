@@ -62,13 +62,13 @@ composer.hears(/^#(?:[0-9a-f]{3}){1,2}$/i, async (ctx, next) => {
             caption:
                 ctx.i18n(`choose_color_${length + 1}`, {
                     colors: labelColors(theme.using).join(', '),
-                }) + getSponsor(),
+                }) + getSponsor(ctx),
             reply_markup: keyboard,
             parse_mode: 'Markdown',
         });
     } else {
         await ctx.api.editMessageCaption(ctx.chat.id, themeId, {
-            caption: ctx.i18n('type_of_theme') + getSponsor(),
+            caption: ctx.i18n('type_of_theme') + getSponsor(ctx),
             reply_markup: getTypeKeyboard(ctx),
             parse_mode: 'Markdown',
         });

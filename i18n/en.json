@@ -25,5 +25,21 @@
     "privacy": "Themer Bot stores basic stats such as your user ID, the date you first and last messaged the bot and how many messages you've sent to the bot.\n\nThemer Bot is written and maintained by [Avrumy](tg:\/\/user?id=234480941) and a few contributors (\/credits) and is [open source](https:\/\/github.com\/ThemerBot\/ThemerBot) under the AGPL Version 3 license.",
     "cannot_fix": "I can't seem to figure out how to fix this theme. Please try with a different theme.",
     "anonymous_admins": "Sorry, anonymous admins cannot create themes. Please disable anonymous admin or use me in a private chat.",
-    "tgx_wallpaper": "To add your wallpaper, go to <b>Settings > Themes and Chats > Wallpaper<\/b>, and choose the wallpaper you want."
+    "tgx_wallpaper": "To add your wallpaper, go to <b>Settings > Themes and Chats > Wallpaper<\/b>, and choose the wallpaper you want.",
+    "custom": "Custom",
+    "donate": "Donate",
+    "donate_button": "Donate ❤️",
+    "donations_disabled": "Sorry, donations aren't enabled for this bot.",
+    "donate_invalid_amount": "Please specify a proper amount.",
+    "donate_min_amount": "Sorry, Telegram has a minimum of $1.",
+    "donate_max_amount": "Sorry, Telegram doesn't allow more than $10,000.",
+    "donate_description": "Do you enjoy this bot and want to help cover the costs of running a popular bot? Donate now!",
+    "donate_choose_amount": "Thanks for helping support @{{username}}! How much would you like to donate? (All amounts are in USD)",
+    "donate_in_private": "Thanks for your interest in helping support @{{username}}! Please contact me in PM to donate.",
+    "donate_custom_amount": "Thanks for helping support @{{username}}! Please specify the amount you want to donate (in USD).",
+    "donate_thanks": "Thanks for donating ${{amount}}!",
+    "made_by": "Made by @{{username}}",
+    "donate_caption": "If you'd like to help support the bot, please <a href=\"{{link}}\">donate<\/a>.",
+    "preview_by": "Preview by @{{username}}",
+    "sponsored_by": "Sponsored by {{sponsor}}:"
 }
