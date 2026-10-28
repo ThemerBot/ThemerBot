@@ -37,7 +37,6 @@
     "envalid": "^9.0.0",
     "get-rgba-palette": "^2.0.1",
     "grammy": "^1.46.0",
-    "image-size": "^2.0.4",
     "mysql2": "^3.24.6",
     "new-i18n": "^3.0.0-5",
     "redis": "^6.3.0",

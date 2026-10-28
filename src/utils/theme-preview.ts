@@ -8,11 +8,11 @@ import {
     XMLSerializer,
     type Document as XmlDocument,
     type Element as XmlElement,
+    type Node as XmlNode,
 } from '@xmldom/xmldom';
 import Attheme from 'attheme-js';
 import fallbacks from 'attheme-js/lib/fallbacks';
 import fs from 'fs';
-import { imageSize } from 'image-size';
 import path from 'path';
 import sharp from 'sharp';
 
@@ -39,6 +39,9 @@ const getElementsByClassName = (node: XmlDocument, className: string) => [
     ...get(node, className, 'stop'),
 ];
 
+const isElement = (node: XmlNode): node is XmlElement =>
+    node.nodeType === node.ELEMENT_NODE;
+
 const fill = (node: XmlElement, color: RgbColor) => {
     const { red, green, blue, alpha } = color;
     const rgba = `rgba(${red}, ${green}, ${blue}, ${alpha / 255})`;
@@ -49,13 +52,9 @@ const fill = (node: XmlElement, color: RgbColor) => {
         node.setAttribute('fill', rgba);
     }
 
-    if (node.childNodes) {
-        for (const child of Array.from(node.childNodes)) {
-            // @ts-expect-error explain
-            if (child.setAttribute) {
-                // @ts-expect-error explain
-                fill(child, color);
-            }
+    for (const child of Array.from(node.childNodes)) {
+        if (isElement(child)) {
+            fill(child, color);
         }
     }
 };
@@ -101,7 +100,6 @@ const createThemePreview = async ({
         elements.map(async element => {
             const chatWidth = Number(element.getAttribute('width'));
             const chatHeight = Number(element.getAttribute('height'));
-            const ratio = chatHeight / chatWidth;
 
             if (attheme.hasWallpaper()) {
                 const imageBuffer = Buffer.from(
@@ -109,26 +107,8 @@ const createThemePreview = async ({
                     'binary',
                 );
 
-                const { width, height } = imageSize(imageBuffer);
-                const imageRatio = (height ?? 0) / (width ?? 0);
-
-                let finalHeight;
-                let finalWidth;
-
-                if (ratio > imageRatio) {
-                    finalHeight = chatHeight;
-                    finalWidth = Math.round(chatHeight / imageRatio);
-                } else {
-                    finalWidth = chatWidth;
-                    finalHeight = Math.round(chatWidth * imageRatio);
-                }
-
-                const resizedImage = await sharp(imageBuffer)
-                    .resize(finalWidth, finalHeight)
-                    .png()
-                    .toBuffer();
-
-                const croppedImage = await sharp(resizedImage)
+                // sharp's default "cover" fit scales the wallpaper to fill the chat area and crops the overflow around the center.
+                const croppedImage = await sharp(imageBuffer)
                     .resize(chatWidth, chatHeight)
                     .png()
                     .toBuffer();
