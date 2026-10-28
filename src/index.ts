@@ -12,7 +12,7 @@ import { middleware as stats } from './utils/stats';
 import { client as redisClient } from './utils/storage';
 
 const main = async () => {
-    if (!fs.existsSync(path.join(__dirname, 'i18n'))) {
+    if (!fs.existsSync(path.join(__dirname, '../i18n'))) {
         await downloadI18n();
     }
 
