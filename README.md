@@ -2,8 +2,11 @@
 
 ## Instructions
 
+-   Requires Node.js 24 or newer.
 -   Copy `.env.example` to `.env`
 -   Run `npm start`
+
+`npm start` builds the TypeScript source before starting the bot.
 
 ## Translations
 
