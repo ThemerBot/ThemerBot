@@ -162,6 +162,11 @@ requireTheme.on('callback_query', async ctx => {
         }
     }
 
+    if (color === undefined || ctx.theme.using.length >= 3) {
+        await ctx.answerCallbackQuery();
+        return;
+    }
+
     if (ctx.theme.using[0]?.color === color) {
         await ctx.answerCallbackQuery({ text: ctx.i18n('cant_reuse_bg') });
         return;

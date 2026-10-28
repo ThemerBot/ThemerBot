@@ -4,6 +4,8 @@ import getPalette from 'get-rgba-palette';
 import sharp from 'sharp';
 import { Theme } from '../types';
 
+const PALETTE_SIZE = 5;
+
 export const labelColors = (
     colors: Theme['using'],
     includeLabel = true,
@@ -23,8 +25,17 @@ export const getImageColors = async (
         .raw()
         .toBuffer();
 
-    return getPalette(pixels, 5).map(([red, green, blue]) =>
+    const colors = getPalette(pixels, PALETTE_SIZE).map(([red, green, blue]) =>
         Color({ r: red, g: green, b: blue }).hex().toLowerCase(),
+    );
+
+    if (colors.length === 0) {
+        throw new Error('Unable to extract any colors from the image');
+    }
+
+    return Array.from(
+        { length: PALETTE_SIZE },
+        (_, i) => colors[i % colors.length],
     );
 };
 
