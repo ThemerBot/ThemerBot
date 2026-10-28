@@ -8,7 +8,7 @@ import handlers from './handlers';
 import downloadI18n from './scripts/download-i18n';
 import { I18nContext } from './types';
 import { middleware as i18n } from './utils/i18n';
-import { middleware as stats } from './utils/stats';
+import { close as closeStats, middleware as stats } from './utils/stats';
 import { client as redisClient, startImageCleanup } from './utils/storage';
 
 const main = async () => {
@@ -47,10 +47,27 @@ const main = async () => {
     bot.use(handlers);
 
     await redisClient.connect();
-    startImageCleanup();
+    const cleanupTimer = startImageCleanup();
 
-    run(bot);
+    const runner = run(bot);
     console.log('Bot started');
+
+    const shutdown = async (signal: NodeJS.Signals) => {
+        console.log(`Received ${signal}, shutting down`);
+
+        if (runner.isRunning()) {
+            await runner.stop();
+        }
+
+        clearInterval(cleanupTimer);
+        await Promise.allSettled([redisClient.close(), closeStats()]);
+    };
+
+    process.once('SIGINT', shutdown);
+    process.once('SIGTERM', shutdown);
 };
 
-main();
+main().catch(error => {
+    console.error('Failed to start the bot:', error);
+    process.exit(1);
+});

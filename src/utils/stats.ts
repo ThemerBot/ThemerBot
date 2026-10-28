@@ -3,8 +3,15 @@ import mysql from 'mysql2/promise';
 import env from '../env';
 import { I18nContext } from '../types';
 
+let pool: mysql.Pool | undefined;
+
+export const close = async (): Promise<void> => {
+    await pool?.end();
+    pool = undefined;
+};
+
 export const middleware = (): Middleware<I18nContext> => {
-    const pool = mysql.createPool({
+    pool = mysql.createPool({
         host: env.MYSQL_HOST,
         user: env.MYSQL_USER,
         password: env.MYSQL_PASS,
@@ -18,7 +25,7 @@ export const middleware = (): Middleware<I18nContext> => {
         }
 
         try {
-            await pool.query(
+            await pool?.query(
                 'insert into stats (user_id, update_type, created_at) values (?, ?, ?)',
                 [
                     ctx.from.id,
