@@ -6,7 +6,7 @@
 -   Copy `.env.example` to `.env`
 -   Run `npm start`
 
-`npm start` builds the TypeScript source before starting the bot.
+`npm start` builds the TypeScript source before starting the bot. Run `npm test` to type-check and run the unit tests.
 
 ## Docker
 

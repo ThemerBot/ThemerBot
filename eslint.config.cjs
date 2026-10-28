@@ -6,7 +6,7 @@ const globals = require('globals');
 module.exports = [
     eslint.configs.recommended,
     {
-        files: ['src/**/*.ts'],
+        files: ['src/**/*.ts', 'test/**/*.ts'],
         languageOptions: {
             parser: tsParser,
             parserOptions: {

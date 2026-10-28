@@ -41,7 +41,19 @@ interface InvalidInvoice {
     text: string;
 }
 
-const getInvoice = (amount: number): ValidInvoice | InvalidInvoice => {
+// Converts a matched amount like "$5" or "12.50" into cents.
+export const parseAmount = (text: string): number | null => {
+    const match = amountRegex.exec(text.trim());
+
+    if (!match) {
+        return null;
+    }
+
+    const [, dollars, cents] = match;
+    return Number(`${dollars}${(cents ?? '').padStart(2, '0')}`);
+};
+
+export const getInvoice = (amount: number): ValidInvoice | InvalidInvoice => {
     if (!env.STRIPE_TOKEN) {
         return {
             valid: false,
@@ -204,9 +216,7 @@ privateFilter.hears(amountRegex, async (ctx, next) => {
         return next();
     }
 
-    const [, dollars, cents] = ctx.match;
-    const amount = Number(`${dollars || 0}${(cents || '').padStart(2, '0')}`);
-    const invoice = getInvoice(amount);
+    const invoice = getInvoice(parseAmount(ctx.match[0]) ?? NaN);
 
     if (invoice.valid) {
         await ctx.replyWithInvoice(

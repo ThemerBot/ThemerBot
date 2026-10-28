@@ -8,8 +8,9 @@
     "start": "node build/index.js",
     "dev": "ts-node src/index.ts",
     "build": "tsc",
-    "test": "tsc --noEmit",
-    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit && tsc -p test",
+    "test": "npm run typecheck && node --test --require ts-node/register/transpile-only --require ./test/setup.ts \"test/**/*.test.ts\"",
+    "lint": "eslint src/ test/",
     "i18n": "ts-node src/scripts/download-i18n.ts"
   },
   "engines": {
