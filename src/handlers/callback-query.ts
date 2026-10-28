@@ -13,8 +13,8 @@ const composer = new Composer<I18nContext>();
 
 composer.callbackQuery(/^cancel,(\d+)$/, async ctx => {
     if (Number(ctx.match[1]) === ctx.from.id) {
-        await ctx.deleteMessage();
         await ctx.answerCallbackQuery();
+        await ctx.deleteMessage();
 
         if (ctx.msg) {
             await saveTheme(ctx, ctx.msg.message_id, null);
@@ -45,6 +45,8 @@ requireTheme.on('callback_query', async (ctx, next) => {
 });
 
 requireTheme.callbackQuery('default', async ctx => {
+    await ctx.answerCallbackQuery();
+
     ctx.theme.using = [
         { label: '1', color: ctx.theme.colors[0] },
         { label: '5', color: ctx.theme.colors[4] },
@@ -60,6 +62,8 @@ requireTheme.callbackQuery('default', async ctx => {
 });
 
 requireTheme.callbackQuery('-', async ctx => {
+    await ctx.answerCallbackQuery();
+
     ctx.theme.using.pop();
     await saveTheme(ctx, ctx.msg.message_id, ctx.theme);
 
@@ -79,6 +83,8 @@ requireTheme.callbackQuery('-', async ctx => {
 requireTheme.callbackQuery(
     ['attheme', 'tgios-theme', 'tgx-theme'],
     async ctx => {
+        await ctx.answerCallbackQuery();
+
         const { photo, using } = ctx.theme;
         const name = getThemeName(using[0].color, using[2].color);
 
@@ -171,6 +177,8 @@ requireTheme.on('callback_query', async ctx => {
         await ctx.answerCallbackQuery({ text: ctx.i18n('cant_reuse_bg') });
         return;
     }
+
+    await ctx.answerCallbackQuery();
 
     ctx.theme.using.push({ color, label });
     await saveTheme(ctx, themeId, ctx.theme);
