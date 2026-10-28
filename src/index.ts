@@ -1,4 +1,4 @@
-import { run } from '@grammyjs/runner';
+import { run, sequentialize } from '@grammyjs/runner';
 import { apiThrottler } from '@grammyjs/transformer-throttler';
 import fs from 'fs';
 import { Bot } from 'grammy';
@@ -21,6 +21,8 @@ const main = async () => {
             apiRoot: env.API_ROOT,
         },
     });
+
+    bot.use(sequentialize(ctx => ctx.chat?.id.toString()));
 
     bot.catch(err => {
         console.error(
