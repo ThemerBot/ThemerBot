@@ -1,5 +1,5 @@
-import env from '../env';
 import { Composer, InlineKeyboard } from 'grammy';
+import env from '../env';
 
 const composer = new Composer();
 
@@ -21,7 +21,6 @@ interface ValidInvoice {
     title: string;
     description: string;
     payload: string;
-    provider_token: string;
     currency: string;
     prices: [
         {
@@ -30,6 +29,7 @@ interface ValidInvoice {
         },
     ];
     extra: {
+        provider_token: string;
         start_parameter: string;
         photo_url: string;
         reply_markup: InlineKeyboard;
@@ -45,7 +45,7 @@ const getInvoice = (amount: number): ValidInvoice | InvalidInvoice => {
     if (!env.STRIPE_TOKEN) {
         return {
             valid: false,
-            text: 'Sorry, donations aren\'t enabled for this bot.',
+            text: "Sorry, donations aren't enabled for this bot.",
         };
     }
 
@@ -62,7 +62,7 @@ const getInvoice = (amount: number): ValidInvoice | InvalidInvoice => {
     } else if (amount > 1000000) {
         return {
             valid: false,
-            text: 'Sorry, Telegram doesn\'t allow more than $10,000.',
+            text: "Sorry, Telegram doesn't allow more than $10,000.",
         };
     }
 
@@ -72,7 +72,6 @@ const getInvoice = (amount: number): ValidInvoice | InvalidInvoice => {
         description:
             'Do you enjoy this bot and want to help cover the costs of running a popular bot? Donate now!',
         payload: `donate:${amount}`,
-        provider_token: env.STRIPE_TOKEN,
         currency: 'USD',
         prices: [
             {
@@ -81,6 +80,7 @@ const getInvoice = (amount: number): ValidInvoice | InvalidInvoice => {
             },
         ],
         extra: {
+            provider_token: env.STRIPE_TOKEN,
             start_parameter: `donate_${amount}`,
             photo_url: 'https://telegra.ph/file/f695296a04e5a44c6776b.png',
             reply_markup: replyButtons,
@@ -100,7 +100,7 @@ privateFilter.command('start', async (ctx, next) => {
     }
 
     if (!env.STRIPE_TOKEN) {
-        await ctx.reply('Sorry, donations aren\'t enabled for this bot.');
+        await ctx.reply("Sorry, donations aren't enabled for this bot.");
     } else if (payload.includes('_')) {
         const amount = Number(payload.split('_')[1]);
         const invoice = getInvoice(amount);
@@ -110,7 +110,6 @@ privateFilter.command('start', async (ctx, next) => {
                 invoice.title,
                 invoice.description,
                 invoice.payload,
-                invoice.provider_token,
                 invoice.currency,
                 invoice.prices,
                 invoice.extra,
@@ -128,7 +127,7 @@ privateFilter.command('start', async (ctx, next) => {
 
 composer.command('donate', async ctx => {
     if (!env.STRIPE_TOKEN) {
-        await ctx.reply('Sorry, donations aren\'t enabled for this bot.');
+        await ctx.reply("Sorry, donations aren't enabled for this bot.");
     } else if (ctx.chat.type === 'private') {
         await ctx.reply(
             `Thanks for helping support @${ctx.me.username}! How much would you like to donate? (All amounts are in USD)`,
@@ -150,7 +149,7 @@ composer.command('donate', async ctx => {
 composer.callbackQuery(/^donate:(\d+|custom)$/, async ctx => {
     if (!env.STRIPE_TOKEN) {
         await ctx.answerCallbackQuery({
-            text: 'Sorry, donations aren\'t enabled for this bot.',
+            text: "Sorry, donations aren't enabled for this bot.",
         });
         return;
     }
@@ -189,7 +188,6 @@ composer.callbackQuery(/^donate:(\d+|custom)$/, async ctx => {
             invoice.title,
             invoice.description,
             invoice.payload,
-            invoice.provider_token,
             invoice.currency,
             invoice.prices,
             invoice.extra,
@@ -215,7 +213,6 @@ privateFilter.hears(amountRegex, async (ctx, next) => {
             invoice.title,
             invoice.description,
             invoice.payload,
-            invoice.provider_token,
             invoice.currency,
             invoice.prices,
             invoice.extra,

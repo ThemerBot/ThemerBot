@@ -4,8 +4,8 @@ import { I18nContext } from '../types';
 import { getImageColors } from '../utils/colors';
 import { downloadFile, downloadPhoto } from '../utils/download';
 import { getKeyboard } from '../utils/keyboard';
-import { saveTheme } from '../utils/storage';
 import { getSponsor } from '../utils/sponsor';
+import { saveTheme } from '../utils/storage';
 
 const composer = new Composer<I18nContext>();
 
@@ -70,7 +70,7 @@ composer.on([':photo', ':document'], async (ctx, next) => {
             photo = await downloadPhoto(ctx, true);
         }
 
-        const colors = await getImageColors(photo, mimeType);
+        const colors = await getImageColors(photo);
         const keyboard = getKeyboard(ctx);
 
         const { message_id } = await ctx.replyWithPhoto(

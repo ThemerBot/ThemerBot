@@ -1,6 +1,8 @@
-import getColors from 'get-image-colors';
-import { Theme } from '../types';
 import ntc from '@youtwitface/ntcjs';
+import Color from 'color';
+import getPalette from 'get-rgba-palette';
+import sharp from 'sharp';
+import { Theme } from '../types';
 
 export const labelColors = (
     colors: Theme['using'],
@@ -14,16 +16,16 @@ export const labelColors = (
 
 export const getImageColors = async (
     buffer: string | Buffer,
-    type?: string,
 ): Promise<string[]> => {
-    let colors;
-    if (typeof buffer === 'string') {
-        colors = await getColors(buffer);
-    } else {
-        colors = await getColors(buffer, type ?? 'image/jpeg');
-    }
+    const pixels = await sharp(buffer)
+        .toColourspace('srgb')
+        .ensureAlpha()
+        .raw()
+        .toBuffer();
 
-    return colors.map(color => color.hex());
+    return getPalette(pixels, 5).map(([red, green, blue]) =>
+        Color({ r: red, g: green, b: blue }).hex(),
+    );
 };
 
 export const getColorName = (color: string): string => {

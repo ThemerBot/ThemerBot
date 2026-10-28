@@ -2,14 +2,19 @@
  * https://gitlab.com/AlexStrNik/attheme-preview
  */
 
-import fs from 'fs';
-import path from 'path';
-import Attheme from 'attheme-js';
 import { brightness, RgbColor } from '@snejugal/color';
+import {
+    DOMParser,
+    XMLSerializer,
+    type Document as XmlDocument,
+    type Element as XmlElement,
+} from '@xmldom/xmldom';
+import Attheme from 'attheme-js';
 import fallbacks from 'attheme-js/lib/fallbacks';
-import sharp from 'sharp';
+import fs from 'fs';
 import { imageSize } from 'image-size';
-import { DOMParser, XMLSerializer } from 'xmldom';
+import path from 'path';
+import sharp from 'sharp';
 
 const { serializeToString: serialize } = new XMLSerializer();
 
@@ -17,13 +22,13 @@ const templatePath = path.join(__dirname, '../../assets/theme-preview.svg');
 const template = fs.readFileSync(templatePath, 'utf8');
 const parser = new DOMParser();
 
-const get = (node: Document, className: string, tag: string) =>
+const get = (node: XmlDocument, className: string, tag: string) =>
     Array.from(node.getElementsByTagName(tag)).filter(
         element =>
             element.getAttribute && element.getAttribute('class') === className,
     );
 
-const getElementsByClassName = (node: Document, className: string) => [
+const getElementsByClassName = (node: XmlDocument, className: string) => [
     ...get(node, className, 'rect'),
     ...get(node, className, 'circle'),
     ...get(node, className, 'path'),
@@ -34,7 +39,7 @@ const getElementsByClassName = (node: Document, className: string) => [
     ...get(node, className, 'stop'),
 ];
 
-const fill = (node: Element, color: RgbColor) => {
+const fill = (node: XmlElement, color: RgbColor) => {
     const { red, green, blue, alpha } = color;
     const rgba = `rgba(${red}, ${green}, ${blue}, ${alpha / 255})`;
 
@@ -71,7 +76,7 @@ const createThemePreview = async ({
     const attheme = new Attheme(theme);
     attheme.fallbackToSelf(fallbacks);
 
-    const preview = parser.parseFromString(template);
+    const preview = parser.parseFromString(template, 'image/svg+xml');
 
     const inBubble = attheme.get('chat_inBubble');
     const outBubble = attheme.get('chat_outBubble');

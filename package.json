@@ -2,14 +2,18 @@
   "name": "themerbot",
   "version": "0.1.0",
   "description": "Create themes for telegram android from a picture.",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
+    "prestart": "npm run build",
     "start": "node build/index.js",
     "dev": "ts-node src/index.ts",
     "build": "tsc",
     "test": "tsc --noEmit",
     "lint": "eslint src/",
-    "i18n": "node scripts/download-translations.js"
+    "i18n": "ts-node src/scripts/download-i18n.ts"
+  },
+  "engines": {
+    "node": ">=24.0.0"
   },
   "repository": {
     "type": "git",
@@ -25,33 +29,31 @@
     "@grammyjs/runner": "^2.0.3",
     "@grammyjs/transformer-throttler": "^1.2.1",
     "@snejugal/color": "^2.1.1",
+    "@xmldom/xmldom": "^0.9.12",
     "@youtwitface/ntcjs": "^1.0.1",
     "attheme-js": "^3.0.0",
-    "color": "^4.2.3",
-    "dotenv": "^16.4.5",
-    "envalid": "^8.0.0",
-    "get-image-colors": "^4.0.1",
-    "grammy": "^1.21.1",
-    "image-size": "^1.1.1",
-    "mysql2": "^3.9.2",
+    "color": "^5.0.3",
+    "dotenv": "^18.0.9",
+    "envalid": "^9.0.0",
+    "get-rgba-palette": "^2.0.1",
+    "grammy": "^1.46.0",
+    "image-size": "^2.0.4",
+    "mysql2": "^3.24.6",
     "new-i18n": "^3.0.0-5",
-    "redis": "^4.6.13",
-    "sharp": "^0.33.2",
-    "unzipper": "^0.10.14",
-    "xmldom": "^0.6.0"
+    "redis": "^6.3.0",
+    "sharp": "^0.35.5",
+    "unzipper": "^0.12.5"
   },
   "devDependencies": {
-    "@types/color": "^3.0.6",
-    "@types/get-image-colors": "^4.0.5",
-    "@types/mkdirp": "^1.0.2",
-    "@types/node": "^20.11.24",
-    "@types/sharp": "^0.31.1",
-    "@types/unzipper": "^0.10.9",
-    "@types/xmldom": "^0.1.34",
-    "@typescript-eslint/eslint-plugin": "^7.1.1",
-    "@typescript-eslint/parser": "^7.1.1",
-    "eslint": "^8.57.0",
+    "@eslint/js": "^10.0.1",
+    "@types/color": "^4.2.1",
+    "@types/node": "^26.6.5",
+    "@types/unzipper": "^0.10.11",
+    "@typescript-eslint/eslint-plugin": "^8.72.1",
+    "@typescript-eslint/parser": "^8.72.1",
+    "eslint": "^10.13.0",
+    "globals": "^17.13.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^6.0.3"
   }
 }
