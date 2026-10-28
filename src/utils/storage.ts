@@ -21,8 +21,46 @@ client.on('error', error => {
     console.error(error);
 });
 
+// unfinished themes (and their saved images) are discarded after this long
+const THEME_TTL_SECONDS = 24 * 60 * 60;
+const CLEANUP_INTERVAL_MS = 60 * 60 * 1000;
+const KEY_PREFIX = 'themerbot_';
+
+const removeExpiredImages = async () => {
+    const cutoff = Date.now() - THEME_TTL_SECONDS * 1000;
+    const files = await fs.readdir(env.IMAGES_PATH);
+
+    await Promise.all(
+        files
+            .filter(file => file.startsWith(KEY_PREFIX))
+            .map(async file => {
+                const filePath = path.join(env.IMAGES_PATH, file);
+                const stats = await fs.stat(filePath).catch(() => null);
+
+                if (stats && stats.mtimeMs < cutoff) {
+                    await fs.rm(filePath, { force: true });
+                }
+            }),
+    );
+};
+
+export const startImageCleanup = ():
+    | ReturnType<typeof setInterval>
+    | undefined => {
+    if (env.LOCAL_API_ROOT) {
+        return undefined;
+    }
+
+    const cleanup = () => removeExpiredImages().catch(console.error);
+    cleanup();
+
+    const timer = setInterval(cleanup, CLEANUP_INTERVAL_MS);
+    timer.unref();
+    return timer;
+};
+
 const getKey = (ctx: Context, messageId: number) =>
-    `themerbot_${ctx.chat?.id}_${ctx.from?.id}_${messageId}`;
+    `${KEY_PREFIX}${ctx.chat?.id}_${ctx.from?.id}_${messageId}`;
 
 export const saveTheme = async (
     ctx: Context,
@@ -34,8 +72,8 @@ export const saveTheme = async (
     if (theme === null) {
         if (!env.LOCAL_API_ROOT) {
             const _theme = await getTheme(ctx, messageId);
-            if (_theme !== null) {
-                await fs.unlink(_theme.photo);
+            if (typeof _theme?.photo === 'string') {
+                await fs.rm(_theme.photo, { force: true });
             }
         }
 
@@ -48,7 +86,9 @@ export const saveTheme = async (
             await fs.writeFile(_theme.photo, theme.photo);
         }
 
-        await client.set(key, JSON.stringify(_theme));
+        await client.set(key, JSON.stringify(_theme), {
+            expiration: { type: 'EX', value: THEME_TTL_SECONDS },
+        });
     }
 };
 

@@ -9,7 +9,7 @@ import downloadI18n from './scripts/download-i18n';
 import { I18nContext } from './types';
 import { middleware as i18n } from './utils/i18n';
 import { middleware as stats } from './utils/stats';
-import { client as redisClient } from './utils/storage';
+import { client as redisClient, startImageCleanup } from './utils/storage';
 
 const main = async () => {
     if (!fs.existsSync(path.join(__dirname, '../i18n'))) {
@@ -47,6 +47,7 @@ const main = async () => {
     bot.use(handlers);
 
     await redisClient.connect();
+    startImageCleanup();
 
     run(bot);
     console.log('Bot started');
