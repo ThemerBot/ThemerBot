@@ -2,7 +2,7 @@
 
 ## Instructions
 
--   Requires Node.js 24 or newer.
+-   Requires Node.js 22.13+ or 24+.
 -   Copy `.env.example` to `.env`
 -   Run `npm start`
 

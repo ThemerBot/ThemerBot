@@ -14,7 +14,7 @@
     "i18n": "ts-node src/scripts/download-i18n.ts"
   },
   "engines": {
-    "node": ">=24.0.0"
+    "node": "^22.13.0 || >=24"
   },
   "repository": {
     "type": "git",
