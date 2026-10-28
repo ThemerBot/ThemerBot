@@ -1,6 +1,6 @@
 services:
     redis:
-        image: redis
+        image: redis:8
         restart: always
         expose:
             - '6379'
@@ -8,23 +8,24 @@ services:
             - redis_data:/data
 
     mysql:
-        image: mysql
+        image: mysql:26
         restart: always
         expose:
             - '3306'
         volumes:
             - data:/var/lib/mysql
+            - ./database.sql:/docker-entrypoint-initdb.d/database.sql:ro
         environment:
             MYSQL_DATABASE: themerbot
             MYSQL_USER: themerbot
             MYSQL_PASSWORD: themerbot
-            MYSQL_RANDOM_ROOT_PASSWORD: true
+            MYSQL_RANDOM_ROOT_PASSWORD: 'true'
 
     adminer:
-        image: adminer
+        image: adminer:6
         restart: always
         ports:
-            - 8080:8080
+            - '127.0.0.1:8080:8080'
 
     themerbot:
         image: themerbot
