@@ -31,7 +31,12 @@ const download = async (): Promise<void> => {
             }),
         },
     );
-    const { bundle_url } = await downloadResponse.json();
+    const { error, bundle_url } = await downloadResponse.json();
+
+    if (error) {
+        console.error('Error downloading i18n:', error.message);
+        return;
+    }
 
     const zipResponse = await fetch(bundle_url);
     const zip = Buffer.from(await zipResponse.arrayBuffer());
