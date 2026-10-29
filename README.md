@@ -17,6 +17,4 @@
 
 ## Translations
 
-Translation files live in the `i18n` directory and come from [Lokalise](https://lokalise.com/public/188240255de857128aa437.31917744/). Run `npm run i18n` to refresh them from Lokalise.
-
-> Thank you to [Lokalise](https://lokalise.com) for providing me with a free open source license.
+Translation files live in the `i18n` directory. Edit them directly; `en.json` is the source language and the fallback for missing translations.

@@ -10,8 +10,7 @@
     "build": "tsc",
     "typecheck": "tsc --noEmit && tsc -p test",
     "test": "npm run typecheck && node --test --require ts-node/register/transpile-only --require ./test/setup.ts \"test/**/*.test.ts\"",
-    "lint": "eslint src/ test/",
-    "i18n": "ts-node src/scripts/download-i18n.ts"
+    "lint": "eslint src/ test/"
   },
   "engines": {
     "node": "^22.13.0 || >=24"
@@ -41,14 +40,12 @@
     "mysql2": "^3.24.6",
     "new-i18n": "^3.0.0-5",
     "redis": "^6.3.0",
-    "sharp": "^0.35.5",
-    "unzipper": "^0.12.5"
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/color": "^4.2.1",
     "@types/node": "^26.6.5",
-    "@types/unzipper": "^0.10.11",
     "@typescript-eslint/eslint-plugin": "^8.72.1",
     "@typescript-eslint/parser": "^8.72.1",
     "eslint": "^10.13.0",

@@ -1,21 +1,14 @@
 import { run, sequentialize } from '@grammyjs/runner';
 import { apiThrottler } from '@grammyjs/transformer-throttler';
-import fs from 'fs';
 import { Bot } from 'grammy';
-import path from 'path';
 import env from './env';
 import handlers from './handlers';
-import downloadI18n from './scripts/download-i18n';
 import { I18nContext } from './types';
 import { middleware as i18n } from './utils/i18n';
 import { close as closeStats, middleware as stats } from './utils/stats';
 import { client as redisClient, startImageCleanup } from './utils/storage';
 
 const main = async () => {
-    if (!fs.existsSync(path.join(__dirname, '../i18n'))) {
-        await downloadI18n();
-    }
-
     const bot = new Bot<I18nContext>(env.BOT_TOKEN, {
         client: {
             apiRoot: env.API_ROOT,
