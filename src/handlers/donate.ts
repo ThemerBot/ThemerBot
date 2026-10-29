@@ -1,6 +1,7 @@
 import { Composer, InlineKeyboard } from 'grammy';
 import env from '../env';
 import { I18nContext } from '../types';
+import { formatDonationLinks } from '../utils/donation-links';
 
 type Translate = I18nContext['i18n'];
 
@@ -18,6 +19,23 @@ const amountButtons = (t: Translate) =>
         .row()
         .text(t('custom'), 'donate:custom');
 const amountRegex = /^(?:USD)?\s*\$?\s*(\d+)(?:\s*\.\s*(\d{2})\d*)?$/i;
+
+export const donationsEnabled = (): boolean =>
+    Boolean(env.STRIPE_TOKEN) || env.DONATION_LINKS.length > 0;
+
+const replyWithoutStripe = (ctx: I18nContext) => {
+    if (env.DONATION_LINKS.length === 0) {
+        return ctx.reply(ctx.i18n('donations_disabled'));
+    }
+
+    return ctx.reply(
+        ctx.i18n('donate_links', {
+            username: ctx.me.username,
+            links: formatDonationLinks(env.DONATION_LINKS),
+        }),
+        { link_preview_options: { prefer_small_media: true } },
+    );
+};
 
 interface ValidInvoice {
     valid: true;
@@ -105,7 +123,7 @@ privateFilter.command('start', async (ctx, next) => {
     }
 
     if (!env.STRIPE_TOKEN) {
-        await ctx.reply(ctx.i18n('donations_disabled'));
+        await replyWithoutStripe(ctx);
     } else if (payload.includes('_')) {
         const amount = Number(payload.split('_')[1]);
         const invoice = getInvoice(amount, ctx.i18n);
@@ -132,7 +150,7 @@ privateFilter.command('start', async (ctx, next) => {
 
 composer.command('donate', async ctx => {
     if (!env.STRIPE_TOKEN) {
-        await ctx.reply(ctx.i18n('donations_disabled'));
+        await replyWithoutStripe(ctx);
     } else if (ctx.chat.type === 'private') {
         await ctx.reply(
             ctx.i18n('donate_choose_amount', { username: ctx.me.username }),
@@ -153,9 +171,8 @@ composer.command('donate', async ctx => {
 
 composer.callbackQuery(/^donate:(\d+|custom)$/, async ctx => {
     if (!env.STRIPE_TOKEN) {
-        await ctx.answerCallbackQuery({
-            text: ctx.i18n('donations_disabled'),
-        });
+        await ctx.answerCallbackQuery();
+        await replyWithoutStripe(ctx);
         return;
     }
 
@@ -209,10 +226,7 @@ privateFilter.hears(amountRegex, async (ctx, next) => {
         return next();
     }
 
-    const invoice = getInvoice(
-        parseAmount(ctx.match[0]) ?? NaN,
-        ctx.i18n,
-    );
+    const invoice = getInvoice(parseAmount(ctx.match[0]) ?? NaN, ctx.i18n);
 
     if (invoice.valid) {
         await ctx.replyWithInvoice(

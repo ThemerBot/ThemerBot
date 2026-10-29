@@ -30,6 +30,7 @@
     "donate": "Donar",
     "donate_button": "Donar ❤️",
     "donations_disabled": "Lo siento, las donaciones no están habilitadas para este bot.",
+    "donate_links": "¡Gracias por ayudar a apoyar a @{{username}}! Puedes donar a través de las siguientes plataformas:\n\n{{links}}",
     "donate_invalid_amount": "Por favor, indica una cantidad válida.",
     "donate_min_amount": "Lo siento, Telegram tiene un mínimo de $1.",
     "donate_max_amount": "Lo siento, Telegram no permite más de $10,000.",

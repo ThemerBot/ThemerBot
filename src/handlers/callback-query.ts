@@ -1,6 +1,5 @@
 import fs from 'fs/promises';
 import { Composer, InputFile } from 'grammy';
-import env from '../env';
 import { I18nContext, ThemeType } from '../types';
 import { labelColors } from '../utils/colors';
 import { getKeyboard, getTypeKeyboard } from '../utils/keyboard';
@@ -8,6 +7,7 @@ import { getTheme, saveTheme } from '../utils/storage';
 import createThemePreview from '../utils/theme-preview';
 import { createTheme, getThemeName } from '../utils/themes';
 import { getSponsor } from '../utils/sponsor';
+import { donationsEnabled } from './donate';
 
 const composer = new Composer<I18nContext>();
 
@@ -106,7 +106,7 @@ requireTheme.callbackQuery(
             caption.push(ctx.i18n('tgx_wallpaper'));
         }
 
-        if (env.STRIPE_TOKEN) {
+        if (donationsEnabled()) {
             caption.push('');
             caption.push(
                 ctx.i18n('donate_caption', {

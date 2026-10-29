@@ -30,6 +30,7 @@
     "donate": "दान करें",
     "donate_button": "दान करें ❤️",
     "donations_disabled": "माफ़ कीजिए, इस बॉट के लिए दान की सुविधा चालू नहीं है।",
+    "donate_links": "@{{username}} का समर्थन करने के लिए धन्यवाद! आप इन प्लेटफ़ॉर्म के ज़रिए दान कर सकते हैं:\n\n{{links}}",
     "donate_invalid_amount": "कृपया सही राशि बताएँ।",
     "donate_min_amount": "माफ़ कीजिए, Telegram पर न्यूनतम राशि $1 है।",
     "donate_max_amount": "माफ़ कीजिए, Telegram $10,000 से ज़्यादा की अनुमति नहीं देता।",

@@ -30,6 +30,7 @@
     "donate": "Doneren",
     "donate_button": "Doneren ❤️",
     "donations_disabled": "Sorry, donaties zijn niet ingeschakeld voor deze bot.",
+    "donate_links": "Bedankt dat je @{{username}} wilt steunen! Je kunt doneren via de volgende platforms:\n\n{{links}}",
     "donate_invalid_amount": "Geef een geldig bedrag op.",
     "donate_min_amount": "Sorry, Telegram hanteert een minimum van $1.",
     "donate_max_amount": "Sorry, Telegram staat niet meer dan $10.000 toe.",

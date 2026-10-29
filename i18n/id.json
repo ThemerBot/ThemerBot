@@ -30,6 +30,7 @@
     "donate": "Donasi",
     "donate_button": "Donasi ❤️",
     "donations_disabled": "Maaf, donasi tidak diaktifkan untuk bot ini.",
+    "donate_links": "Terima kasih telah membantu mendukung @{{username}}! Anda dapat berdonasi melalui platform berikut:\n\n{{links}}",
     "donate_invalid_amount": "Mohon masukkan jumlah yang valid.",
     "donate_min_amount": "Maaf, Telegram menetapkan jumlah minimal $1.",
     "donate_max_amount": "Maaf, Telegram tidak mengizinkan lebih dari $10.000.",

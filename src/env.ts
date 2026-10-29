@@ -1,7 +1,10 @@
-import { cleanEnv, str, bool, url, host, port } from 'envalid';
+import { cleanEnv, str, bool, url, host, port, makeValidator } from 'envalid';
 import dotenv from 'dotenv';
+import { DonationLink, parseDonationLinks } from './utils/donation-links';
 
 dotenv.config();
+
+const donationLinks = makeValidator<DonationLink[]>(parseDonationLinks);
 
 export default cleanEnv(process.env, {
     BOT_TOKEN: str({ desc: 'The Telegram bot API token' }),
@@ -23,6 +26,10 @@ export default cleanEnv(process.env, {
     MYSQL_PORT: port({ default: 3306 }),
 
     STRIPE_TOKEN: str({ default: undefined }),
+    DONATION_LINKS: donationLinks({
+        desc: 'Comma-separated "Label=URL" pairs shown when Stripe donations are disabled',
+        default: [],
+    }),
     ENABLE_STATS: bool({ default: false }),
 
     SPONSORED_BY: str({ default: undefined }),

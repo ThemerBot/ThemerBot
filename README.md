@@ -8,6 +8,12 @@
 
 `npm start` builds the TypeScript source before starting the bot. Run `npm test` to type-check and run the unit tests.
 
+## Donations
+
+-   Set `STRIPE_TOKEN` to accept donations through Telegram payments.
+-   Otherwise, set `DONATION_LINKS` to comma-separated `Label=URL` pairs (for example `ko-fi=ko-fi.com/name,PayPal=paypal.me/name`), and `/donate` lists them.
+-   With neither set, `/donate` says donations aren't enabled.
+
 ## Docker
 
 -   Set `REDIS_HOST=redis` and `MYSQL_HOST=mysql` in `.env`
